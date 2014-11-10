@@ -26,8 +26,21 @@ public class ServerTest {
     public void testServerCanBeStarted() throws Exception {
         startPrivateServer(5000);
         Socket serverSocket = new Socket("localhost", 5000);
+        PrintWriter out = new PrintWriter(serverSocket.getOutputStream(), true);
         BufferedReader in = new BufferedReader(new InputStreamReader(serverSocket.getInputStream()));
+        out.println("ping");
         assertEquals("Server Up", in.readLine());
+    }
+
+    @Test
+    public void testServerHandleGetRequestEndPoints() throws Exception {
+        startPrivateServer(5000);
+        Socket serverSocket = new Socket("localhost", 5000);
+        PrintWriter out = new PrintWriter(serverSocket.getOutputStream(), true);
+        BufferedReader in = new BufferedReader(new InputStreamReader(serverSocket.getInputStream()));
+        out.println("GET /echo HTTP/1.1");
+        assertEquals("echo", in.readLine());
+
     }
 
     private void startPrivateServer(final int portNumber) {

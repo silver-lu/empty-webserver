@@ -31,8 +31,19 @@ public class Server {
         try {
             Socket clientSocket = listener.accept();
             try {
+                BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
                 PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
-                out.println("Server Up");
+                String request = in.readLine();
+                String[] requestParam = request.split(" ");
+                if ( requestParam.length > 2 && requestParam[1].equals("/echo") ) {
+                    out.println("echo");
+                }
+                else if ( requestParam.length > 2 && requestParam[1].equals("/foobar")){
+                    out.println("HTTP/1.1 404 Not Found");
+                }
+                else {
+                    out.println("Server Up");
+                }
             }
             finally {
                 clientSocket.close();
