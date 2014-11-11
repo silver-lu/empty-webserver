@@ -1,5 +1,7 @@
 package com.undecided;
 
+import java.io.UnsupportedEncodingException;
+
 /**
  * Created by silver.lu on 11/11/14.
  */
@@ -8,6 +10,7 @@ public class ServerResponse {
     private String serverType;
     private String contentType;
     private String charSet;
+    private String responseBody;
 
     public ServerResponse() {
         this(HttpResponseCode.BadRequest);
@@ -18,6 +21,7 @@ public class ServerResponse {
         this.serverType = "undecided";
         this.charSet = "UTF-8";
         this.contentType = "text/html";
+        this.responseBody = "";
     }
 
     public HttpResponseCode getResponseCode() {
@@ -34,5 +38,24 @@ public class ServerResponse {
 
     public String getCharSet() {
         return charSet;
+    }
+
+    public int getContentLength() throws UnsupportedEncodingException {
+        return responseBody.getBytes(charSet).length;
+    }
+
+    public void setResponseBody(String responseBody) {
+        this.responseBody = responseBody;
+    }
+
+    public String getResponseHeader() {
+        String header =
+                HttpConstant.HTTP_VERSION + " " + HttpConstant.RESPONSE_CODES.get(responseCode);
+        header += "test";
+        return header;
+    }
+
+    public String getResponseBody() {
+        return "";
     }
 }

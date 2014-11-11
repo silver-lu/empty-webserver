@@ -35,10 +35,10 @@ public class DirectoryListerTest {
         MockFile mockFile = new MockFile(".");
 
         List<File> fakeFiles = new ArrayList<File>();
-        fakeFiles.add(new MockFile("./abc"));
+        fakeFiles.add(new MockFile("abc"));
 
 
-        MockFile hiddenFile = new MockFile("./HiddenFile");
+        MockFile hiddenFile = new MockFile("HiddenFile");
         hiddenFile.flagAsHidden();
         fakeFiles.add(hiddenFile);
 

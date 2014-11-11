@@ -36,6 +36,24 @@ public class ServerResponseTest {
     public void testDefaultResponseHasCharsetSet() throws Exception {
         ServerResponse response = new ServerResponse();
         assertEquals("UTF-8", response.getCharSet());
+    }
 
+    @Test
+    public void testContentLengthIsAutomaticallyCalculated() throws Exception {
+        ServerResponse response = new ServerResponse();
+        response.setResponseBody("This is a Test Body");
+        assertEquals(19, response.getContentLength());
+    }
+
+    @Test
+    public void testDefaultResponseReturnCorrectHeader() throws Exception {
+        ServerResponse response = new ServerResponse();
+        String header = response.getResponseHeader();
+    }
+
+    @Test
+    public void testDefaultResponseReturnsEmptyBody() throws Exception {
+        ServerResponse response = new ServerResponse();
+        String body = response.getResponseBody();
     }
 }
