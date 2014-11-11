@@ -30,6 +30,16 @@ public class DirectoryListerTest {
         assertTrue(pathExists(files, "./src"));
     }
 
+    @Test
+    public void testHiddenFilesAreNotPulledUp() throws Exception {
+
+    }
+
+    @Test
+    public void testHiddenDirectoriesAreNotPulledUp() throws Exception {
+
+    }
+
     private boolean pathExists(List<File> paths, String target) {
         for  ( File path : paths ) {
             if ( path.getPath().equals(target)) {
