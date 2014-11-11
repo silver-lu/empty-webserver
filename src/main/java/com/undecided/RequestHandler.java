@@ -14,8 +14,12 @@ public class RequestHandler {
     public void processRequest() {
         try {
             request.parse();
+
             if (request.getRequestUrl().equals("/ping")) {
                 response = "Pong";
+            } else if (request.getRequestUrl().equals("/")) {
+                DirectoryLister lister = new DirectoryLister("/");
+                response = "HTTP/1.1 200 OK\n" + lister.getStringReadableFilesAndDirectories();
             } else {
                 response = "HTTP/1.1 404 Not Found";
             }

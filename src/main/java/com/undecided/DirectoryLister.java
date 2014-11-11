@@ -15,7 +15,8 @@ public class DirectoryLister {
     private List<File> allDirectories;
 
     public DirectoryLister(String startDirectory) {
-        this.startDirectory = startDirectory;
+        String root = "./";
+        this.startDirectory = root + startDirectory;
         this.readableFiles = new ArrayList<File>();
         this.readableDirectories = new ArrayList<File>();
         this.readableFilesAndDirectories = new ArrayList<File>();
@@ -44,6 +45,15 @@ public class DirectoryLister {
                 this.allDirectories.add(file);
             }
         }
+    }
+
+    public String getStringReadableFilesAndDirectories() {
+        String str = "";
+        for (File file : getReadableFilesAndDirectories()) {
+            str += file.getName() + " ";
+        }
+
+        return str;
     }
 
     public List<File> getReadableFilesAndDirectories() {

@@ -18,8 +18,7 @@ public class DirectoryListerTest {
         DirectoryLister directoryLister = new DirectoryLister(".");
         List<File> files = directoryLister.getReadableFiles();
 
-        assertTrue(pathExists(files, "./pom.xml"));
-
+        assertTrue(pathExists(files, "pom.xml"));
     }
 
     @Test
@@ -27,7 +26,7 @@ public class DirectoryListerTest {
         DirectoryLister directoryLister = new DirectoryLister(".");
         List<File> files = directoryLister.getReadableDirectories();
 
-        assertTrue(pathExists(files, "./src"));
+        assertTrue(pathExists(files, "src"));
     }
 
     @Test
@@ -42,7 +41,7 @@ public class DirectoryListerTest {
 
     private boolean pathExists(List<File> paths, String target) {
         for  ( File path : paths ) {
-            if ( path.getPath().equals(target)) {
+            if ( path.getPath().contains(target)) {
                 return true;
             }
         }
