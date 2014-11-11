@@ -31,6 +31,14 @@ public class DirectoryListerTest {
     }
 
     @Test
+    public void testServerRootStartsInCurrentDirectory() {
+        DirectoryLister directoryLister = new DirectoryLister(new File("/"));
+        String response = directoryLister.getStringReadableFilesAndDirectories();
+
+        assertTrue(response.contains("src"));
+    }
+
+    @Test
     public void testHiddenFilesAreNotPulledUp() throws Exception {
         MockFile mockFile = new MockFile(".");
 
