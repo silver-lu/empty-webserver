@@ -13,4 +13,12 @@ public class ServerResponseTest {
         ServerResponse response = new ServerResponse();
         assertEquals(HttpResponseCode.BadRequest, response.getResponseCode());
     }
+
+    @Test
+    public void testResponseCodeCanBeSetViaConstructorParams() throws Exception {
+        ServerResponse response = new ServerResponse(HttpResponseCode.NotFound);
+        assertEquals(HttpResponseCode.NotFound, response.getResponseCode());
+    }
+
+
 }
