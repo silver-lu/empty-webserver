@@ -13,12 +13,11 @@ public class ClientRequest {
     private String requestUrl;
     private HttpVersion httpVersion;
 
-    public ClientRequest(String rawInput) throws Exception {
+    public ClientRequest(String rawInput) {
         this.rawInput = rawInput;
-        parse();
     }
 
-    private void parse() throws Exception {
+    public void parse() throws Exception {
         String requestLine = rawInput;
         if ( requestLine == null || requestLine.length() < 10) {
             throw new MalformedRequestException();
