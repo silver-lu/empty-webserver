@@ -1,7 +1,8 @@
 package com.undecided;
 
-import java.io.BufferedReader;
-import java.io.Reader;
+import com.undecided.exceptions.MalformedRequestException;
+import com.undecided.exceptions.ProtocolNotRecognizedException;
+import com.undecided.exceptions.RequestMethodNotRecognizedException;
 
 /**
  * Created by silver.lu on 11/10/14.
@@ -13,12 +14,11 @@ public class ClientRequest {
     private String requestUrl;
     private HttpVersion httpVersion;
 
-    public ClientRequest(String rawInput) throws Exception {
+    public ClientRequest(String rawInput) {
         this.rawInput = rawInput;
-        parse();
     }
 
-    private void parse() throws Exception {
+    public void parse() throws Exception {
         String requestLine = rawInput;
         if ( requestLine == null || requestLine.length() < 10) {
             throw new MalformedRequestException();
@@ -34,7 +34,7 @@ public class ClientRequest {
     }
 
     private void parseHttpVersion(String httpVersion) throws Exception{
-        if ( httpVersion.equals("HTTP/1.1") ) {
+        if ( httpVersion.equals(HttpConstant.HTTP_VERSION) ) {
             this.httpVersion = HttpVersion.OneDotOne;
         }
         else {
@@ -52,7 +52,7 @@ public class ClientRequest {
     }
 
     private void parseRequestMethod(String requestMethod) throws Exception {
-        if ( requestMethod.equals("GET") ) {
+        if ( requestMethod.equals(HttpConstant.GET_REQUEST) ) {
             this.requestMethod = HttpRequestMethod.Get;
         }
         else {

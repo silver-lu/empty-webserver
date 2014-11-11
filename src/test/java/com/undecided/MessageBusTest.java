@@ -10,8 +10,7 @@ import java.io.PrintWriter;
 import java.net.InetAddress;
 import java.net.Socket;
 
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.TestCase.assertTrue;
+import static org.junit.Assert.*;
 
 /**
  * Created by silver.lu on 11/10/14.
