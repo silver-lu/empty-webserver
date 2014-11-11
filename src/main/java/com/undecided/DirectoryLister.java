@@ -15,13 +15,15 @@ public class DirectoryLister {
     private List<File> allDirectories;
 
     public DirectoryLister(File baseDirectory) {
+        String rootDir = "./";
+
         this.readableFiles = new ArrayList<File>();
         this.readableDirectories = new ArrayList<File>();
         this.readableFilesAndDirectories = new ArrayList<File>();
         this.allFiles = new ArrayList<File>();
         this.allDirectories = new ArrayList<File>();
 
-        this.baseDirectory = baseDirectory;
+        this.baseDirectory = new File(rootDir + baseDirectory.toString());
         parseDirectory();
     }
 
