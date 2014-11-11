@@ -1,0 +1,60 @@
+package com.undecided;
+
+import java.io.File;
+import java.util.*;
+
+/**
+ * Created by silver.lu on 11/11/14.
+ */
+public class DirectoryLister {
+    private String startDirectory;
+    private List<File> readableFiles;
+    private List<File> readableDirectories;
+    private List<File> readableFilesAndDirectories;
+    private List<File> allFiles;
+    private List<File> allDirectories;
+
+    public DirectoryLister(String startDirectory) {
+        this.startDirectory = startDirectory;
+        this.readableFiles = new ArrayList<File>();
+        this.readableDirectories = new ArrayList<File>();
+        this.readableFilesAndDirectories = new ArrayList<File>();
+        this.allFiles = new ArrayList<File>();
+        this.allDirectories = new ArrayList<File>();
+
+        parseDirectory();
+    }
+
+    private void parseDirectory() {
+        File dir = new File(startDirectory);
+        File[] files = dir.listFiles();
+        for (File file : files) {
+            if ( file.isFile() ) {
+                if ( !file.isHidden() ) {
+                    this.readableFiles.add(file);
+                    this.readableFilesAndDirectories.add(file);
+                }
+                this.allFiles.add(file);
+            }
+            if ( file.isDirectory() ) {
+                if ( !file.isHidden() ) {
+                    this.readableDirectories.add(file);
+                    this.readableFilesAndDirectories.add(file);
+                }
+                this.allDirectories.add(file);
+            }
+        }
+    }
+
+    public List<File> getReadableFilesAndDirectories() {
+        return readableFilesAndDirectories;
+    }
+
+    public List<File> getReadableFiles() {
+        return readableFiles;
+    }
+
+    public List<File> getReadableDirectories() {
+        return readableDirectories;
+    }
+}
