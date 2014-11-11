@@ -45,7 +45,6 @@ public class DirectoryListerTest {
         mockFile.setFiles(fakeFiles);
 
         DirectoryLister directoryLister = new DirectoryLister(mockFile);
-        System.out.println(directoryLister.getReadableFiles().toString());
     }
 
     @Test

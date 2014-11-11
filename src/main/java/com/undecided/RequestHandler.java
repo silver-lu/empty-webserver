@@ -2,6 +2,8 @@ package com.undecided;
 
 import com.undecided.exceptions.RequestMethodNotRecognizedException;
 
+import java.io.File;
+
 /**
  * Created by silver.lu on 11/11/14.
  */
@@ -20,7 +22,7 @@ public class RequestHandler {
             if (request.getRequestUrl().equals("/ping")) {
                 response = "Pong";
             } else if (request.getRequestUrl().equals("/")) {
-                DirectoryLister lister = new DirectoryLister("/");
+                DirectoryLister lister = new DirectoryLister(new File("/"));
                 response = "HTTP/1.1 200 OK\n" + lister.getStringReadableFilesAndDirectories();
             } else {
                 response = getVersionedHttpResponse(HttpConstant.NOT_FOUND);
