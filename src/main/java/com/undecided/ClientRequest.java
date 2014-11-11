@@ -1,8 +1,6 @@
 package com.undecided;
 
-import com.undecided.exceptions.MalformedRequestException;
-import com.undecided.exceptions.ProtocolNotRecognizedException;
-import com.undecided.exceptions.RequestMethodNotRecognizedException;
+import com.undecided.exceptions.*;
 
 /**
  * Created by silver.lu on 11/10/14.
