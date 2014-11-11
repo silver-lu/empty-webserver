@@ -1,4 +1,4 @@
-package com.ericsmith;
+package com.undecided;
 
 /**
  * Created by silver.lu on 11/10/14.
