@@ -20,5 +20,22 @@ public class ServerResponseTest {
         assertEquals(HttpResponseCode.NotFound, response.getResponseCode());
     }
 
+    @Test
+    public void testDefaultResponseHasServerTypeSet() throws Exception {
+        ServerResponse response = new ServerResponse();
+        assertEquals("undecided", response.getServerType());
+    }
 
+    @Test
+    public void testDefaultResponseHasContentTypeSet() throws Exception {
+        ServerResponse response = new ServerResponse();
+        assertEquals("text/html", response.getContentType());
+    }
+
+    @Test
+    public void testDefaultResponseHasCharsetSet() throws Exception {
+        ServerResponse response = new ServerResponse();
+        assertEquals("UTF-8", response.getCharSet());
+
+    }
 }
