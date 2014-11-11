@@ -1,8 +1,9 @@
 package com.undecided;
 
+import com.undecided.exceptions.MalformedRequestException;
+import com.undecided.exceptions.ProtocolNotRecognizedException;
+import com.undecided.exceptions.RequestMethodNotRecognizedException;
 import org.junit.Test;
-
-import java.io.StringReader;
 
 import static org.junit.Assert.assertEquals;
 

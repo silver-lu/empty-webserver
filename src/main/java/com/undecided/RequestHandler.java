@@ -1,5 +1,7 @@
 package com.undecided;
 
+import com.undecided.exceptions.RequestMethodNotRecognizedException;
+
 /**
  * Created by silver.lu on 11/11/14.
  */
@@ -21,18 +23,22 @@ public class RequestHandler {
                 DirectoryLister lister = new DirectoryLister("/");
                 response = "HTTP/1.1 200 OK\n" + lister.getStringReadableFilesAndDirectories();
             } else {
-                response = "HTTP/1.1 404 Not Found";
+                response = getVersionedHttpResponse(HttpConstant.NOT_FOUND);
             }
         }
         catch ( RequestMethodNotRecognizedException expected) {
-            response = "HTTP/1.1 405 Method Not Allowed";
+            response = getVersionedHttpResponse(HttpConstant.METHOD_NOT_ALLOWED);
         }
         catch ( Exception e) {
-            response = "HTTP/1.1 400 Bad Request";
+            response = getVersionedHttpResponse(HttpConstant.BAD_REQUEST);
         }
     }
 
     public String getResponse() {
         return response;
+    }
+
+    private String getVersionedHttpResponse(String responseCode) {
+        return HttpConstant.HTTP_VERSION + " " + responseCode;
     }
 }
