@@ -6,6 +6,7 @@ import org.junit.Test;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.net.InetAddress;
 import java.net.Socket;
 
@@ -37,18 +38,22 @@ public class MessageBusTest {
     @Test
     public void testMessageBusCanWriteData() throws Exception {
         startPrivateServer(5000);
-        Socket serverSocket = new Socket(InetAddress.getLocalHost(), 5000);
+        Socket socket = new Socket(InetAddress.getLocalHost(), 5000);
         Thread.sleep(1000);
-        bus.writeData("This is a Test");
-        BufferedReader in = new BufferedReader(new InputStreamReader(serverSocket.getInputStream()));
-        assertEquals("This is a Test", in.readLine());
+        bus.writeData("This is a write Test");
+        BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+        assertEquals("This is a write Test", in.readLine());
     }
 
     @Test
-    public void testBusAutoCloseSockets() throws Exception {
+    public void testMessageBusCanReadData() throws Exception {
         startPrivateServer(5000);
-        bus.close();
-        bus.close();
+        Socket socket = new Socket(InetAddress.getLocalHost(), 5000);
+        Thread.sleep(1000);
+        PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
+        out.println("This is a read Test");
+        assertEquals("This is a read Test", bus.readData());
+
     }
 
     private void startPrivateServer(final int portNumber) throws InterruptedException {
