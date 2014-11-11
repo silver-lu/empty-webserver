@@ -11,18 +11,18 @@ import java.io.Reader;
  */
 public class ClientRequest {
 
-    private BufferedReader rawInput;
+    private String rawInput;
     private HttpRequestMethod requestMethod;
     private String requestUrl;
     private HttpVersion httpVersion;
 
-    public ClientRequest(Reader rawInput) throws Exception {
-        this.rawInput = new BufferedReader(rawInput);
+    public ClientRequest(String rawInput) throws Exception {
+        this.rawInput = rawInput;
         parse();
     }
 
     private void parse() throws Exception {
-        String requestLine = rawInput.readLine();
+        String requestLine = rawInput;
         if ( requestLine == null || requestLine.length() < 10) {
             throw new MalformedRequestException();
         }

@@ -17,12 +17,20 @@ public class Server {
         bus.writeData(res);
     }
 
-    public static String processRequest(String input) {
-        if (input.equals("Test")) {
-            return new String(input);
+    public static String processRequest(String input) throws Exception {
+        try {
+            ClientRequest request = new ClientRequest(input);
+            if (request.getRequestUrl().equals("/ping")) {
+                return new String("Pong");
+            } else {
+                return new String("HTTP/1.1 404 Not Found");
+            }
         }
-        else {
-            return new String("HTTP/1.1 404 Not Found");
+        catch ( RequestMethodNotRecognizedException expected) {
+            return new String ("HTTP/1.1 405 Method Not Allowed");
+        }
+        catch ( Exception e) {
+            return new String ("HTTP/1.1 400 Bad Request");
         }
     }
 
