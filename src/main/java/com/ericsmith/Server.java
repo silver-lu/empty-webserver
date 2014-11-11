@@ -9,41 +9,47 @@ import java.net.Socket;
 
 public class Server {
 
-    public static String SERVER_START_COMMAND;
-    private int portNumber;
-
-    public Server(int portNumber) {
-        this.portNumber = portNumber;
+    public static void main(String[] args) throws Exception {
+        MessageBus bus = new SocketMessageBus(5000);
+        bus.start();
+        String input = bus.readData();
+        String res = processRequest(input);
+        bus.writeData(res);
     }
 
-    public static void main(String[] args) throws IOException {
-        Server server = new Server(5000);
-        server.run();
-
+    public static String processRequest(String input) {
+        if (input.equals("Test")) {
+            return new String(input);
+        }
+        else {
+            return new String("HTTP/1.1 404 Not Found");
+        }
     }
 
-    public int getPort() {
-        return portNumber;
-    }
-
-    public void run() throws IOException {
+/*
+    public void run() throws Exception {
         ServerSocket listener = new ServerSocket(this.portNumber);
         try {
             Socket clientSocket = listener.accept();
             try {
                 BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
                 PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
-                String request = in.readLine();
-                String[] requestParam = request.split(" ");
-                if ( requestParam.length > 2 && requestParam[1].equals("/echo") ) {
-                    out.println("echo");
+
+                try {
+                    ClientRequest clientRequest = new ClientRequest(new InputStreamReader(clientSocket.getInputStream()));
+
+                    if ( clientRequest.getRequestUrl().equals("/echo") ) {
+                        out.println("echo");
+                    }
+                    else {
+                        out.println("HTTP/1.1 404 Not Found");
+                    }
                 }
-                else if ( requestParam.length > 2 && requestParam[1].equals("/foobar")){
-                    out.println("HTTP/1.1 404 Not Found");
+                catch (MalformedRequestException expected) {
+                    out.println("HTTP/1.1 400 Bad Request");
                 }
-                else {
-                    out.println("Server Up");
-                }
+
+
             }
             finally {
                 clientSocket.close();
@@ -54,4 +60,6 @@ public class Server {
             listener.close();
         }
     }
+
+ */
 }
