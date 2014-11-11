@@ -14,8 +14,6 @@ public class DirectoryLister {
     private List<File> allFiles;
     private List<File> allDirectories;
 
-
-
     public DirectoryLister(File baseDirectory) {
         this.readableFiles = new ArrayList<File>();
         this.readableDirectories = new ArrayList<File>();
