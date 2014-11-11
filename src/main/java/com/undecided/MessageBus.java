@@ -1,4 +1,4 @@
-package com.ericsmith;
+package com.undecided;
 
 import java.io.IOException;
 

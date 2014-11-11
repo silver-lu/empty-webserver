@@ -1,9 +1,6 @@
-package com.ericsmith;
-
-import jdk.nashorn.internal.ir.RuntimeNode;
+package com.undecided;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.Reader;
 
 /**
