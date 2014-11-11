@@ -25,4 +25,13 @@ public class RequestHandlerTest {
         String response = handler.getResponse();
         assertEquals("HTTP/1.1 404 Not Found", response);
     }
+
+    @Test
+    public void testInvalidRequestMethodWillReturn405() throws Exception {
+        RequestHandler handler = new RequestHandler("FOO /test HTTP/1.1");
+        handler.processRequest();
+        String response = handler.getResponse();
+        assertEquals("HTTP/1.1 405 Method Not Allowed", response);
+
+    }
 }

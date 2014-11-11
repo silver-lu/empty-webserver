@@ -17,18 +17,22 @@ public class RequestHandler {
             if (request.getRequestUrl().equals("/ping")) {
                 response = "Pong";
             } else {
-                response = "HTTP/1.1 404 Not Found";
+                response = getVersionedHttpResponse(HttpResponseCodes.NOT_FOUND);
             }
         }
         catch ( RequestMethodNotRecognizedException expected) {
-            response = "HTTP/1.1 405 Method Not Allowed";
+            response = getVersionedHttpResponse(HttpResponseCodes.METHOD_NOT_ALLOWED);
         }
         catch ( Exception e) {
-            response = "HTTP/1.1 400 Bad Request";
+            response = getVersionedHttpResponse(HttpResponseCodes.BAD_REQUEST);
         }
     }
 
     public String getResponse() {
         return response;
+    }
+
+    private String getVersionedHttpResponse(String responseCode) {
+        return HttpResponseCodes.HTTP_VERSION + " " + responseCode;
     }
 }
