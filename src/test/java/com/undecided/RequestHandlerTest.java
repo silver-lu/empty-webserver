@@ -33,4 +33,5 @@ public class RequestHandlerTest {
         String response = handler.getResponse();
         assertEquals("HTTP/1.1 405 Method Not Allowed", response);
     }
+
 }
