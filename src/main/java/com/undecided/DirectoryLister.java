@@ -7,6 +7,7 @@ import java.util.*;
  * Created by silver.lu on 11/11/14.
  */
 public class DirectoryLister {
+    private File baseDirectory;
     private String startDirectory;
     private List<File> readableFiles;
     private List<File> readableDirectories;
@@ -14,9 +15,14 @@ public class DirectoryLister {
     private List<File> allFiles;
     private List<File> allDirectories;
 
+<<<<<<< HEAD
     public DirectoryLister(String startDirectory) {
         String root = "./";
         this.startDirectory = root + startDirectory;
+=======
+ /*   public DirectoryLister(String startDirectory) {
+        this.startDirectory = startDirectory;
+>>>>>>> 15e979333a5c2607bfcdaec68f770ac4c21e5a13
         this.readableFiles = new ArrayList<File>();
         this.readableDirectories = new ArrayList<File>();
         this.readableFilesAndDirectories = new ArrayList<File>();
@@ -24,11 +30,22 @@ public class DirectoryLister {
         this.allDirectories = new ArrayList<File>();
 
         parseDirectory();
+    }*/
+
+    public DirectoryLister(File baseDirectory) {
+        this.startDirectory = startDirectory;
+        this.readableFiles = new ArrayList<File>();
+        this.readableDirectories = new ArrayList<File>();
+        this.readableFilesAndDirectories = new ArrayList<File>();
+        this.allFiles = new ArrayList<File>();
+        this.allDirectories = new ArrayList<File>();
+
+        this.baseDirectory = baseDirectory;
+        parseDirectory();
     }
 
     private void parseDirectory() {
-        File dir = new File(startDirectory);
-        File[] files = dir.listFiles();
+        File[] files = baseDirectory.listFiles();
         for (File file : files) {
             if ( file.isFile() ) {
                 if ( !file.isHidden() ) {

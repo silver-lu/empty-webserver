@@ -3,6 +3,7 @@ package com.undecided;
 import org.junit.Test;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 import static junit.framework.TestCase.assertTrue;
@@ -15,7 +16,7 @@ public class DirectoryListerTest {
 
     @Test
     public void testCanPullUpReadableFilesInCurrentDirectory() throws Exception {
-        DirectoryLister directoryLister = new DirectoryLister(".");
+        DirectoryLister directoryLister = new DirectoryLister(new File("."));
         List<File> files = directoryLister.getReadableFiles();
 
         assertTrue(pathExists(files, "pom.xml"));
@@ -23,7 +24,7 @@ public class DirectoryListerTest {
 
     @Test
     public void testCanPullUpDirectoriesInGivenDirectory() throws Exception {
-        DirectoryLister directoryLister = new DirectoryLister(".");
+        DirectoryLister directoryLister = new DirectoryLister(new File("."));
         List<File> files = directoryLister.getReadableDirectories();
 
         assertTrue(pathExists(files, "src"));
@@ -31,7 +32,20 @@ public class DirectoryListerTest {
 
     @Test
     public void testHiddenFilesAreNotPulledUp() throws Exception {
+        MockFile mockFile = new MockFile(".");
 
+        List<File> fakeFiles = new ArrayList<File>();
+        fakeFiles.add(new MockFile("./abc"));
+
+
+        MockFile hiddenFile = new MockFile("./HiddenFile");
+        hiddenFile.flagAsHidden();
+        fakeFiles.add(hiddenFile);
+
+        mockFile.setFiles(fakeFiles);
+
+        DirectoryLister directoryLister = new DirectoryLister(mockFile);
+        System.out.println(directoryLister.getReadableFiles().toString());
     }
 
     @Test
