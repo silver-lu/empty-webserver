@@ -21,7 +21,7 @@ public class DirectoryListerTest {
         DirectoryLister directoryLister = new DirectoryLister(new File("."));
         List<File> files = directoryLister.getReadableFiles();
 
-        assertTrue(pathExists(files, "./pom.xml"));
+        assertTrue(pathExists(files, "." + File.separator + "pom.xml"));
     }
 
     @Test
@@ -29,7 +29,7 @@ public class DirectoryListerTest {
         DirectoryLister directoryLister = new DirectoryLister(new File("."));
         List<File> files = directoryLister.getReadableDirectories();
 
-        assertTrue(pathExists(files, "./src"));
+        assertTrue(pathExists(files, "." + File.separator + "src"));
     }
 
     @Test
