@@ -13,4 +13,49 @@ public class ServerResponseTest {
         ServerResponse response = new ServerResponse();
         assertEquals(HttpResponseCode.BadRequest, response.getResponseCode());
     }
+
+    @Test
+    public void testResponseCodeCanBeSetViaConstructorParams() throws Exception {
+        ServerResponse response = new ServerResponse(HttpResponseCode.NotFound);
+        assertEquals(HttpResponseCode.NotFound, response.getResponseCode());
+    }
+
+    @Test
+    public void testDefaultResponseHasServerTypeSet() throws Exception {
+        ServerResponse response = new ServerResponse();
+        assertEquals("undecided", response.getServerType());
+    }
+
+    @Test
+    public void testDefaultResponseHasContentTypeSet() throws Exception {
+        ServerResponse response = new ServerResponse();
+        assertEquals("text/html", response.getContentType());
+    }
+
+    @Test
+    public void testDefaultResponseHasCharsetSet() throws Exception {
+        ServerResponse response = new ServerResponse();
+        assertEquals("UTF-8", response.getCharSet());
+    }
+
+    @Test
+    public void testContentLengthIsAutomaticallyCalculated() throws Exception {
+        ServerResponse response = new ServerResponse();
+        response.setResponseBody("This is a Test Body");
+        assertEquals(19, response.getContentLength());
+    }
+
+    @Test
+    public void testDefaultResponseReturnCorrectHeader() throws Exception {
+        ServerResponse response = new ServerResponse();
+        String header = response.getResponseHeader();
+        assertEquals("HTTP/1.1 400 Bad Request\r\nDate: Tue, 11 Nov 2014 19:15:23 GMT\r\nServer: undecided\r\nContent-Type: text/html; charset=UTF-8\r\nContent-Length: 0\r\n", header);
+    }
+
+    @Test
+    public void testDefaultResponseReturnsEmptyBody() throws Exception {
+        ServerResponse response = new ServerResponse();
+        String body = response.getResponseBody();
+        assertEquals("", body);
+    }
 }
