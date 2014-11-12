@@ -15,6 +15,8 @@ public class DirectoryLister {
     private List<File> allDirectories;
 
     public DirectoryLister(File baseDirectory) {
+        String rootDir = "./";
+
         this.readableFiles = new ArrayList<File>();
         this.readableDirectories = new ArrayList<File>();
         this.readableFilesAndDirectories = new ArrayList<File>();
