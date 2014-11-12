@@ -21,7 +21,7 @@ public class DirectoryListerTest {
         DirectoryLister directoryLister = new DirectoryLister(new File("."));
         List<File> files = directoryLister.getReadableFiles();
 
-        assertTrue(pathExists(files, "pom.xml"));
+        assertTrue(pathExists(files, "./pom.xml"));
     }
 
     @Test
@@ -29,7 +29,7 @@ public class DirectoryListerTest {
         DirectoryLister directoryLister = new DirectoryLister(new File("."));
         List<File> files = directoryLister.getReadableDirectories();
 
-        assertTrue(pathExists(files, "src"));
+        assertTrue(pathExists(files, "./src"));
     }
 
     @Test
@@ -37,7 +37,7 @@ public class DirectoryListerTest {
         MockFile mockFile = new MockFile(".");
 
         List<File> fakeFiles = new ArrayList<File>();
-        MockFile normalFile = new MockFile("./abc");
+        MockFile normalFile = new MockFile("abc");
         normalFile.setIsFile(true);
         fakeFiles.add(normalFile);
 
@@ -52,8 +52,8 @@ public class DirectoryListerTest {
         DirectoryLister directoryLister = new DirectoryLister(mockFile);
         List<File> files = directoryLister.getReadableFiles();
         System.out.println(files.toString());
-        assertTrue(pathExists(directoryLister.getReadableFiles(), "./abc"));
-        assertFalse(pathExists(directoryLister.getReadableFiles(), "./HiddenFile"));
+        assertTrue(pathExists(directoryLister.getReadableFiles(), "abc"));
+        assertFalse(pathExists(directoryLister.getReadableFiles(), "HiddenFile"));
 
     }
 
