@@ -59,11 +59,32 @@ public class DirectoryListerTest {
         assertFalse(pathExists(files, "HiddenFile"));
     }
 
-/*    @Test
+    @Test
     public void testHiddenDirectoriesAreNotPulledUp() throws Exception {
 
+        MockFile mockFile = new MockFile(".");
+        List<File> fakeDirs = new ArrayList<File>();
+
+        MockFile dir1 = new MockFile("DIR1");
+        dir1.setIsDirectory(true);
+
+        fakeDirs.add(dir1);
+
+
+        MockFile hiddenDir = new MockFile("HIDDENDIR");
+        hiddenDir.setIsDirectory(true);
+        hiddenDir.flagAsHidden();
+        fakeDirs.add(hiddenDir);
+
+
+        mockFile.setFiles(fakeDirs);
+
+        DirectoryLister directoryLister = new DirectoryLister(mockFile);
+        assertTrue(pathExists(directoryLister.getReadableDirectories(), "DIR1"));
+        assertFalse(pathExists(directoryLister.getReadableDirectories(), "HIDDENDIR"));
+
     }
-*/
+
     private boolean pathExists(List<File> paths, String target) {
         for  ( File path : paths ) {
             if ( path.getPath().contains(target)) {

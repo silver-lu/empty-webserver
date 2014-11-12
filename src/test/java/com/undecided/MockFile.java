@@ -11,6 +11,8 @@ public class MockFile extends File {
 
     List<File> files = new ArrayList<File>();
     private boolean hidden;
+    private boolean isDirectory;
+    private boolean isFile;
 
     public MockFile(String pathname) {
         super(pathname);
@@ -22,9 +24,22 @@ public class MockFile extends File {
         return files.toArray(new File[files.size()]);
     }
 
+    public void setIsFile(boolean isFile){
+        this.isFile = isFile;
+    }
+
     @Override
     public boolean isFile() {
-        return true;
+        return isFile;
+    }
+
+    public void setIsDirectory(boolean isDirectory) {
+        this.isDirectory = isDirectory;
+    }
+
+    @Override
+    public boolean isDirectory(){
+        return isDirectory;
     }
 
     @Override
