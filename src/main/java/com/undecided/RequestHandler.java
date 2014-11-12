@@ -22,8 +22,10 @@ public class RequestHandler {
             if (request.getRequestUrl().equals("/ping")) {
                 response = "Pong";
             } else if (request.getRequestUrl().equals("/")) {
-                DirectoryLister lister = new DirectoryLister(new File("/"));
-                response = "HTTP/1.1 200 OK\n" + lister.getStringReadableFilesAndDirectories();
+                DirectoryLister lister = new DirectoryLister(new File(Server.startDirectory));
+                ServerResponse serverResponse = new ServerResponse(HttpResponseCode.Ok);
+                serverResponse.setResponseBody(lister.getStringReadableFilesAndDirectories());
+                response = serverResponse.getResponseHeader() + "\r\n" + serverResponse.getResponseBody();
             } else {
                 response = getVersionedHttpResponse(HttpConstant.NOT_FOUND);
             }

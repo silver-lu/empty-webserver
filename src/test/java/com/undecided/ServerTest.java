@@ -19,4 +19,6 @@ public class ServerTest {
         String response = server.processRequest("GET /test HTTP/1.1");
         assertEquals("HTTP/1.1 404 Not Found", response);
     }
+
+
 }

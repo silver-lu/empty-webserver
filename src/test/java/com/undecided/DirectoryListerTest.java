@@ -54,16 +54,16 @@ public class DirectoryListerTest {
 
         DirectoryLister directoryLister = new DirectoryLister(mockFile);
         List<File> files = directoryLister.getReadableFiles();
-        System.out.println(files.toString());
+
         assertTrue(pathExists(files, "abc"));
         assertFalse(pathExists(files, "HiddenFile"));
     }
 
-    @Test
+/*    @Test
     public void testHiddenDirectoriesAreNotPulledUp() throws Exception {
 
     }
-
+*/
     private boolean pathExists(List<File> paths, String target) {
         for  ( File path : paths ) {
             if ( path.getPath().contains(target)) {
