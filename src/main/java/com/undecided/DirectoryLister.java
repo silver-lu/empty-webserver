@@ -8,11 +8,23 @@ import java.util.*;
  */
 public class DirectoryLister {
     private File baseDirectory;
+    private String startDirectory;
     private List<File> readableFiles;
     private List<File> readableDirectories;
     private List<File> readableFilesAndDirectories;
     private List<File> allFiles;
     private List<File> allDirectories;
+
+ /*   public DirectoryLister(String startDirectory) {
+        this.startDirectory = startDirectory;
+        this.readableFiles = new ArrayList<File>();
+        this.readableDirectories = new ArrayList<File>();
+        this.readableFilesAndDirectories = new ArrayList<File>();
+        this.allFiles = new ArrayList<File>();
+        this.allDirectories = new ArrayList<File>();
+
+        parseDirectory();
+    }*/
 
     public DirectoryLister(File baseDirectory) {
         String rootDir = "./";

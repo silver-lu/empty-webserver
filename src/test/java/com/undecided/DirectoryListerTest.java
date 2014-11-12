@@ -6,6 +6,8 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import static junit.framework.Assert.assertFalse;
+import static junit.framework.Assert.assertTrue;
 import static junit.framework.TestCase.*;
 
 /**
@@ -19,7 +21,7 @@ public class DirectoryListerTest {
         DirectoryLister directoryLister = new DirectoryLister(new File("."));
         List<File> files = directoryLister.getReadableFiles();
 
-        assertTrue(pathExists(files, "pom.xml"));
+        assertTrue(pathExists(files, "./pom.xml"));
     }
 
     @Test
@@ -27,26 +29,21 @@ public class DirectoryListerTest {
         DirectoryLister directoryLister = new DirectoryLister(new File("."));
         List<File> files = directoryLister.getReadableDirectories();
 
-        assertTrue(pathExists(files, "src"));
+        assertTrue(pathExists(files, "./src"));
     }
-
- /*   @Test
-    public void testServerRootStartsInCurrentDirectory() {
-        DirectoryLister directoryLister = new DirectoryLister(new File("/"));
-        String response = directoryLister.getStringReadableFilesAndDirectories();
-        System.out.println(response);
-        assertTrue(response.contains("src"));
-    }*/
 
     @Test
     public void testHiddenFilesAreNotPulledUp() throws Exception {
         MockFile mockFile = new MockFile(".");
 
         List<File> fakeFiles = new ArrayList<File>();
-        fakeFiles.add(new MockFile("abc"));
+        MockFile normalFile = new MockFile("abc");
+        normalFile.setIsFile(true);
+        fakeFiles.add(normalFile);
 
 
         MockFile hiddenFile = new MockFile("HiddenFile");
+        hiddenFile.setIsFile(true);
         hiddenFile.flagAsHidden();
         fakeFiles.add(hiddenFile);
 
@@ -55,18 +52,40 @@ public class DirectoryListerTest {
         DirectoryLister directoryLister = new DirectoryLister(mockFile);
         List<File> files = directoryLister.getReadableFiles();
         System.out.println(files.toString());
-        assertTrue(pathExists(files, "abc"));
-        assertFalse(pathExists(files, "HiddenFile"));
+        assertTrue(pathExists(directoryLister.getReadableFiles(), "abc"));
+        assertFalse(pathExists(directoryLister.getReadableFiles(), "HiddenFile"));
+
     }
 
     @Test
     public void testHiddenDirectoriesAreNotPulledUp() throws Exception {
 
+        MockFile mockFile = new MockFile(".");
+        List<File> fakeDirs = new ArrayList<File>();
+
+        MockFile dir1 = new MockFile("DIR1");
+        dir1.setIsDirectory(true);
+
+        fakeDirs.add(dir1);
+
+
+        MockFile hiddenDir = new MockFile("HIDDENDIR");
+        hiddenDir.setIsDirectory(true);
+        hiddenDir.flagAsHidden();
+        fakeDirs.add(hiddenDir);
+
+
+        mockFile.setFiles(fakeDirs);
+
+        DirectoryLister directoryLister = new DirectoryLister(mockFile);
+        assertTrue(pathExists(directoryLister.getReadableDirectories(), "DIR1"));
+        assertFalse(pathExists(directoryLister.getReadableDirectories(), "HIDDENDIR"));
+
     }
 
     private boolean pathExists(List<File> paths, String target) {
         for  ( File path : paths ) {
-            if ( path.getPath().contains(target)) {
+            if ( path.getPath().equals(target)) {
                 return true;
             }
         }
