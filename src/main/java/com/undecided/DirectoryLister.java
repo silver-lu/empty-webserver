@@ -23,7 +23,7 @@ public class DirectoryLister {
         this.allFiles = new ArrayList<File>();
         this.allDirectories = new ArrayList<File>();
 
-        this.baseDirectory = new File(rootDir + baseDirectory.toString());
+        this.baseDirectory = baseDirectory;
         parseDirectory();
     }
 
