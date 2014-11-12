@@ -49,11 +49,13 @@ public class ServerResponseTest {
     public void testDefaultResponseReturnCorrectHeader() throws Exception {
         ServerResponse response = new ServerResponse();
         String header = response.getResponseHeader();
+        assertEquals("HTTP/1.1 400 Bad Request\r\nDate: Tue, 11 Nov 2014 19:15:23 GMT\r\nServer: undecided\r\nContent-Type: text/html; charset=UTF-8\r\nContent-Length: 0\r\n", header);
     }
 
     @Test
     public void testDefaultResponseReturnsEmptyBody() throws Exception {
         ServerResponse response = new ServerResponse();
         String body = response.getResponseBody();
+        assertEquals("", body);
     }
 }

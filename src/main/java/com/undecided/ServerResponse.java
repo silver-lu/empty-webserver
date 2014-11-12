@@ -1,6 +1,8 @@
 package com.undecided;
 
 import java.io.UnsupportedEncodingException;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 
 /**
  * Created by silver.lu on 11/11/14.
@@ -40,8 +42,17 @@ public class ServerResponse {
         return charSet;
     }
 
-    public int getContentLength() throws UnsupportedEncodingException {
-        return responseBody.getBytes(charSet).length;
+    public int getContentLength() {
+        int contentLength = 0;
+
+        try {
+            contentLength = responseBody.getBytes(charSet).length;
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        finally {
+            return contentLength;
+        }
     }
 
     public void setResponseBody(String responseBody) {
@@ -49,13 +60,17 @@ public class ServerResponse {
     }
 
     public String getResponseHeader() {
-        String header =
-                HttpConstant.HTTP_VERSION + " " + HttpConstant.RESPONSE_CODES.get(responseCode);
-        header += "test";
+        String header = "";
+        header += String.format(HttpResponseConstant.TPL_RESPONSE_CODE, HttpConstant.HTTP_VERSION, HttpConstant.RESPONSE_CODES.get(responseCode));
+        String.format(header += String.format(HttpResponseConstant.TPL_RESPONSE_TIMESTAMP, SimpleDateTime.now()));
+        header += String.format(HttpResponseConstant.TPL_SERVER_TYPE, serverType);
+        header += String.format(HttpResponseConstant.TPL_CONTENT_TYPE, contentType, charSet);
+        header += String.format(HttpResponseConstant.TPL_CONTENT_LENGTH, getContentLength());
         return header;
+
     }
 
     public String getResponseBody() {
-        return "";
+        return responseBody;
     }
 }
