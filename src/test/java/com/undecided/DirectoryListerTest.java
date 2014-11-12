@@ -13,7 +13,6 @@ import static junit.framework.TestCase.*;
  */
 public class DirectoryListerTest {
 
-
     @Test
     public void testCanPullUpReadableFilesInCurrentDirectory() throws Exception {
         DirectoryLister directoryLister = new DirectoryLister(new File("."));
@@ -43,12 +42,8 @@ public class DirectoryListerTest {
         MockFile mockFile = new MockFile(".");
 
         List<File> fakeFiles = new ArrayList<File>();
-        fakeFiles.add(new MockFile("abc"));
-
-
-        MockFile hiddenFile = new MockFile("HiddenFile");
-        hiddenFile.flagAsHidden();
-        fakeFiles.add(hiddenFile);
+        fakeFiles.add(new MockFile("abc", MockFile.FILE ));
+        fakeFiles.add(new MockFile("hiddenFile", MockFile.FILE, MockFile.HIDDEN));
 
         mockFile.setFiles(fakeFiles);
 
@@ -56,7 +51,7 @@ public class DirectoryListerTest {
         List<File> files = directoryLister.getReadableFiles();
 
         assertTrue(pathExists(files, "abc"));
-        assertFalse(pathExists(files, "HiddenFile"));
+        assertFalse(pathExists(files, "hiddenFile"));
     }
 
     @Test
@@ -65,24 +60,17 @@ public class DirectoryListerTest {
         MockFile mockFile = new MockFile(".");
         List<File> fakeDirs = new ArrayList<File>();
 
-        MockFile dir1 = new MockFile("DIR1");
-        dir1.setIsDirectory(true);
+        List<File> fakeFiles = new ArrayList<File>();
+        fakeFiles.add(new MockFile("abc", MockFile.DIRECTORY ));
+        fakeFiles.add(new MockFile("hiddenDirectory", MockFile.DIRECTORY, MockFile.HIDDEN));
 
-        fakeDirs.add(dir1);
-
-
-        MockFile hiddenDir = new MockFile("HIDDENDIR");
-        hiddenDir.setIsDirectory(true);
-        hiddenDir.flagAsHidden();
-        fakeDirs.add(hiddenDir);
-
-
-        mockFile.setFiles(fakeDirs);
+        mockFile.setFiles(fakeFiles);
 
         DirectoryLister directoryLister = new DirectoryLister(mockFile);
-        assertTrue(pathExists(directoryLister.getReadableDirectories(), "DIR1"));
-        assertFalse(pathExists(directoryLister.getReadableDirectories(), "HIDDENDIR"));
+        List<File> files = directoryLister.getReadableDirectories();
 
+        assertTrue(pathExists(files, "abc"));
+        assertFalse(pathExists(files, "hiddenDirectory"));
     }
 
     private boolean pathExists(List<File> paths, String target) {

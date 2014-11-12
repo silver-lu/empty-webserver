@@ -14,9 +14,28 @@ public class MockFile extends File {
     private boolean isDirectory;
     private boolean isFile;
 
+    public static final boolean DIRECTORY = true;
+    public static final boolean HIDDEN = true;
+    public static final boolean FILE = false;
+
+
     public MockFile(String pathname) {
         super(pathname);
+        this.isFile = true;
+    }
 
+    public MockFile(String pathname, boolean isDirectory) {
+        this(pathname);
+        this.isDirectory = isDirectory;
+        if ( isDirectory ) {
+            this.isFile = false;
+        }
+        this.hidden = false;
+    }
+
+    public MockFile(String pathname, boolean isDirectory, boolean isHidden) {
+        this(pathname, isDirectory);
+        this.hidden = isHidden;
     }
 
     @Override
@@ -55,4 +74,5 @@ public class MockFile extends File {
     public void flagAsHidden() {
         hidden = true;
     }
+
 }
