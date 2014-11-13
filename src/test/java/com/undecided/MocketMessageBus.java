@@ -3,7 +3,7 @@ package com.undecided;
 /**
  * Created by silver.lu on 11/10/14.
  */
-public class MocketMessageBus implements MessageBus {
+public class MocketMessageBus extends MessageBus {
     private int portNumber;
     public boolean started;
 

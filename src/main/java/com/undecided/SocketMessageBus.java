@@ -9,12 +9,12 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 /**
  * Created by silver.lu on 11/10/14.
  */
-public class SocketMessageBus implements MessageBus{
+public class SocketMessageBus extends MessageBus{
 
     private int portNumber;
     private ServerSocket listener;
     private Socket clientSocket;
-    public static boolean isRunning;
+
     static Collection<Socket> activeSockets = new ConcurrentLinkedQueue<Socket>();
 
     public SocketMessageBus(int portNumber) {

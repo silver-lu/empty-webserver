@@ -5,8 +5,8 @@ import java.io.IOException;
 /**
  * Created by silver.lu on 11/10/14.
  */
-public interface MessageBus {
-    public void start() throws IOException;
-    public void close() throws IOException;
-
+public abstract class MessageBus {
+    public abstract void start() throws IOException;
+    public abstract void close() throws IOException;
+    public boolean isRunning;
 }

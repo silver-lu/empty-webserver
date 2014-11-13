@@ -5,13 +5,12 @@ import com.undecided.exceptions.CommandLineArgumentNotFoundException;
 public class Server {
     public static String startDirectory;
     public static Integer listeningPort;
-    public static boolean serverRunning;
 
 
     public static void main(String[] args) throws Exception {
 
         setInitiationParams(args);
-        SocketMessageBus bus = new SocketMessageBus(listeningPort);
+        MessageBus bus = new SocketMessageBus(listeningPort);
         bus.start();
     }
 
