@@ -35,7 +35,6 @@ public class HttpGetMethodHandlerTest {
         requestHeader.parse();
         HttpGetMethodHandler handler = new HttpGetMethodHandler(requestHeader);
         handler.processRequest();
-        System.out.println(handler.getResponse());
         String[] lines = handler.getResponse().split(System.lineSeparator());
         assertEquals("HTTP/1.1 200 OK", lines[0]);
         assertEquals("</project>", lines[lines.length - 1]);
