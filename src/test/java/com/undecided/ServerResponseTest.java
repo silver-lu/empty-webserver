@@ -1,6 +1,8 @@
 package com.undecided;
 
 import com.undecided.enums.HttpResponseCode;
+import com.undecided.utils.SimpleDateTime;
+import com.undecided.utils.SimpleDateTimeInterface;
 import org.junit.Test;
 
 import java.util.Arrays;
@@ -51,7 +53,13 @@ public class ServerResponseTest {
 
     @Test
     public void testDefaultResponseReturnCorrectHeader() throws Exception {
-        ServerResponse response = new ServerResponse();
+        //ServerResponse response = new ServerResponse();
+
+        SimpleDateTimeInterface dateTime = new SimpleDateTime();
+        dateTime.setDateTime("Tue, 11 Nov 2014 19:15:23 GMT");
+
+        ServerResponse response = new ServerResponse( dateTime );
+
         String header = response.getResponseHeader();
         String[] lines = header.split(System.lineSeparator());
         assertEquals("HTTP/1.1 400 Bad Request", lines[0]);

@@ -4,6 +4,7 @@ import com.undecided.constants.HttpConstant;
 import com.undecided.constants.HttpResponseConstant;
 import com.undecided.enums.HttpResponseCode;
 import com.undecided.utils.SimpleDateTime;
+import com.undecided.utils.SimpleDateTimeInterface;
 
 import java.io.UnsupportedEncodingException;
 import java.util.List;
@@ -17,6 +18,7 @@ public class ServerResponse {
     private String contentType;
     private String charSet;
     private String responseBody;
+    private SimpleDateTimeInterface dateTime;
     private List<String> allowedMethods;
 
     public ServerResponse() {
@@ -30,6 +32,11 @@ public class ServerResponse {
         this.contentType = "text/html";
         this.responseBody = "";
         this.allowedMethods = null;
+    }
+
+    public ServerResponse(SimpleDateTimeInterface dateTimeInterface) {
+        this(HttpResponseCode.BadRequest);
+        dateTime = dateTimeInterface;
     }
 
     public HttpResponseCode getResponseCode() {
@@ -67,14 +74,18 @@ public class ServerResponse {
 
     public String getResponseHeader() {
         String header = "";
+
+        if (dateTime == null) { dateTime = new SimpleDateTime(); }
+
         header += String.format(HttpResponseConstant.TPL_RESPONSE_CODE, HttpConstant.HTTP_VERSION, HttpConstant.RESPONSE_CODES.get(responseCode));
-        String.format(header += String.format(HttpResponseConstant.TPL_RESPONSE_TIMESTAMP, SimpleDateTime.now()));
+        String.format(header += String.format(HttpResponseConstant.TPL_RESPONSE_TIMESTAMP, dateTime.now()));
         header += String.format(HttpResponseConstant.TPL_SERVER_TYPE, serverType);
         if (allowedMethods != null) {
             header += String.format(HttpResponseConstant.TPL_ALLOWED_METHODS, String.join(",", allowedMethods));
         }
         header += String.format(HttpResponseConstant.TPL_CONTENT_TYPE, contentType, charSet);
         header += String.format(HttpResponseConstant.TPL_CONTENT_LENGTH, getContentLength());
+
         return header;
 
     }

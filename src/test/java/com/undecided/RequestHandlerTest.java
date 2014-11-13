@@ -26,12 +26,13 @@ public class RequestHandlerTest {
         assertEquals("HTTP/1.1 404 Not Found", response.split(System.lineSeparator())[0]);
     }
 
-
-    /*    @Test
-    public void testValidRequestForRootDirectory() throws Exception {
-        RequestHandler handler = new RequestHandler("GET / HTTP/1.1");
+    /*
+    @Test
+    public void testValidRequestWillReturn404ByDefault() throws Exception {
+        RequestHandler handler = new RequestHandler("GET /test HTTP/1.1");
         handler.processRequest();
         String response = handler.getResponse();
+        assertEquals("HTTP/1.1 404 Not Found", response);
     }*/
 
     @Test
