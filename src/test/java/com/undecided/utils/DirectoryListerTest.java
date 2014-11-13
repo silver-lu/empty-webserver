@@ -1,6 +1,6 @@
-package com.undecided;
+package com.undecided.utils;
 
-import com.undecided.utils.DirectoryLister;
+import com.undecided.mocks.MockFile;
 import org.junit.Test;
 
 import java.io.File;

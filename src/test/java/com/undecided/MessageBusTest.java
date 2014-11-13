@@ -1,5 +1,6 @@
 package com.undecided;
 
+import com.undecided.mocks.MocketMessageBus;
 import org.junit.After;
 import org.junit.Test;
 

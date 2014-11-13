@@ -1,4 +1,4 @@
-package com.undecided;
+package com.undecided.mocks;
 
 import java.io.File;
 import java.util.ArrayList;

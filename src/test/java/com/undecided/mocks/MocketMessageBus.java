@@ -1,4 +1,6 @@
-package com.undecided;
+package com.undecided.mocks;
+
+import com.undecided.MessageBus;
 
 /**
  * Created by silver.lu on 11/10/14.
