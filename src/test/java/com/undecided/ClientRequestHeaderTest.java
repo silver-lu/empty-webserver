@@ -10,57 +10,68 @@ import static org.junit.Assert.assertEquals;
 /**
  * Created by silver.lu on 11/10/14.
  */
-public class ClientRequestTest {
+public class ClientRequestHeaderTest {
     @Test
     public void testParseGetRequestCorrectly() throws Exception {
-        ClientRequest clientRequest = new ClientRequest("GET /test.html HTTP/1.1");
-        clientRequest.parse();
+        RequestHeader requestHeader = new RequestHeader("GET /test.html HTTP/1.1");
+        requestHeader.parse();
 
-        assertEquals(HttpRequestMethod.Get, clientRequest.getRequestMethod());
-        assertEquals("/test.html", clientRequest.getRequestUrl());
-        assertEquals(HttpVersion.OneDotOne, clientRequest.getHttpVersion());
+        assertEquals(HttpRequestMethod.Get, requestHeader.getRequestMethod());
+        assertEquals("/test.html", requestHeader.getRequestUrl());
+        assertEquals(HttpVersion.OneDotOne, requestHeader.getHttpVersion());
+    }
+
+    @Test
+    public void testParseOptionsRequestCorrectly() throws Exception {
+        RequestHeader requestHeader = new RequestHeader("OPTIONS * HTTP/1.1");
+        requestHeader.parse();
+
+        assertEquals(HttpRequestMethod.Options, requestHeader.getRequestMethod());
+        assertEquals("*", requestHeader.getRequestUrl());
+        assertEquals(HttpVersion.OneDotOne, requestHeader.getHttpVersion());
+
     }
 
     @Test(expected = MalformedRequestException.class)
     public void testMalformedRequestExceptionWhenRequestLineIsEmpty() throws Exception {
-        ClientRequest clientRequest = new ClientRequest("");
-        clientRequest.parse();
+        RequestHeader requestHeader = new RequestHeader("");
+        requestHeader.parse();
     }
 
     @Test(expected = MalformedRequestException.class)
     public void testMalformedRequestExceptionWhenThereAreLessThanTwoSpaceTokens() throws Exception {
-        ClientRequest clientRequest = new ClientRequest("GET");
-        clientRequest.parse();
+        RequestHeader requestHeader = new RequestHeader("GET");
+        requestHeader.parse();
     }
 
     @Test(expected = MalformedRequestException.class)
     public void testMalformedRequestExceptionWhenThereAreMoreThanTwoSpaceTokens() throws Exception {
-        ClientRequest clientRequest = new ClientRequest("GET /abc 123.html HTTP/1.1");
-        clientRequest.parse();
+        RequestHeader requestHeader = new RequestHeader("GET /abc 123.html HTTP/1.1");
+        requestHeader.parse();
     }
 
     @Test(expected = RequestMethodNotRecognizedException.class)
     public void testRequestMethodNotRecognizedExceptionIsThrownWhenRequestMethodIsNotRecognized() throws Exception {
-        ClientRequest clientRequest = new ClientRequest("UNKNOWN /abc HTTP/1.1");
-        clientRequest.parse();
+        RequestHeader requestHeader = new RequestHeader("UNKNOWN /abc HTTP/1.1");
+        requestHeader.parse();
     }
 
     @Test(expected = ProtocolNotRecognizedException.class)
     public void testProtocolNotRecognizedExceptionIsThrownWhenRequestMethodIsNotRecognized() throws Exception {
-        ClientRequest clientRequest = new ClientRequest("GET /abc HTTP/9.1");
-        clientRequest.parse();
+        RequestHeader requestHeader = new RequestHeader("GET /abc HTTP/9.1");
+        requestHeader.parse();
     }
 
     @Test(expected = MalformedRequestException.class)
     public void testMalformedRequestExceptionIsThrownWhenRequestUrlIsMissing() throws Exception {
-        ClientRequest clientRequest = new ClientRequest("GET  HTTP/1.1");
-        clientRequest.parse();
+        RequestHeader requestHeader = new RequestHeader("GET  HTTP/1.1");
+        requestHeader.parse();
     }
 
     @Test(expected = MalformedRequestException.class)
     public void testMalformedRequestExceptionIsThrownWhenRequestUrlMissingSlash() throws Exception {
-        ClientRequest clientRequest = new ClientRequest("GET abc HTTP/1.1");
-        clientRequest.parse();
+        RequestHeader requestHeader = new RequestHeader("GET abc HTTP/1.1");
+        requestHeader.parse();
     }
 
 }

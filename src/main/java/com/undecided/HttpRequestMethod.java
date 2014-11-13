@@ -5,5 +5,5 @@ package com.undecided;
  */
 public enum HttpRequestMethod {
     Get,
-    Post
+    Options, Post
 }

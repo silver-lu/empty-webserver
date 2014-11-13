@@ -73,4 +73,8 @@ public class ServerResponse {
     public String getResponseBody() {
         return responseBody;
     }
+
+    public String getHttpResponse() {
+        return getResponseHeader() + "\r\n" + getResponseBody();
+    }
 }

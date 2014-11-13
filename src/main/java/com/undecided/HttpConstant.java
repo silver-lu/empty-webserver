@@ -23,4 +23,5 @@ public interface HttpConstant {
             put(HttpResponseCode.Ok, OK);
         }
     };
+    String OPTIONS_REQUEST = "OPTIONS" ;
 }
