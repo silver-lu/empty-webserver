@@ -1,4 +1,4 @@
-package com.undecided;
+package com.undecided.utils;
 
 import com.undecided.exceptions.CommandLineArgumentNotFoundException;
 

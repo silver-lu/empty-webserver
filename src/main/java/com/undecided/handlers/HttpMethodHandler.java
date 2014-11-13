@@ -1,4 +1,6 @@
-package com.undecided;
+package com.undecided.handlers;
+
+import com.undecided.RequestHeader;
 
 /**
  * Created by silver.lu on 11/12/14.

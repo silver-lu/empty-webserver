@@ -1,12 +1,15 @@
-package com.undecided;
+package com.undecided.handlers;
+
+import com.undecided.RequestHeader;
+import com.undecided.enums.HttpRequestMethod;
 
 /**
  * Created by silver.lu on 11/12/14.
  */
-public class RequestMethodRouter {
+public class HttpMethodHandlerFactory {
     private final RequestHeader requestHeader;
 
-    public RequestMethodRouter(RequestHeader requestHeader) {
+    public HttpMethodHandlerFactory(RequestHeader requestHeader) {
         this.requestHeader = requestHeader;
     }
 

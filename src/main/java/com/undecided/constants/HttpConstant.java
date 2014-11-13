@@ -1,4 +1,7 @@
-package com.undecided;
+package com.undecided.constants;
+
+import com.undecided.enums.HttpRequestMethod;
+import com.undecided.enums.HttpResponseCode;
 
 import java.util.HashMap;
 import java.util.Map;

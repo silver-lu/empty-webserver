@@ -1,5 +1,6 @@
 package com.undecided;
 
+import com.undecided.handlers.*;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -7,14 +8,14 @@ import static org.junit.Assert.assertEquals;
 /**
  * Created by silver.lu on 11/12/14.
  */
-public class RequestMethodRouterTest {
+public class RequestMethodFactoryTest {
     @Test
     public void testGetRequestAreRoutedToGetRequestHandler() throws Exception {
         RequestHeader requestHeader = new RequestHeader("GET /test HTTP/1.1");
         requestHeader.parse();
 
-        RequestMethodRouter router = new RequestMethodRouter(requestHeader);
-        assertEquals(HttpGetMethodHandler.class, router.getHandler().getClass());
+        HttpMethodHandlerFactory factory = new HttpMethodHandlerFactory(requestHeader);
+        assertEquals(HttpGetMethodHandler.class, factory.getHandler().getClass());
     }
 
     @Test
@@ -22,7 +23,7 @@ public class RequestMethodRouterTest {
         RequestHeader requestHeader = new RequestHeader("OPTIONS * HTTP/1.1");
         requestHeader.parse();
 
-        RequestMethodRouter router = new RequestMethodRouter(requestHeader);
-        assertEquals(HttpOptionsMethodHandler.class, router.getHandler().getClass());
+        HttpMethodHandlerFactory factory = new HttpMethodHandlerFactory(requestHeader);
+        assertEquals(HttpOptionsMethodHandler.class, factory.getHandler().getClass());
     }
 }

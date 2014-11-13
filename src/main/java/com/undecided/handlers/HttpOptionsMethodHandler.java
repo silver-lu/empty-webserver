@@ -1,4 +1,9 @@
-package com.undecided;
+package com.undecided.handlers;
+
+import com.undecided.RequestHeader;
+import com.undecided.ServerResponse;
+import com.undecided.constants.HttpConstant;
+import com.undecided.enums.HttpResponseCode;
 
 import java.util.ArrayList;
 

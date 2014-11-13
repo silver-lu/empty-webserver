@@ -1,4 +1,4 @@
-package com.undecided;
+package com.undecided.constants;
 
 /**
  * Created by silver.lu on 11/12/14.

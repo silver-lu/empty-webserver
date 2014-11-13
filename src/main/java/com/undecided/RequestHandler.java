@@ -1,9 +1,11 @@
 package com.undecided;
 
+import com.undecided.constants.HttpConstant;
+import com.undecided.enums.HttpResponseCode;
 import com.undecided.exceptions.MissingRequestHeaderException;
 import com.undecided.exceptions.RequestMethodNotRecognizedException;
-
-import java.io.File;
+import com.undecided.handlers.HttpMethodHandler;
+import com.undecided.handlers.HttpMethodHandlerFactory;
 
 /**
  * Created by silver.lu on 11/11/14.
@@ -26,8 +28,8 @@ public class RequestHandler {
         }
         try {
             requestHeader.parse();
-            RequestMethodRouter methodRouter = new RequestMethodRouter(requestHeader);
-            HttpMethodHandler handler = methodRouter.getHandler();
+            HttpMethodHandlerFactory factory = new HttpMethodHandlerFactory(requestHeader);
+            HttpMethodHandler handler = factory.getHandler();
             handler.processRequest();
             response = handler.getResponse();
         }

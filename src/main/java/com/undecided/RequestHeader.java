@@ -1,5 +1,8 @@
 package com.undecided;
 
+import com.undecided.constants.HttpConstant;
+import com.undecided.enums.HttpRequestMethod;
+import com.undecided.enums.HttpVersion;
 import com.undecided.exceptions.*;
 
 /**
