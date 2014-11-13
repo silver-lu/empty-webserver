@@ -26,4 +26,14 @@ public class RequestMethodFactoryTest {
         HttpMethodHandlerFactory factory = new HttpMethodHandlerFactory(requestHeader);
         assertEquals(HttpOptionsMethodHandler.class, factory.getHandler().getClass());
     }
+
+    @Test
+    public void testPutRequestAreRoutedToPutRequestHandler() throws Exception {
+        RequestHeader requestHeader = new RequestHeader("PUT /test HTTP/1.1");
+        requestHeader.parse();
+
+        HttpMethodHandlerFactory factory = new HttpMethodHandlerFactory(requestHeader);
+
+        assertEquals(HttpPutMethodHandler.class, factory.getHandler().getClass());
+    }
 }

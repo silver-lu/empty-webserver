@@ -27,7 +27,7 @@ public class RequestHandlerTest {
     }
 
 
-/*    @Test
+    /*    @Test
     public void testValidRequestForRootDirectory() throws Exception {
         RequestHandler handler = new RequestHandler("GET / HTTP/1.1");
         handler.processRequest();

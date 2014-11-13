@@ -29,6 +29,7 @@ public class ServerResponse {
         this.charSet = "UTF-8";
         this.contentType = "text/html";
         this.responseBody = "";
+        this.allowedMethods = null;
     }
 
     public HttpResponseCode getResponseCode() {

@@ -17,20 +17,56 @@ public class DirectoryListerTest {
     @Test
     public void testCanPullUpReadableFilesInCurrentDirectory() throws Exception {
         DirectoryLister directoryLister = new DirectoryLister(new File("."));
+        directoryLister.parseDirectory();
         List<File> files = directoryLister.getReadableFiles();
-
         assertTrue(pathExists(files, "pom.xml"));
     }
 
     @Test
     public void testCanPullUpDirectoriesInGivenDirectory() throws Exception {
         DirectoryLister directoryLister = new DirectoryLister(new File("."));
+        directoryLister.parseDirectory();
         List<File> files = directoryLister.getReadableDirectories();
 
         assertTrue(pathExists(files, "src"));
     }
 
- /*   @Test
+    @Test
+    public void testWeAreGettingDirectoryBackAsDirectory() throws Exception {
+        DirectoryLister directoryLister = new DirectoryLister(new File("src"));
+        assertTrue(directoryLister.isDirectory());
+
+        directoryLister = new DirectoryLister(new File("pom.xml"));
+        assertFalse(directoryLister.isDirectory());
+    }
+
+    @Test
+    public void testWeAreGettingFileBackAsFile() throws Exception {
+        DirectoryLister directoryLister = new DirectoryLister(new File("pom.xml"));
+        assertTrue(directoryLister.isFile());
+
+        directoryLister = new DirectoryLister(new File("src"));
+        assertFalse(directoryLister.isFile());
+    }
+
+    @Test
+    public void testCanCheckIfAFilePathExistsOrNot() throws Exception {
+        DirectoryLister directoryLister = new DirectoryLister(new File("pom.xml"));
+        assertTrue(directoryLister.exists());
+
+        directoryLister = new DirectoryLister(new File("abc.123"));
+        assertFalse(directoryLister.exists());
+    }
+
+    @Test
+    public void testReadContentOfAFile() throws Exception {
+        DirectoryLister directoryLister = new DirectoryLister(new File("pom.xml"));
+        String fileContent = directoryLister.getFileContent();
+        String[] lines = fileContent.split(System.lineSeparator());
+        assertEquals("</project>", lines[lines.length - 1]);
+    }
+
+    /*   @Test
     public void testServerRootStartsInCurrentDirectory() {
         DirectoryLister directoryLister = new DirectoryLister(new File("/"));
         String response = directoryLister.getStringReadableFilesAndDirectories();
@@ -49,6 +85,7 @@ public class DirectoryListerTest {
         mockFile.setFiles(fakeFiles);
 
         DirectoryLister directoryLister = new DirectoryLister(mockFile);
+        directoryLister.parseDirectory();
         List<File> files = directoryLister.getReadableFiles();
 
         assertTrue(pathExists(files, "abc"));
@@ -68,6 +105,7 @@ public class DirectoryListerTest {
         mockFile.setFiles(fakeFiles);
 
         DirectoryLister directoryLister = new DirectoryLister(mockFile);
+        directoryLister.parseDirectory();
         List<File> files = directoryLister.getReadableDirectories();
 
         assertTrue(pathExists(files, "abc"));

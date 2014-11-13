@@ -17,17 +17,35 @@ public class HttpGetMethodHandler extends HttpMethodHandler {
 
     @Override
     public void processRequest() {
+        DirectoryLister lister = new DirectoryLister(new File(Server.startDirectory + requestHeader.getRequestUrl()));
+
+        if (! lister.exists()){
+            ServerResponse serverResponse = new ServerResponse(HttpResponseCode.NotFound);
+            response = serverResponse.getHttpResponse();
+        }
+        else if ( lister.isFile()) {
+            ServerResponse serverResponse = new ServerResponse(HttpResponseCode.Ok);
+            serverResponse.setResponseBody(lister.getFileContent());
+            response = serverResponse.getHttpResponse();
+        }
+        else if ( lister.isDirectory()) {
+            lister.parseDirectory();
+            ServerResponse serverResponse = new ServerResponse(HttpResponseCode.Ok);
+            serverResponse.setResponseBody(lister.getStringReadableFilesAndDirectories());
+            response = serverResponse.getHttpResponse();
+        }
+/*
         if (requestHeader.getRequestUrl().equals("/ping")) {
             response = "Pong";
         } else if (requestHeader.getRequestUrl().equals("/")) {
-            DirectoryLister lister = new DirectoryLister(new File(Server.startDirectory));
+            lister.parseDirectory();
             ServerResponse serverResponse = new ServerResponse(HttpResponseCode.Ok);
             serverResponse.setResponseBody(lister.getStringReadableFilesAndDirectories());
             response = serverResponse.getHttpResponse();
         } else {
             ServerResponse serverResponse = new ServerResponse(HttpResponseCode.NotFound);
             response = serverResponse.getHttpResponse();
-        }
+        }*/
     }
 
 }
