@@ -1,41 +1,47 @@
 package com.undecided;
 
+import com.undecided.constants.HttpConstant;
+import com.undecided.enums.HttpResponseCode;
+import com.undecided.exceptions.MissingRequestHeaderException;
 import com.undecided.exceptions.RequestMethodNotRecognizedException;
-
-import java.io.File;
+import com.undecided.handlers.HttpMethodHandler;
+import com.undecided.handlers.HttpMethodHandlerFactory;
 
 /**
  * Created by silver.lu on 11/11/14.
  */
 public class RequestHandler {
-    ClientRequest request;
+    RequestHeader requestHeader;
     String response;
 
     public RequestHandler(String request) {
-        this.request = new ClientRequest(request);
+        this.requestHeader = new RequestHeader(request);
     }
 
-    public void processRequest() {
-        try {
-            request.parse();
+    public RequestHandler() {
 
-            if (request.getRequestUrl().equals("/ping")) {
-                response = "Pong";
-            } else if (request.getRequestUrl().equals("/")) {
-                DirectoryLister lister = new DirectoryLister(new File(Server.startDirectory));
-                ServerResponse serverResponse = new ServerResponse(HttpResponseCode.Ok);
-                serverResponse.setResponseBody(lister.getStringReadableFilesAndDirectories());
-                response = serverResponse.getResponseHeader() + "\r\n" + serverResponse.getResponseBody();
-            } else {
-                response = getVersionedHttpResponse(HttpConstant.NOT_FOUND);
-            }
+    }
+
+    public void processRequest() throws MissingRequestHeaderException {
+        if (requestHeader == null) {
+            throw new MissingRequestHeaderException();
+        }
+        try {
+            requestHeader.parse();
+            HttpMethodHandlerFactory factory = new HttpMethodHandlerFactory(requestHeader);
+            HttpMethodHandler handler = factory.getHandler();
+            handler.processRequest();
+            response = handler.getResponse();
         }
         catch ( RequestMethodNotRecognizedException expected) {
-            response = getVersionedHttpResponse(HttpConstant.METHOD_NOT_ALLOWED);
+            ServerResponse serverResponse = new ServerResponse(HttpResponseCode.MethodNotAllowed);
+            response = serverResponse.getHttpResponse();
         }
         catch ( Exception e) {
-            response = getVersionedHttpResponse(HttpConstant.BAD_REQUEST);
+            ServerResponse serverResponse = new ServerResponse(HttpResponseCode.BadRequest);
+            response = serverResponse.getHttpResponse();
         }
+
     }
 
     public String getResponse() {
@@ -44,5 +50,9 @@ public class RequestHandler {
 
     private String getVersionedHttpResponse(String responseCode) {
         return HttpConstant.HTTP_VERSION + " " + responseCode;
+    }
+
+    public void setRequest(String request) {
+        this.requestHeader = new RequestHeader(request);
     }
 }

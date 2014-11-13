@@ -1,56 +1,47 @@
 package com.undecided;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.Collection;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 /**
  * Created by silver.lu on 11/10/14.
  */
-public class SocketMessageBus implements MessageBus{
+public class SocketMessageBus extends MessageBus{
 
     private int portNumber;
     private ServerSocket listener;
     private Socket clientSocket;
 
+    static Collection<Socket> activeSockets = new ConcurrentLinkedQueue<Socket>();
+
     public SocketMessageBus(int portNumber) {
         this.portNumber = portNumber;
     }
 
-    @Override
     public void start() throws IOException {
         try {
             listener = new ServerSocket(this.portNumber);
-            clientSocket = listener.accept();
+            isRunning = true;
+            while ( isRunning ) {
+                clientSocket = listener.accept();
+                MessageBusWorker worker = new MessageBusWorker(clientSocket, new RequestHandler());
+                new Thread(worker).start();
+            }
         } catch (Exception e) {
+        }
+        finally {
             close();
         }
     }
 
 
-    @Override
-    public String readData() throws IOException {
-        BufferedReader reader = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-        return reader.readLine();
-    }
-
-    @Override
-    public void writeData(String input) throws IOException {
-        PrintWriter writer = new PrintWriter(clientSocket.getOutputStream(), true);
-        writer.println(input);
-        writer.flush();
-    }
-
-    @Override
     public void close() throws IOException {
-        if ( listener != null ) {
+        isRunning = false;
+        if (listener != null) {
             listener.close();
-        }
-        if ( clientSocket != null ) {
-            clientSocket.close();
         }
     }
 }

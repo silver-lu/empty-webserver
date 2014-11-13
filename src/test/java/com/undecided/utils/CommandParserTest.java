@@ -1,6 +1,7 @@
-package com.undecided;
+package com.undecided.utils;
 
 import com.undecided.exceptions.CommandLineArgumentNotFoundException;
+import com.undecided.utils.CommandParser;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;

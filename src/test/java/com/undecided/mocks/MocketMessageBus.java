@@ -1,9 +1,11 @@
-package com.undecided;
+package com.undecided.mocks;
+
+import com.undecided.MessageBus;
 
 /**
  * Created by silver.lu on 11/10/14.
  */
-public class MocketMessageBus implements MessageBus {
+public class MocketMessageBus extends MessageBus {
     private int portNumber;
     public boolean started;
 
@@ -14,16 +16,6 @@ public class MocketMessageBus implements MessageBus {
     @Override
     public void start() {
         started = true;
-    }
-
-    @Override
-    public String readData() {
-        return new String("404");
-    }
-
-    @Override
-    public void writeData(String input) {
-
     }
 
     @Override
