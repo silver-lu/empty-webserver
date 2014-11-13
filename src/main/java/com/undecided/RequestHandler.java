@@ -1,5 +1,6 @@
 package com.undecided;
 
+import com.undecided.exceptions.MissingRequestHeaderException;
 import com.undecided.exceptions.RequestMethodNotRecognizedException;
 
 import java.io.File;
@@ -15,7 +16,14 @@ public class RequestHandler {
         this.requestHeader = new RequestHeader(request);
     }
 
-    public void processRequest() {
+    public RequestHandler() {
+
+    }
+
+    public void processRequest() throws MissingRequestHeaderException {
+        if (requestHeader == null) {
+            throw new MissingRequestHeaderException();
+        }
         try {
             requestHeader.parse();
             RequestMethodRouter methodRouter = new RequestMethodRouter(requestHeader);
@@ -31,6 +39,7 @@ public class RequestHandler {
             ServerResponse serverResponse = new ServerResponse(HttpResponseCode.BadRequest);
             response = serverResponse.getHttpResponse();
         }
+
     }
 
     public String getResponse() {
@@ -39,5 +48,9 @@ public class RequestHandler {
 
     private String getVersionedHttpResponse(String responseCode) {
         return HttpConstant.HTTP_VERSION + " " + responseCode;
+    }
+
+    public void setRequest(String request) {
+        this.requestHeader = new RequestHeader(request);
     }
 }

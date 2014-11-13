@@ -15,6 +15,21 @@ public interface HttpConstant {
     public final static String HTTP_VERSION = "HTTP/1.1";
 
     public final static String GET_REQUEST = "GET";
+    public final static String OPTIONS_REQUEST = "OPTIONS";
+    public final static String POST_REQUEST = "POST";
+    public final static String PUT_REQUEST = "PUT";
+    public final static String HEAD_REQUEST = "HEAD";
+
+    public final static Map<String, HttpRequestMethod> REQUEST_METHODS = new HashMap<String, HttpRequestMethod>() {
+        {
+            put(GET_REQUEST, HttpRequestMethod.Get);
+            put(OPTIONS_REQUEST, HttpRequestMethod.Options);
+            put(POST_REQUEST, HttpRequestMethod.Post);
+            put(PUT_REQUEST, HttpRequestMethod.Put);
+            put(HEAD_REQUEST, HttpRequestMethod.Head);
+        }
+    };
+
     public final static Map<HttpResponseCode, String> RESPONSE_CODES = new HashMap<HttpResponseCode, String>() {
         {
             put(HttpResponseCode.BadRequest, BAD_REQUEST);
@@ -23,5 +38,4 @@ public interface HttpConstant {
             put(HttpResponseCode.Ok, OK);
         }
     };
-    String OPTIONS_REQUEST = "OPTIONS" ;
 }

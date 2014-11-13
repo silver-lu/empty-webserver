@@ -17,16 +17,6 @@ public class MocketMessageBus implements MessageBus {
     }
 
     @Override
-    public String readData() {
-        return new String("404");
-    }
-
-    @Override
-    public void writeData(String input) {
-
-    }
-
-    @Override
     public void close() {
 
     }

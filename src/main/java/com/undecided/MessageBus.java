@@ -7,11 +7,6 @@ import java.io.IOException;
  */
 public interface MessageBus {
     public void start() throws IOException;
-
-    public String readData() throws IOException;
-
-    public void writeData(String input) throws IOException;
-
     public void close() throws IOException;
 
 }
