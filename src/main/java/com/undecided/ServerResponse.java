@@ -84,7 +84,7 @@ public class ServerResponse {
     }
 
     public String getHttpResponse() {
-        return getResponseHeader() + "\r\n" + getResponseBody();
+        return getResponseHeader() + System.lineSeparator() + getResponseBody();
     }
 
     public void setAllowedMethods(List<String> allowedMethods) {

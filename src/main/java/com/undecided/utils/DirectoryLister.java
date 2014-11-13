@@ -76,7 +76,10 @@ public class DirectoryLister {
             reader = new BufferedReader(new FileReader(baseDirectory.getAbsolutePath()));
             String currentLine;
             while ((currentLine = reader.readLine()) != null) {
-                fileContent += currentLine + System.lineSeparator();
+                if (fileContent != "") {
+                    fileContent += System.lineSeparator();
+                }
+                fileContent += currentLine;
             }
         }
         catch (IOException e) {

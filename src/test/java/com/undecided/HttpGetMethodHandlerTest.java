@@ -2,7 +2,6 @@ package com.undecided;
 
 import com.undecided.constants.ServerParamConstant;
 import com.undecided.handlers.HttpGetMethodHandler;
-import com.undecided.handlers.HttpOptionsMethodHandler;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -26,13 +25,19 @@ public class HttpGetMethodHandlerTest {
         requestHeader.parse();
         HttpGetMethodHandler handler = new HttpGetMethodHandler(requestHeader);
         handler.processRequest();
-        assertEquals("HTTP/1.1 200 OK", handler.getResponse().split("\r\n")[0]);
+        assertEquals("HTTP/1.1 200 OK", handler.getResponse().split(System.lineSeparator())[0]);
         assertTrue(handler.getResponse().contains("main"));
     }
 
     @Test
     public void testPathThatAreFileIsHandledWithReturningFileContent() throws Exception {
-
-
+        RequestHeader requestHeader = new RequestHeader("GET /pom.xml HTTP/1.1");
+        requestHeader.parse();
+        HttpGetMethodHandler handler = new HttpGetMethodHandler(requestHeader);
+        handler.processRequest();
+        System.out.println(handler.getResponse());
+        String[] lines = handler.getResponse().split(System.lineSeparator());
+        assertEquals("HTTP/1.1 200 OK", lines[0]);
+        assertEquals("</project>", lines[lines.length - 1]);
     }
 }

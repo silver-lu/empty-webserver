@@ -53,7 +53,12 @@ public class ServerResponseTest {
     public void testDefaultResponseReturnCorrectHeader() throws Exception {
         ServerResponse response = new ServerResponse();
         String header = response.getResponseHeader();
-        assertEquals("HTTP/1.1 400 Bad Request\r\nDate: Tue, 11 Nov 2014 19:15:23 GMT\r\nServer: undecided\r\nContent-Type: text/html; charset=UTF-8\r\nContent-Length: 0\r\n", header);
+        String[] lines = header.split(System.lineSeparator());
+        assertEquals("HTTP/1.1 400 Bad Request", lines[0]);
+        assertEquals("Date: Tue, 11 Nov 2014 19:15:23 GMT", lines[1]);
+        assertEquals("Server: undecided", lines[2]);
+        assertEquals("Content-Type: text/html; charset=UTF-8", lines[3]);
+        assertEquals("Content-Length: 0", lines[4]);
     }
 
     @Test
