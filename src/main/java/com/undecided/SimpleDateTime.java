@@ -1,10 +1,31 @@
 package com.undecided;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.TimeZone;
+
 /**
  * Created by silver.lu on 11/11/14.
  */
-public class SimpleDateTime {
-    public static String now() {
-        return "Tue, 11 Nov 2014 19:15:23 GMT";
+public class SimpleDateTime implements SimpleDateTimeInterface {
+    String dateTime = "";
+
+    @Override
+    public String now() {
+
+        if (!dateTime.isEmpty())
+            return dateTime;
+
+        String DATE_FORMAT = "EEE, dd MMM yyyy HH:mm:ss z";
+        final SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT);
+        sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
+        String dateTimeString =  sdf.format(new Date());
+        dateTimeString += "Date: ";
+        return dateTimeString;
+    }
+
+    @Override
+    public void setDateTime(String dateTime) {
+        this.dateTime = dateTime;
     }
 }

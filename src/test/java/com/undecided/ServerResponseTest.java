@@ -47,9 +47,20 @@ public class ServerResponseTest {
 
     @Test
     public void testDefaultResponseReturnCorrectHeader() throws Exception {
-        ServerResponse response = new ServerResponse();
+        //ServerResponse response = new ServerResponse();
+
+        SimpleDateTimeInterface dateTime = new SimpleDateTime();
+        dateTime.setDateTime("Tue, 11 Nov 2014 19:15:23 GMT");
+
+        ServerResponse response = new ServerResponse( dateTime );
+
         String header = response.getResponseHeader();
-        assertEquals("HTTP/1.1 400 Bad Request\r\nDate: Tue, 11 Nov 2014 19:15:23 GMT\r\nServer: undecided\r\nContent-Type: text/html; charset=UTF-8\r\nContent-Length: 0\r\n", header);
+
+        assertEquals("HTTP/1.1 400 Bad Request\r\n" +
+                "Date: Tue, 11 Nov 2014 19:15:23 GMT\r\n" +
+                "Server: undecided\r\n" +
+                "Content-Type: text/html; charset=UTF-8\r\n" +
+                "Content-Length: 0\r\n", header);
     }
 
     @Test

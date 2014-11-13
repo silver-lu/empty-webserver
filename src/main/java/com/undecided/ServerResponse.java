@@ -1,8 +1,6 @@
 package com.undecided;
 
 import java.io.UnsupportedEncodingException;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
 
 /**
  * Created by silver.lu on 11/11/14.
@@ -13,6 +11,7 @@ public class ServerResponse {
     private String contentType;
     private String charSet;
     private String responseBody;
+    private SimpleDateTimeInterface dateTime;
 
     public ServerResponse() {
         this(HttpResponseCode.BadRequest);
@@ -24,6 +23,11 @@ public class ServerResponse {
         this.charSet = "UTF-8";
         this.contentType = "text/html";
         this.responseBody = "";
+    }
+
+    public ServerResponse(SimpleDateTimeInterface dateTimeInterface) {
+        this(HttpResponseCode.BadRequest);
+        dateTime = dateTimeInterface;
     }
 
     public HttpResponseCode getResponseCode() {
@@ -61,11 +65,21 @@ public class ServerResponse {
 
     public String getResponseHeader() {
         String header = "";
+
+        if (dateTime == null) { dateTime = new SimpleDateTime(); }
+
+//        header.concat(String.format(HttpResponseConstant.TPL_RESPONSE_CODE, HttpConstant.HTTP_VERSION, HttpConstant.RESPONSE_CODES.get(responseCode)));
+//        header.concat(String.format(HttpResponseConstant.TPL_RESPONSE_TIMESTAMP, dateTime.now()));
+//        header.concat(String.format(HttpResponseConstant.TPL_SERVER_TYPE, serverType));
+//        header.concat(String.format(HttpResponseConstant.TPL_CONTENT_TYPE, contentType, charSet));
+//        header.concat(String.format(HttpResponseConstant.TPL_CONTENT_LENGTH, getContentLength()));
+
         header += String.format(HttpResponseConstant.TPL_RESPONSE_CODE, HttpConstant.HTTP_VERSION, HttpConstant.RESPONSE_CODES.get(responseCode));
-        String.format(header += String.format(HttpResponseConstant.TPL_RESPONSE_TIMESTAMP, SimpleDateTime.now()));
+        String.format(header += String.format(HttpResponseConstant.TPL_RESPONSE_TIMESTAMP, dateTime.now()));
         header += String.format(HttpResponseConstant.TPL_SERVER_TYPE, serverType);
         header += String.format(HttpResponseConstant.TPL_CONTENT_TYPE, contentType, charSet);
         header += String.format(HttpResponseConstant.TPL_CONTENT_LENGTH, getContentLength());
+
         return header;
 
     }

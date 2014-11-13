@@ -23,7 +23,12 @@ public class RequestHandler {
                 response = "Pong";
             } else if (request.getRequestUrl().equals("/")) {
                 DirectoryLister lister = new DirectoryLister(new File("/"));
-                response = "HTTP/1.1 200 OK\n" + lister.getStringReadableFilesAndDirectories();
+                String body = lister.getStringReadableFilesAndDirectories();
+                ServerResponse serverResponse = new ServerResponse(HttpResponseCode.Ok);
+                serverResponse.setResponseBody(body);
+
+                response = serverResponse.getResponseHeader() + serverResponse.getResponseBody();
+
             } else {
                 response = getVersionedHttpResponse(HttpConstant.NOT_FOUND);
             }
