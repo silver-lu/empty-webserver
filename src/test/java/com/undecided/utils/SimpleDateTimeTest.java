@@ -1,4 +1,4 @@
-package com.undecided;
+package com.undecided.utils;
 
 import org.junit.Test;
 

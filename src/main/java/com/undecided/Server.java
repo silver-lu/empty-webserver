@@ -1,56 +1,37 @@
 package com.undecided;
 
+import com.undecided.constants.ServerParamConstant;
+import com.undecided.exceptions.CommandLineArgumentNotFoundException;
+import com.undecided.utils.CommandParser;
+
 public class Server {
+    public static String startDirectory;
+    public static Integer listeningPort;
+
 
     public static void main(String[] args) throws Exception {
-        MessageBus bus = new SocketMessageBus(5000);
+
+        setInitiationParams(args);
+        MessageBus bus = new SocketMessageBus(listeningPort);
         bus.start();
-        String input = bus.readData();
-        String res = processRequest(input);
-        bus.writeData(res);
     }
 
-    public static String processRequest(String input) {
+    private static void setInitiationParams(String[] args) {
+        CommandParser commandParser = new CommandParser(args);
+        commandParser.parse();
 
-        RequestHandler handler = new RequestHandler(input);
-        handler.processRequest();
-        return handler.getResponse();
-    }
-
-/*
-    public void run() throws Exception {
-        ServerSocket listener = new ServerSocket(this.portNumber);
         try {
-            Socket clientSocket = listener.accept();
-            try {
-                BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-                PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
-
-                try {
-                    ClientRequest clientRequest = new ClientRequest(new InputStreamReader(clientSocket.getInputStream()));
-
-                    if ( clientRequest.getRequestUrl().equals("/echo") ) {
-                        out.println("echo");
-                    }
-                    else {
-                        out.println("HTTP/1.1 404 Not Found");
-                    }
-                }
-                catch (MalformedRequestException expected) {
-                    out.println("HTTP/1.1 400 Bad Request");
-                }
-
-
-            }
-            finally {
-                clientSocket.close();
-            }
-
+            startDirectory = commandParser.getValueOf(ServerParamConstant.START_DIRECTORY);
         }
-        finally {
-            listener.close();
+        catch (CommandLineArgumentNotFoundException e) {
+            startDirectory = ServerParamConstant.DEFAULT_START_DIRECTORY;
+        }
+
+        try {
+            listeningPort = Integer.parseUnsignedInt(commandParser.getValueOf(ServerParamConstant.PORT_NUMBER));
+        }
+        catch (CommandLineArgumentNotFoundException e) {
+            listeningPort = ServerParamConstant.DEFAULT_PORT_NUMBER;
         }
     }
-
- */
 }

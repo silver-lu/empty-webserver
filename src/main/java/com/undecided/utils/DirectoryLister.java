@@ -1,6 +1,6 @@
-package com.undecided;
+package com.undecided.utils;
 
-import java.io.File;
+import java.io.*;
 import java.util.*;
 
 /**
@@ -15,19 +15,16 @@ public class DirectoryLister {
     private List<File> allDirectories;
 
     public DirectoryLister(File baseDirectory) {
-        String rootDir = "./";
 
         this.readableFiles = new ArrayList<File>();
         this.readableDirectories = new ArrayList<File>();
         this.readableFilesAndDirectories = new ArrayList<File>();
         this.allFiles = new ArrayList<File>();
         this.allDirectories = new ArrayList<File>();
-
-        this.baseDirectory = new File(rootDir + baseDirectory.toString());
-        parseDirectory();
+        this.baseDirectory = baseDirectory;
     }
 
-    private void parseDirectory() {
+    public void parseDirectory() {
         File[] files = baseDirectory.listFiles();
         for (File file : files) {
             if ( file.isFile() ) {
@@ -66,5 +63,40 @@ public class DirectoryLister {
 
     public List<File> getReadableDirectories() {
         return readableDirectories;
+    }
+
+    public boolean exists() {
+        return baseDirectory.exists();
+    }
+
+    public String getFileContent() {
+        BufferedReader reader = null;
+        String fileContent = "";
+        try {
+            reader = new BufferedReader(new FileReader(baseDirectory.getAbsolutePath()));
+            String currentLine;
+            while ((currentLine = reader.readLine()) != null) {
+                fileContent += currentLine + System.lineSeparator();
+            }
+        }
+        catch (IOException e) {
+            return "";
+        }
+        finally {
+            try {
+                reader.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return fileContent;
+    }
+
+    public boolean isFile() {
+        return this.baseDirectory.isFile();
+    }
+
+    public boolean isDirectory() {
+        return this.baseDirectory.isDirectory();
     }
 }

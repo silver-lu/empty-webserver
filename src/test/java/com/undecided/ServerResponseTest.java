@@ -1,7 +1,11 @@
 package com.undecided;
 
+import com.undecided.enums.HttpResponseCode;
 import org.junit.Test;
 
+import java.util.Arrays;
+
+import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertEquals;
 
 /**
@@ -68,5 +72,12 @@ public class ServerResponseTest {
         ServerResponse response = new ServerResponse();
         String body = response.getResponseBody();
         assertEquals("", body);
+    }
+
+    @Test
+    public void testAllowedMethodsCanBeSet() throws Exception {
+        ServerResponse response = new ServerResponse();
+        response.setAllowedMethods(Arrays.asList("HEAD", "PUT", "GET"));
+        assertTrue(response.getResponseHeader().contains("Allow: HEAD,PUT,GET"));
     }
 }

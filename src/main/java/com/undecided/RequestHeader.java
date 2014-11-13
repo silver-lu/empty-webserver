@@ -1,18 +1,21 @@
 package com.undecided;
 
+import com.undecided.constants.HttpConstant;
+import com.undecided.enums.HttpRequestMethod;
+import com.undecided.enums.HttpVersion;
 import com.undecided.exceptions.*;
 
 /**
  * Created by silver.lu on 11/10/14.
  */
-public class ClientRequest {
+public class RequestHeader {
 
     private String rawInput;
     private HttpRequestMethod requestMethod;
     private String requestUrl;
     private HttpVersion httpVersion;
 
-    public ClientRequest(String rawInput) {
+    public RequestHeader(String rawInput) {
         this.rawInput = rawInput;
     }
 
@@ -41,7 +44,7 @@ public class ClientRequest {
     }
 
     private void parseRequestUrl(String requestUrl) throws Exception{
-        if ( requestUrl.length() > 0 && requestUrl.charAt(0) == '/' ) {
+        if ( (requestUrl.length() > 0 && requestUrl.charAt(0) == '/') || requestUrl.equals("*") ) {
             this.requestUrl = requestUrl;
         }
         else {
@@ -52,6 +55,18 @@ public class ClientRequest {
     private void parseRequestMethod(String requestMethod) throws Exception {
         if ( requestMethod.equals(HttpConstant.GET_REQUEST) ) {
             this.requestMethod = HttpRequestMethod.Get;
+        }
+        else if ( requestMethod.equals(HttpConstant.OPTIONS_REQUEST) ){
+            this.requestMethod = HttpRequestMethod.Options;
+        }
+        else if ( requestMethod.equals(HttpConstant.HEAD_REQUEST) ) {
+            this.requestMethod = HttpRequestMethod.Head;
+        }
+        else if ( requestMethod.equals(HttpConstant.POST_REQUEST) ) {
+            this.requestMethod = HttpRequestMethod.Post;
+        }
+        else if ( requestMethod.equals(HttpConstant.PUT_REQUEST) ) {
+            this.requestMethod = HttpRequestMethod.Put;
         }
         else {
             throw new RequestMethodNotRecognizedException();

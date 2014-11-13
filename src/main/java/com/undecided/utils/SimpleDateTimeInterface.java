@@ -1,4 +1,4 @@
-package com.undecided;
+package com.undecided.utils;
 
 /**
  * Created by anthony.chai on 11/13/14.
