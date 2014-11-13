@@ -25,19 +25,20 @@ public class HttpGetMethodHandlerTest {
         requestHeader.parse();
         HttpGetMethodHandler handler = new HttpGetMethodHandler(requestHeader);
         handler.processRequest();
-        assertEquals("HTTP/1.1 200 OK", handler.getResponse().split(System.lineSeparator())[0]);
-        assertTrue(handler.getResponse().contains("main"));
+        assertEquals("HTTP/1.1 200 OK", handler.getResponse().getHeader().split(System.lineSeparator())[0]);
+        assertTrue(new String(handler.getResponse().getBody()).contains("main"));
     }
 
     @Test
-    public void testPathThatAreFileIsHandledWithReturningFileContent() throws Exception {
+    public void testPathThatAreTextFileIsHandledWithReturningFileContent() throws Exception {
         RequestHeader requestHeader = new RequestHeader("GET /pom.xml HTTP/1.1");
         requestHeader.parse();
         HttpGetMethodHandler handler = new HttpGetMethodHandler(requestHeader);
         handler.processRequest();
-        System.out.println(handler.getResponse());
-        String[] lines = handler.getResponse().split(System.lineSeparator());
+        String[] lines = new String(handler.getResponse().getHeader()).split(System.lineSeparator());
         assertEquals("HTTP/1.1 200 OK", lines[0]);
+
+        lines = handler.getResponse().getBodyAsString().split(System.lineSeparator());
         assertEquals("</project>", lines[lines.length - 1]);
     }
 }

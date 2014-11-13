@@ -14,7 +14,7 @@ public class RequestHandlerTest {
 
         RequestHandler handler = new RequestHandler("");
         handler.processRequest();
-        String response = handler.getResponse();
+        String response = handler.getResponse().getHeader();
         assertEquals("HTTP/1.1 400 Bad Request", response.split(System.lineSeparator())[0]);
     }
 
@@ -22,7 +22,7 @@ public class RequestHandlerTest {
     public void testValidRequestWillReturn404ByDefault() throws Exception {
         RequestHandler handler = new RequestHandler("GET /test HTTP/1.1");
         handler.processRequest();
-        String response = handler.getResponse();
+        String response = handler.getResponse().getHeader();
         assertEquals("HTTP/1.1 404 Not Found", response.split(System.lineSeparator())[0]);
     }
 
@@ -39,7 +39,7 @@ public class RequestHandlerTest {
     public void testInvalidRequestMethodWillReturn405() throws Exception {
         RequestHandler handler = new RequestHandler("FOO /test HTTP/1.1");
         handler.processRequest();
-        String response = handler.getResponse();
+        String response = handler.getResponse().getHeader();
         assertEquals("HTTP/1.1 405 Method Not Allowed", response.split(System.lineSeparator())[0]);
     }
 

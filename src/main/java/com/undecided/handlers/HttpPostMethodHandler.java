@@ -15,6 +15,6 @@ public class HttpPostMethodHandler extends HttpMethodHandler {
     @Override
     public void processRequest() {
         ServerResponse serverResponse = new ServerResponse(HttpResponseCode.Ok);
-        response = serverResponse.getHttpResponse();
+        response = serverResponse;
     }
 }

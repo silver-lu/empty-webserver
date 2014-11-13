@@ -61,8 +61,8 @@ public class DirectoryListerTest {
     @Test
     public void testReadContentOfAFile() throws Exception {
         DirectoryLister directoryLister = new DirectoryLister(new File("pom.xml"));
-        String fileContent = directoryLister.getFileContent();
-        String[] lines = fileContent.split(System.lineSeparator());
+        byte[] fileContent = directoryLister.getFileContent();
+        String[] lines = new String(fileContent).split(System.lineSeparator());
         assertEquals("</project>", lines[lines.length - 1]);
     }
 

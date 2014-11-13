@@ -17,7 +17,7 @@ public class ServerResponse {
     private String serverType;
     private String contentType;
     private String charSet;
-    private String responseBody;
+    private byte[] responseBody;
     private SimpleDateTimeInterface dateTime;
     private List<String> allowedMethods;
 
@@ -30,7 +30,7 @@ public class ServerResponse {
         this.serverType = "undecided";
         this.charSet = "UTF-8";
         this.contentType = "text/html";
-        this.responseBody = "";
+        this.responseBody = "".getBytes();
         this.allowedMethods = null;
     }
 
@@ -58,21 +58,14 @@ public class ServerResponse {
     public int getContentLength() {
         int contentLength = 0;
 
-        try {
-            contentLength = responseBody.getBytes(charSet).length;
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
-        finally {
-            return contentLength;
-        }
+        return responseBody.length;
     }
 
-    public void setResponseBody(String responseBody) {
+    public void setResponseBody(byte[] responseBody) {
         this.responseBody = responseBody;
     }
 
-    public String getResponseHeader() {
+    public String getHeader() {
         String header = "";
 
         if (dateTime == null) { dateTime = new SimpleDateTime(); }
@@ -83,22 +76,31 @@ public class ServerResponse {
         if (allowedMethods != null) {
             header += String.format(HttpResponseConstant.TPL_ALLOWED_METHODS, String.join(",", allowedMethods));
         }
-        header += String.format(HttpResponseConstant.TPL_CONTENT_TYPE, contentType, charSet);
+        if (contentType.equals("image/jpeg")) {
+            header += "Content-Type: image/jpeg" + System.lineSeparator();
+        }
+        else {
+            header += String.format(HttpResponseConstant.TPL_CONTENT_TYPE, contentType, charSet);
+        }
         header += String.format(HttpResponseConstant.TPL_CONTENT_LENGTH, getContentLength());
 
         return header;
 
     }
 
-    public String getResponseBody() {
+    public byte[] getBody() {
         return responseBody;
-    }
-
-    public String getHttpResponse() {
-        return getResponseHeader() + System.lineSeparator() + getResponseBody();
     }
 
     public void setAllowedMethods(List<String> allowedMethods) {
         this.allowedMethods = allowedMethods;
+    }
+
+    public void setContentType(String contentType) {
+        this.contentType = contentType;
+    }
+
+    public String getBodyAsString() {
+        return new String(responseBody);
     }
 }

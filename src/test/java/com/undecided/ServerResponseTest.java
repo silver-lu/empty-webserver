@@ -8,6 +8,7 @@ import org.junit.Test;
 import java.util.Arrays;
 
 import static junit.framework.TestCase.assertTrue;
+import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 
 /**
@@ -47,7 +48,7 @@ public class ServerResponseTest {
     @Test
     public void testContentLengthIsAutomaticallyCalculated() throws Exception {
         ServerResponse response = new ServerResponse();
-        response.setResponseBody("This is a Test Body");
+        response.setResponseBody("This is a Test Body".getBytes());
         assertEquals(19, response.getContentLength());
     }
 
@@ -60,7 +61,7 @@ public class ServerResponseTest {
 
         ServerResponse response = new ServerResponse( dateTime );
 
-        String header = response.getResponseHeader();
+        String header = response.getHeader();
         String[] lines = header.split(System.lineSeparator());
         assertEquals("HTTP/1.1 400 Bad Request", lines[0]);
         assertEquals("Date: Tue, 11 Nov 2014 19:15:23 GMT", lines[1]);
@@ -72,14 +73,20 @@ public class ServerResponseTest {
     @Test
     public void testDefaultResponseReturnsEmptyBody() throws Exception {
         ServerResponse response = new ServerResponse();
-        String body = response.getResponseBody();
-        assertEquals("", body);
+        byte[] body = response.getBody();
+        assertArrayEquals("".getBytes(), body);
     }
 
     @Test
     public void testAllowedMethodsCanBeSet() throws Exception {
         ServerResponse response = new ServerResponse();
         response.setAllowedMethods(Arrays.asList("HEAD", "PUT", "GET"));
-        assertTrue(response.getResponseHeader().contains("Allow: HEAD,PUT,GET"));
+        assertTrue(response.getHeader().contains("Allow: HEAD,PUT,GET"));
+    }
+
+    @Test
+    public void testSettingContentTypeToImageIsReturnedCorrectly() throws Exception {
+        ServerResponse response = new ServerResponse(HttpResponseCode.Ok);
+        response.setContentType("image/jpeg");
     }
 }
