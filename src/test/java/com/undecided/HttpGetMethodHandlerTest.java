@@ -41,4 +41,14 @@ public class HttpGetMethodHandlerTest {
         lines = handler.getResponse().getBodyAsString().split(System.lineSeparator());
         assertEquals("</project>", lines[lines.length - 1]);
     }
+
+    @Test
+    public void testFilesAreLoadedWithCorrectMimeTypeInTheHeader() throws Exception {
+        RequestHeader requestHeader = new RequestHeader("GET /pom.xml HTTP/1.1");
+        requestHeader.parse();
+        HttpGetMethodHandler handler = new HttpGetMethodHandler(requestHeader);
+        handler.processRequest();
+        String[] lines = new String(handler.getResponse().getHeader()).split(System.lineSeparator());
+        assertEquals("Content-Type: text/xml", lines[3]);
+    }
 }

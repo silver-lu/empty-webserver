@@ -55,8 +55,4 @@ public class RequestHandler {
     public void setRequest(String request) {
         this.requestHeader = new RequestHeader(request);
     }
-
-   /* public String getHeader() {
-        response.getHeader()
-    }*/
 }

@@ -1,8 +1,13 @@
 package com.undecided.utils;
 
+import com.undecided.constants.MimeTypeConstant;
+import com.undecided.enums.FileExtension;
+
+import javax.swing.filechooser.FileNameExtensionFilter;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.nio.file.spi.FileTypeDetector;
 import java.util.*;
 
 /**
@@ -87,5 +92,15 @@ public class DirectoryLister {
 
     public boolean isDirectory() {
         return this.baseDirectory.isDirectory();
+    }
+
+    private FileExtension getFileExtension() {
+        String filename = baseDirectory.getName();
+        String extensionString = filename.substring(filename.lastIndexOf('.')+1);
+        return MimeTypeConstant.EXTENTION.get(extensionString);
+    }
+
+    public String getFileMimeType() {
+        return MimeTypeConstant.MIME_TYPE.get(getFileExtension());
     }
 }

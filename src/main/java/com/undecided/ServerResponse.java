@@ -13,13 +13,14 @@ import java.util.List;
  * Created by silver.lu on 11/11/14.
  */
 public class ServerResponse {
-    private HttpResponseCode responseCode;
-    private String serverType;
-    private String contentType;
-    private String charSet;
-    private byte[] responseBody;
-    private SimpleDateTimeInterface dateTime;
-    private List<String> allowedMethods;
+    protected HttpResponseCode responseCode;
+    protected String serverType;
+    protected String contentType;
+    protected String charSet;
+    protected byte[] responseBody;
+    protected SimpleDateTimeInterface dateTime;
+    protected List<String> allowedMethods;
+    protected String contentMimeType;
 
     public ServerResponse() {
         this(HttpResponseCode.BadRequest);
@@ -71,7 +72,7 @@ public class ServerResponse {
         if (dateTime == null) { dateTime = new SimpleDateTime(); }
 
         header += String.format(HttpResponseConstant.TPL_RESPONSE_CODE, HttpConstant.HTTP_VERSION, HttpConstant.RESPONSE_CODES.get(responseCode));
-        String.format(header += String.format(HttpResponseConstant.TPL_RESPONSE_TIMESTAMP, dateTime.now()));
+        header += String.format(HttpResponseConstant.TPL_RESPONSE_TIMESTAMP, dateTime.now());
         header += String.format(HttpResponseConstant.TPL_SERVER_TYPE, serverType);
         if (allowedMethods != null) {
             header += String.format(HttpResponseConstant.TPL_ALLOWED_METHODS, String.join(",", allowedMethods));
