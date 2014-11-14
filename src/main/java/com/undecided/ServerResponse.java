@@ -2,6 +2,7 @@ package com.undecided;
 
 import com.undecided.constants.HttpConstant;
 import com.undecided.constants.HttpResponseConstant;
+import com.undecided.constants.ServerParamConstant;
 import com.undecided.enums.HttpResponseCode;
 import com.undecided.utils.SimpleDateTime;
 import com.undecided.utils.SimpleDateTimeInterface;
@@ -75,19 +76,45 @@ public class ServerResponse {
     public String getResponseHeader() {
         String header = "";
 
+        header += getBasicHeader();
+        header += getContentHeader();
+
+        return header;
+
+    }
+
+    public String getBasicAuthResponseHeader() {
+        String header = "";
+
+        header += getBasicHeader();
+        header += String.format(HttpResponseConstant.TPL_BASIC_AUTH, ServerParamConstant.BASIC_REALM);
+        header += getContentHeader();
+
+        return header;
+    }
+
+    private String getBasicHeader() {
+        String header = "";
+
         if (dateTime == null) { dateTime = new SimpleDateTime(); }
 
         header += String.format(HttpResponseConstant.TPL_RESPONSE_CODE, HttpConstant.HTTP_VERSION, HttpConstant.RESPONSE_CODES.get(responseCode));
-        String.format(header += String.format(HttpResponseConstant.TPL_RESPONSE_TIMESTAMP, dateTime.now()));
+        header += String.format(HttpResponseConstant.TPL_RESPONSE_TIMESTAMP, dateTime.now());
         header += String.format(HttpResponseConstant.TPL_SERVER_TYPE, serverType);
         if (allowedMethods != null) {
             header += String.format(HttpResponseConstant.TPL_ALLOWED_METHODS, String.join(",", allowedMethods));
         }
+
+        return header;
+    }
+
+    private String getContentHeader() {
+        String header = "";
+
         header += String.format(HttpResponseConstant.TPL_CONTENT_TYPE, contentType, charSet);
         header += String.format(HttpResponseConstant.TPL_CONTENT_LENGTH, getContentLength());
 
         return header;
-
     }
 
     public String getResponseBody() {
@@ -98,7 +125,12 @@ public class ServerResponse {
         return getResponseHeader() + System.lineSeparator() + getResponseBody();
     }
 
+    public String getBasicAuthResponse() {
+        return getBasicAuthResponseHeader() + System.lineSeparator() + getResponseBody();
+    }
+
     public void setAllowedMethods(List<String> allowedMethods) {
         this.allowedMethods = allowedMethods;
     }
+
 }

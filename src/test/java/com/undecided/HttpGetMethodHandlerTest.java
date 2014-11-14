@@ -39,4 +39,15 @@ public class HttpGetMethodHandlerTest {
         assertEquals("HTTP/1.1 200 OK", lines[0]);
         assertEquals("</project>", lines[lines.length - 1]);
     }
+
+    @Test
+    public void testPathThatRequiresBasicAuthReturns401() throws Exception {
+        RequestHeader requestHeader = new RequestHeader("GET /logs HTTP/1.1");
+        requestHeader.parse();
+        HttpGetMethodHandler handler = new HttpGetMethodHandler(requestHeader);
+        handler.processRequest();
+        String[] lines = handler.getResponse().split(System.lineSeparator());
+        assertEquals("HTTP/1.1 401 Authentication required", lines[0]);
+        assertEquals("Authentication required", lines[lines.length - 1]);
+    }
 }

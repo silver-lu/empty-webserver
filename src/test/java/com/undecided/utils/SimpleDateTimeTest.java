@@ -17,11 +17,4 @@ public class SimpleDateTimeTest {
         assertTrue(date.contains("GMT"));
     }
 
-    @Test
-    public void nowReturnsWordDate() {
-        SimpleDateTime dateTime = new SimpleDateTime();
-        String date = dateTime.now();
-
-        assertTrue(date.contains("Date: "));
-    }
 }

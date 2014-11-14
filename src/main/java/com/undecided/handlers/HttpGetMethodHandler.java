@@ -19,7 +19,12 @@ public class HttpGetMethodHandler extends HttpMethodHandler {
     public void processRequest() {
         DirectoryLister lister = new DirectoryLister(new File(Server.startDirectory + requestHeader.getRequestUrl()));
 
-        if (! lister.exists()){
+        if (requestHeader.getRequestUrl().equals("/logs")) {
+            ServerResponse serverResponse = new ServerResponse(HttpResponseCode.AuthorizedRequired);
+            serverResponse.setResponseBody("Authentication required");
+            response = serverResponse.getBasicAuthResponse();
+        }
+        else if (! lister.exists()){
             ServerResponse serverResponse = new ServerResponse(HttpResponseCode.NotFound);
             response = serverResponse.getHttpResponse();
         }
