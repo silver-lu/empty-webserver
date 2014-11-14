@@ -19,7 +19,13 @@ public class HttpGetMethodHandler extends HttpMethodHandler {
     public void processRequest() {
         DirectoryLister lister = new DirectoryLister(new File(Server.startDirectory + requestHeader.getRequestUrl()));
 
-        if (! lister.exists()){
+
+        if ( requestHeader.getRequestUrl().equals("/redirect") ) {
+            ServerResponse serverResponse = new ServerRedirectResponse(HttpResponseCode.Redirect);
+            serverResponse.setRedirectLocation("http://localhost:5000/");
+            response = serverResponse;
+        }
+        else if (! lister.exists()){
             ServerResponse serverResponse = new ServerResponse(HttpResponseCode.NotFound);
             response = serverResponse;
         }

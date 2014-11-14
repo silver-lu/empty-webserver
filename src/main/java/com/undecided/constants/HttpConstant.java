@@ -14,6 +14,7 @@ public interface HttpConstant {
     public final static String NOT_FOUND = "404 Not Found";
     public final static String METHOD_NOT_ALLOWED = "405 Method Not Allowed";
     public final static String OK = "200 OK";
+    public final static String REDIRECT = "302 Redirect";
 
     public final static String HTTP_VERSION = "HTTP/1.1";
 
@@ -39,6 +40,7 @@ public interface HttpConstant {
             put(HttpResponseCode.MethodNotAllowed, METHOD_NOT_ALLOWED);
             put(HttpResponseCode.NotFound, NOT_FOUND);
             put(HttpResponseCode.Ok, OK);
+            put(HttpResponseCode.Redirect, REDIRECT);
         }
     };
 }

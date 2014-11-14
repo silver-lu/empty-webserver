@@ -21,6 +21,7 @@ public class ServerResponse {
     protected SimpleDateTimeInterface dateTime;
     protected List<String> allowedMethods;
     protected String contentMimeType;
+    protected String redirectLocation;
 
     public ServerResponse() {
         this(HttpResponseCode.BadRequest);
@@ -103,5 +104,8 @@ public class ServerResponse {
 
     public String getBodyAsString() {
         return new String(responseBody);
+    }
+
+    public void setRedirectLocation(String location) {
     }
 }

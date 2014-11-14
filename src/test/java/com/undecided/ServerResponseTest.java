@@ -83,10 +83,4 @@ public class ServerResponseTest {
         response.setAllowedMethods(Arrays.asList("HEAD", "PUT", "GET"));
         assertTrue(response.getHeader().contains("Allow: HEAD,PUT,GET"));
     }
-
-    @Test
-    public void testSettingContentTypeToImageIsReturnedCorrectly() throws Exception {
-        ServerResponse response = new ServerResponse(HttpResponseCode.Ok);
-        response.setContentType("image/jpeg");
-    }
 }
