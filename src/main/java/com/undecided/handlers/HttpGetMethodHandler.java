@@ -22,7 +22,8 @@ public class HttpGetMethodHandler extends HttpMethodHandler {
         } else if (requestHeader.getRequestUrl().equals("/")) {
             DirectoryLister lister = new DirectoryLister(new File(Server.startDirectory));
             ServerResponse serverResponse = new ServerResponse(HttpResponseCode.Ok);
-            serverResponse.setResponseBody(lister.getStringReadableFilesAndDirectories());
+            //serverResponse.setResponseBody(lister.getStringReadableFilesAndDirectories());
+            serverResponse.setResponseBody(lister.getLinkableDirectory());
             response = serverResponse.getHttpResponse();
         } else {
             ServerResponse serverResponse = new ServerResponse(HttpResponseCode.NotFound);
