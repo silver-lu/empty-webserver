@@ -77,7 +77,7 @@ public class ServerResponse {
 
     }
 
-    public String getBasicAuthResponseHeader() {
+    public String getBasicAuthHeader() {
         String header = "";
 
         header += getBasicHeader();
@@ -98,12 +98,6 @@ public class ServerResponse {
         if (allowedMethods != null) {
             header += String.format(HttpResponseConstant.TPL_ALLOWED_METHODS, String.join(",", allowedMethods));
         }
-        if (contentType.equals("image/jpeg")) {
-            header += "Content-Type: image/jpeg" + System.lineSeparator();
-        }
-        else {
-            header += String.format(HttpResponseConstant.TPL_CONTENT_TYPE, contentType, charSet);
-        }
 
         return header;
     }
@@ -111,7 +105,12 @@ public class ServerResponse {
     private String getContentHeader() {
         String header = "";
 
-        header += String.format(HttpResponseConstant.TPL_CONTENT_TYPE, contentType, charSet);
+        if (contentType.equals("image/jpeg")) {
+            header += "Content-Type: image/jpeg" + System.lineSeparator();
+        }
+        else {
+            header += String.format(HttpResponseConstant.TPL_CONTENT_TYPE, contentType, charSet);
+        }
         header += String.format(HttpResponseConstant.TPL_CONTENT_LENGTH, getContentLength());
 
         return header;
@@ -121,13 +120,13 @@ public class ServerResponse {
         return responseBody;
     }
 
-    public String getHttpResponse() {
-        return getResponseHeader() + System.lineSeparator() + getResponseBody();
-    }
-
-    public String getBasicAuthResponse() {
-        return getBasicAuthResponseHeader() + System.lineSeparator() + getResponseBody();
-    }
+//    public String getHttpResponse() {
+//        return getHeader() + System.lineSeparator() + getBody();
+//    }
+//
+//    public String getBasicAuthResponse() {
+//        return getBasicAuthHeader() + System.lineSeparator() + getBody();
+//    }
 
     public void setAllowedMethods(List<String> allowedMethods) {
         this.allowedMethods = allowedMethods;
