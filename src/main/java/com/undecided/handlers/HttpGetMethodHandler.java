@@ -25,6 +25,14 @@ public class HttpGetMethodHandler extends HttpMethodHandler {
             serverResponse.setRedirectLocation("http://localhost:5000/");
             response = serverResponse;
         }
+        else if (requestHeader.getRequestUrl().equals("/logs")) {
+            ServerResponse serverResponse = new ServerResponse(HttpResponseCode.AuthorizedRequired);
+            String message = "Authentication required";
+            serverResponse.setResponseBody(message.getBytes());
+
+            //response = serverResponse.getBasicAuthResponse();
+            response = serverResponse;
+        }
         else if (! lister.exists()){
             ServerResponse serverResponse = new ServerResponse(HttpResponseCode.NotFound);
             response = serverResponse;

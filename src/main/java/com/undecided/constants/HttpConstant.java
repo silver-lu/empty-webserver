@@ -11,6 +11,7 @@ import java.util.Map;
  */
 public interface HttpConstant {
     public final static String BAD_REQUEST = "400 Bad Request";
+    public final static String AUTHORIZED_REQUIRED = "401 Authentication required";
     public final static String NOT_FOUND = "404 Not Found";
     public final static String METHOD_NOT_ALLOWED = "405 Method Not Allowed";
     public final static String OK = "200 OK";
@@ -37,6 +38,7 @@ public interface HttpConstant {
     public final static Map<HttpResponseCode, String> RESPONSE_CODES = new HashMap<HttpResponseCode, String>() {
         {
             put(HttpResponseCode.BadRequest, BAD_REQUEST);
+            put(HttpResponseCode.AuthorizedRequired, AUTHORIZED_REQUIRED);
             put(HttpResponseCode.MethodNotAllowed, METHOD_NOT_ALLOWED);
             put(HttpResponseCode.NotFound, NOT_FOUND);
             put(HttpResponseCode.Ok, OK);
