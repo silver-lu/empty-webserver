@@ -26,31 +26,21 @@ public class HttpGetMethodHandler extends HttpMethodHandler {
         }
         else if (! lister.exists()){
             ServerResponse serverResponse = new ServerResponse(HttpResponseCode.NotFound);
-            response = serverResponse.getHttpResponse();
+            response = serverResponse;
         }
         else if ( lister.isFile()) {
-            ServerResponse serverResponse = new ServerResponse(HttpResponseCode.Ok);
+            ServerResponse serverResponse = new ServerGetFileResponse(HttpResponseCode.Ok);
+            serverResponse.setContentType(lister.getFileMimeType());
             serverResponse.setResponseBody(lister.getFileContent());
-            response = serverResponse.getHttpResponse();
+            response = serverResponse;
         }
         else if ( lister.isDirectory()) {
             lister.parseDirectory();
             ServerResponse serverResponse = new ServerResponse(HttpResponseCode.Ok);
-            serverResponse.setResponseBody(lister.getStringReadableFilesAndDirectories());
-            response = serverResponse.getHttpResponse();
+            serverResponse.setResponseBody(lister.getStringReadableFilesAndDirectories().getBytes());
+            response = serverResponse;
         }
-/*
-        if (requestHeader.getRequestUrl().equals("/ping")) {
-            response = "Pong";
-        } else if (requestHeader.getRequestUrl().equals("/")) {
-            lister.parseDirectory();
-            ServerResponse serverResponse = new ServerResponse(HttpResponseCode.Ok);
-            serverResponse.setResponseBody(lister.getStringReadableFilesAndDirectories());
-            response = serverResponse.getHttpResponse();
-        } else {
-            ServerResponse serverResponse = new ServerResponse(HttpResponseCode.NotFound);
-            response = serverResponse.getHttpResponse();
-        }*/
+
     }
 
 }

@@ -33,7 +33,24 @@ public class RequestMethodFactoryTest {
         requestHeader.parse();
 
         HttpMethodHandlerFactory factory = new HttpMethodHandlerFactory(requestHeader);
-
         assertEquals(HttpPutMethodHandler.class, factory.getHandler().getClass());
+    }
+
+    @Test
+    public void testHeadRequestAreRoutedToHeadRequestHandler() throws Exception {
+        RequestHeader requestHeader = new RequestHeader("HEAD /test HTTP/1.1");
+        requestHeader.parse();
+
+        HttpMethodHandlerFactory factory = new HttpMethodHandlerFactory(requestHeader);
+        assertEquals(HttpHeadMethodHandler.class, factory.getHandler().getClass());
+    }
+
+    @Test
+    public void testPostRequestAreRoutedToHeadRequestHandler() throws Exception {
+        RequestHeader requestHeader = new RequestHeader("POST /test HTTP/1.1");
+        requestHeader.parse();
+
+        HttpMethodHandlerFactory factory = new HttpMethodHandlerFactory(requestHeader);
+        assertEquals(HttpPostMethodHandler.class, factory.getHandler().getClass());
     }
 }

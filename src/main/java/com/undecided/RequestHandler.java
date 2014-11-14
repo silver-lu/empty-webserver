@@ -12,7 +12,7 @@ import com.undecided.handlers.HttpMethodHandlerFactory;
  */
 public class RequestHandler {
     RequestHeader requestHeader;
-    String response;
+    ServerResponse response;
 
     public RequestHandler(String request) {
         this.requestHeader = new RequestHeader(request);
@@ -35,16 +35,16 @@ public class RequestHandler {
         }
         catch ( RequestMethodNotRecognizedException expected) {
             ServerResponse serverResponse = new ServerResponse(HttpResponseCode.MethodNotAllowed);
-            response = serverResponse.getHttpResponse();
+            response = serverResponse;
         }
         catch ( Exception e) {
             ServerResponse serverResponse = new ServerResponse(HttpResponseCode.BadRequest);
-            response = serverResponse.getHttpResponse();
+            response = serverResponse;
         }
 
     }
 
-    public String getResponse() {
+    public ServerResponse getResponse() {
         return response;
     }
 

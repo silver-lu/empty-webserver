@@ -4,6 +4,8 @@ import com.undecided.mocks.MockFile;
 import org.junit.Test;
 
 import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -61,18 +63,50 @@ public class DirectoryListerTest {
     @Test
     public void testReadContentOfAFile() throws Exception {
         DirectoryLister directoryLister = new DirectoryLister(new File("pom.xml"));
-        String fileContent = directoryLister.getFileContent();
-        String[] lines = fileContent.split(System.lineSeparator());
+        byte[] fileContent = directoryLister.getFileContent();
+        String[] lines = new String(fileContent).split(System.lineSeparator());
         assertEquals("</project>", lines[lines.length - 1]);
     }
 
-    /*   @Test
-    public void testServerRootStartsInCurrentDirectory() {
-        DirectoryLister directoryLister = new DirectoryLister(new File("/"));
-        String response = directoryLister.getStringReadableFilesAndDirectories();
-        System.out.println(response);
-        assertTrue(response.contains("src"));
-    }*/
+    @Test
+    public void testWeAreAbleToRetrieveCorrectMimeTypeForHtmlFileExtension() throws Exception {
+        DirectoryLister directoryLister = new DirectoryLister(new MockFile("htmlFile.html"));
+        assertEquals("text/html", directoryLister.getFileMimeType());
+    }
+
+    @Test
+    public void testWeAreAbleToRetrieveCorrectMimeTypeForXmlFileExtension() throws Exception {
+        DirectoryLister directoryLister = new DirectoryLister(new MockFile("xmlFile.xml"));
+        assertEquals("text/xml", directoryLister.getFileMimeType());
+    }
+
+    @Test
+    public void testWeAreAbleToRetrieveCorrectMimeTypeForTxtFileExtension() throws Exception {
+        DirectoryLister directoryLister = new DirectoryLister(new MockFile("textFile.txt"));
+        assertEquals("text/plain", directoryLister.getFileMimeType());
+    }
+
+    @Test
+    public void testWeAreAbleToRetrieveCorrectMimeTypeForJpegFileExtension() throws Exception {
+        DirectoryLister directoryLister = new DirectoryLister(new MockFile("jpegFile.jpeg"));
+        assertEquals("image/jpeg", directoryLister.getFileMimeType());
+
+        directoryLister = new DirectoryLister(new MockFile("jpegFile.jpg"));
+        assertEquals("image/jpeg", directoryLister.getFileMimeType());
+    }
+
+    @Test
+    public void testWeAreAbleToRetrieveCorrectMimeTypeForGifFileExtension() throws Exception {
+        DirectoryLister directoryLister = new DirectoryLister(new MockFile("gifFile.gif"));
+        assertEquals("image/gif", directoryLister.getFileMimeType());
+    }
+
+    @Test
+    public void testWeAreAbleToRetrieveCorrectMimeTypeForPngFileExtension() throws Exception {
+        DirectoryLister directoryLister = new DirectoryLister(new MockFile("pngFile.png"));
+        assertEquals("image/png", directoryLister.getFileMimeType());
+    }
+
 
     @Test
     public void testHiddenFilesAreNotPulledUp() throws Exception {

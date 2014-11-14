@@ -68,6 +68,7 @@ public class MessageBusTest {
     @Test
     public void testEndToEndWeGetA400BackWithABadRequest() throws Exception {
         startPrivateServer(5000);
+        Thread.sleep(500);
         Socket socket = new Socket(InetAddress.getLocalHost(), 5000);
         PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
         out.println("This is a read Test");

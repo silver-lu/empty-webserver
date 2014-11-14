@@ -1,6 +1,13 @@
 package com.undecided.utils;
 
+import com.undecided.constants.MimeTypeConstant;
+import com.undecided.enums.FileExtension;
+
+import javax.swing.filechooser.FileNameExtensionFilter;
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.spi.FileTypeDetector;
 import java.util.*;
 
 /**
@@ -69,30 +76,14 @@ public class DirectoryLister {
         return baseDirectory.exists();
     }
 
-    public String getFileContent() {
-        BufferedReader reader = null;
-        String fileContent = "";
+    public byte[] getFileContent() {
         try {
-            reader = new BufferedReader(new FileReader(baseDirectory.getAbsolutePath()));
-            String currentLine;
-            while ((currentLine = reader.readLine()) != null) {
-                if (fileContent != "") {
-                    fileContent += System.lineSeparator();
-                }
-                fileContent += currentLine;
-            }
+            byte[] fileContent = Files.readAllBytes(Paths.get(baseDirectory.getAbsolutePath()));
+            return fileContent;
+
+        } catch (IOException e) {
+            return new byte[0];
         }
-        catch (IOException e) {
-            return "";
-        }
-        finally {
-            try {
-                reader.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        return fileContent;
     }
 
     public boolean isFile() {
@@ -101,5 +92,15 @@ public class DirectoryLister {
 
     public boolean isDirectory() {
         return this.baseDirectory.isDirectory();
+    }
+
+    private FileExtension getFileExtension() {
+        String filename = baseDirectory.getName();
+        String extensionString = filename.substring(filename.lastIndexOf('.')+1);
+        return MimeTypeConstant.EXTENTION.get(extensionString);
+    }
+
+    public String getFileMimeType() {
+        return MimeTypeConstant.MIME_TYPE.get(getFileExtension());
     }
 }
