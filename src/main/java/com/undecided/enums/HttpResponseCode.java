@@ -9,5 +9,6 @@ public enum HttpResponseCode {
     BadRequest,
     MethodNotAllowed,
     Redirect,
-    AuthorizedRequired
+    AuthorizedRequired,
+    Created
 }

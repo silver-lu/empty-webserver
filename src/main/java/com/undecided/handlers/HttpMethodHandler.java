@@ -15,7 +15,7 @@ public abstract class HttpMethodHandler {
         this.requestHeader = requestHeader;
     }
 
-    public abstract void processRequest();
+    public abstract void processRequest() throws Exception;
 
     public ServerResponse getResponse() {
         return response;
