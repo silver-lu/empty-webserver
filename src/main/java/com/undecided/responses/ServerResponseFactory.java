@@ -1,6 +1,7 @@
 package com.undecided.responses;
 
 import com.undecided.enums.HttpResponseCode;
+import com.undecided.enums.HttpResponseType;
 
 /**
  * Created by silver.lu on 11/17/14.
@@ -21,6 +22,16 @@ public class ServerResponseFactory {
         }
         else if (responseCode == HttpResponseCode.Unauthorized) {
             return new ServerUnauthorizedResponse();
+        }
+        return null;
+    }
+
+    public static ServerResponse getInstance(HttpResponseType responseType) {
+        if ( responseType == HttpResponseType.File) {
+            return new ServerGetFileResponse();
+        }
+        else if ( responseType == HttpResponseType.Directory) {
+            return new ServerGetDirectoryResponse();
         }
         return null;
     }

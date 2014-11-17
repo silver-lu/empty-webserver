@@ -2,6 +2,7 @@ package com.undecided.handlers;
 
 import com.undecided.*;
 import com.undecided.enums.HttpResponseCode;
+import com.undecided.enums.HttpResponseType;
 import com.undecided.responses.*;
 import com.undecided.utils.DirectoryLister;
 
@@ -22,12 +23,12 @@ public class HttpGetMethodHandler extends HttpMethodHandler {
 
 
         if ( requestHeader.getRequestUrl().equals("/redirect") ) {
-            ServerResponse serverResponse = new ServerRedirectResponse();
+            ServerResponse serverResponse = ServerResponseFactory.getInstance(HttpResponseCode.Redirect);
             serverResponse.setRedirectLocation("http://localhost:5000/");
             response = serverResponse;
         }
         else if (requestHeader.getRequestUrl().equals("/logs")) {
-            ServerResponse serverResponse = new ServerUnauthorizedResponse();
+            ServerResponse serverResponse = ServerResponseFactory.getInstance(HttpResponseCode.Unauthorized);
             String message = "Authentication required";
             serverResponse.setResponseBody(message.getBytes());
 
@@ -35,18 +36,18 @@ public class HttpGetMethodHandler extends HttpMethodHandler {
             response = serverResponse;
         }
         else if (! lister.exists()){
-            ServerResponse serverResponse = new ServerNotFoundResponse();
+            ServerResponse serverResponse = ServerResponseFactory.getInstance(HttpResponseCode.NotFound);
             response = serverResponse;
         }
         else if ( lister.isFile()) {
-            ServerResponse serverResponse = new ServerGetFileResponse();
+            ServerResponse serverResponse = ServerResponseFactory.getInstance(HttpResponseType.File);
             serverResponse.setContentType(lister.getFileMimeType());
             serverResponse.setResponseBody(lister.getFileContent());
             response = serverResponse;
         }
         else if ( lister.isDirectory()) {
             lister.parseDirectory();
-            ServerResponse serverResponse = new ServerGetDirectoryResponse();
+            ServerResponse serverResponse = ServerResponseFactory.getInstance(HttpResponseType.Directory);
             serverResponse.setResponseBody(lister.getLinkableDirectory().getBytes());
             response = serverResponse;
         }
