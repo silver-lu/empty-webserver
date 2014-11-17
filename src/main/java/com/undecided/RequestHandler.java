@@ -1,11 +1,15 @@
 package com.undecided;
 
 import com.undecided.constants.HttpConstant;
-import com.undecided.enums.HttpResponseCode;
 import com.undecided.exceptions.MissingRequestHeaderException;
 import com.undecided.exceptions.RequestMethodNotRecognizedException;
 import com.undecided.handlers.HttpMethodHandler;
 import com.undecided.handlers.HttpMethodHandlerFactory;
+import com.undecided.responses.ServerBadRequestResponse;
+import com.undecided.responses.ServerMethodNotAllowedResponse;
+import com.undecided.responses.ServerResponse;
+
+import java.util.ArrayList;
 
 /**
  * Created by silver.lu on 11/11/14.
@@ -34,11 +38,12 @@ public class RequestHandler {
             response = handler.getResponse();
         }
         catch ( RequestMethodNotRecognizedException expected) {
-            ServerResponse serverResponse = new ServerResponse(HttpResponseCode.MethodNotAllowed);
+            ServerResponse serverResponse = new ServerMethodNotAllowedResponse();
+            serverResponse.setAllowedMethods(new ArrayList<String>(HttpConstant.REQUEST_METHODS.keySet()));
             response = serverResponse;
         }
         catch ( Exception e) {
-            ServerResponse serverResponse = new ServerResponse(HttpResponseCode.BadRequest);
+            ServerResponse serverResponse = new ServerBadRequestResponse();
             response = serverResponse;
         }
 

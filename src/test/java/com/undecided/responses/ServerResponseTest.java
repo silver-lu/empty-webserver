@@ -1,6 +1,8 @@
-package com.undecided;
+package com.undecided.responses;
 
 import com.undecided.enums.HttpResponseCode;
+import com.undecided.responses.ServerOptionsResponse;
+import com.undecided.responses.ServerResponse;
 import com.undecided.utils.SimpleDateTime;
 import com.undecided.utils.SimpleDateTimeInterface;
 import org.junit.Test;
@@ -17,37 +19,37 @@ import static org.junit.Assert.assertEquals;
 public class ServerResponseTest {
     @Test
     public void testDefaultResponseIsSetTo400() throws Exception {
-        ServerResponse response = new ServerResponse();
+        ServerResponse response = new ServerStandardResponse();
         assertEquals(HttpResponseCode.BadRequest, response.getResponseCode());
     }
 
     @Test
     public void testResponseCodeCanBeSetViaConstructorParams() throws Exception {
-        ServerResponse response = new ServerResponse(HttpResponseCode.NotFound);
+        ServerResponse response = new ServerStandardResponse(HttpResponseCode.NotFound);
         assertEquals(HttpResponseCode.NotFound, response.getResponseCode());
     }
 
     @Test
     public void testDefaultResponseHasServerTypeSet() throws Exception {
-        ServerResponse response = new ServerResponse();
+        ServerResponse response = new ServerStandardResponse();
         assertEquals("undecided", response.getServerType());
     }
 
     @Test
     public void testDefaultResponseHasContentTypeSet() throws Exception {
-        ServerResponse response = new ServerResponse();
+        ServerResponse response = new ServerStandardResponse();
         assertEquals("text/html", response.getContentType());
     }
 
     @Test
     public void testDefaultResponseHasCharsetSet() throws Exception {
-        ServerResponse response = new ServerResponse();
+        ServerResponse response = new ServerStandardResponse();
         assertEquals("UTF-8", response.getCharSet());
     }
 
     @Test
     public void testContentLengthIsAutomaticallyCalculated() throws Exception {
-        ServerResponse response = new ServerResponse();
+        ServerResponse response = new ServerStandardResponse();
         response.setResponseBody("This is a Test Body".getBytes());
         assertEquals(19, response.getContentLength());
     }
@@ -59,7 +61,9 @@ public class ServerResponseTest {
         SimpleDateTimeInterface dateTime = new SimpleDateTime();
         dateTime.setDateTime("Tue, 11 Nov 2014 19:15:23 GMT");
 
-        ServerResponse response = new ServerResponse( dateTime );
+        ServerResponse response = new ServerStandardResponse();
+
+        response.setDateTime(dateTime);
 
         String header = response.getHeader();
         String[] lines = header.split(System.lineSeparator());
@@ -72,15 +76,8 @@ public class ServerResponseTest {
 
     @Test
     public void testDefaultResponseReturnsEmptyBody() throws Exception {
-        ServerResponse response = new ServerResponse();
+        ServerResponse response = new ServerStandardResponse();
         byte[] body = response.getBody();
         assertArrayEquals("".getBytes(), body);
-    }
-
-    @Test
-    public void testAllowedMethodsCanBeSet() throws Exception {
-        ServerResponse response = new ServerResponse();
-        response.setAllowedMethods(Arrays.asList("HEAD", "PUT", "GET"));
-        assertTrue(response.getHeader().contains("Allow: HEAD,PUT,GET"));
     }
 }

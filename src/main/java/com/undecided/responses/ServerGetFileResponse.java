@@ -1,6 +1,5 @@
-package com.undecided;
+package com.undecided.responses;
 
-import com.undecided.ServerResponse;
 import com.undecided.constants.HttpConstant;
 import com.undecided.constants.HttpResponseConstant;
 import com.undecided.enums.HttpResponseCode;
@@ -10,10 +9,11 @@ import com.undecided.utils.SimpleDateTime;
  * Created by silver.lu on 11/13/14.
  */
 public class ServerGetFileResponse extends ServerResponse {
-    public ServerGetFileResponse(HttpResponseCode responseCode) {
-        super(responseCode);
+    public ServerGetFileResponse() {
+        super(HttpResponseCode.Ok);
     }
 
+    @Override
     public String getHeader() {
         String header = "";
 

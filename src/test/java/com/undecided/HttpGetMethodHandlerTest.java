@@ -58,7 +58,7 @@ public class HttpGetMethodHandlerTest {
         requestHeader.parse();
         HttpGetMethodHandler handler = new HttpGetMethodHandler(requestHeader);
         handler.processRequest();
-        String[] lines = handler.getResponse().getBasicAuthHeader().split(System.lineSeparator());
+        String[] lines = handler.getResponse().getHeader().split(System.lineSeparator());
         assertEquals("HTTP/1.1 401 Unauthorized", lines[0]);
 
         lines = handler.getResponse().getBodyAsString().split(System.lineSeparator());

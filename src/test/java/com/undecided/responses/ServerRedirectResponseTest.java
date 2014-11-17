@@ -1,6 +1,9 @@
-package com.undecided;
+package com.undecided.responses;
 
 import com.undecided.enums.HttpResponseCode;
+import com.undecided.responses.ServerRedirectResponse;
+import com.undecided.responses.ServerResponse;
+import junit.framework.Assert;
 import org.junit.Test;
 
 import static junit.framework.TestCase.assertTrue;
@@ -12,14 +15,15 @@ import static org.junit.Assert.assertEquals;
 public class ServerRedirectResponseTest {
     @Test
     public void testRedirectResponseHasTheCorrectResponseCode() throws Exception {
-        ServerResponse response = new ServerRedirectResponse(HttpResponseCode.Redirect);
+        ServerResponse response = new ServerRedirectResponse();
         response.setRedirectLocation("/");
+        assertEquals(HttpResponseCode.Redirect, response.getResponseCode());
         assertEquals("HTTP/1.1 302 Redirect", response.getHeader().split(System.lineSeparator())[0]);
     }
 
     @Test
     public void testREdirectResponseHasANewLocationSet() throws Exception {
-        ServerResponse response = new ServerRedirectResponse(HttpResponseCode.Redirect);
+        ServerResponse response = new ServerRedirectResponse();
         response.setRedirectLocation("/");
         assertEquals("Location: /", response.getHeader().split(System.lineSeparator())[1]);
     }
