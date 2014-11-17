@@ -26,7 +26,7 @@ public class HttpGetMethodHandler extends HttpMethodHandler {
             response = serverResponse;
         }
         else if (requestHeader.getRequestUrl().equals("/logs")) {
-            ServerResponse serverResponse = new ServerResponse(HttpResponseCode.AuthorizedRequired);
+            ServerResponse serverResponse = new ServerResponse(HttpResponseCode.Unauthorized);
             String message = "Authentication required";
             serverResponse.setResponseBody(message.getBytes());
 
