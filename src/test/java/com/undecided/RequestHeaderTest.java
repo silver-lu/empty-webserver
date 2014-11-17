@@ -12,9 +12,9 @@ import static org.junit.Assert.assertEquals;
 /**
  * Created by silver.lu on 11/10/14.
  */
-public class ClientRequestHeaderTest {
+public class RequestHeaderTest {
     @Test
-    public void testParseGetRequestCorrectly() throws Exception {
+    public void testParseGetRequestHeaderCorrectly() throws Exception {
         RequestHeader requestHeader = new RequestHeader("GET /test.html HTTP/1.1");
         requestHeader.parse();
 
@@ -24,14 +24,43 @@ public class ClientRequestHeaderTest {
     }
 
     @Test
-    public void testParseOptionsRequestCorrectly() throws Exception {
+    public void testParseOptionsRequestHeaderCorrectly() throws Exception {
         RequestHeader requestHeader = new RequestHeader("OPTIONS * HTTP/1.1");
         requestHeader.parse();
 
         assertEquals(HttpRequestMethod.Options, requestHeader.getRequestMethod());
         assertEquals("*", requestHeader.getRequestUrl());
         assertEquals(HttpVersion.OneDotOne, requestHeader.getHttpVersion());
+    }
 
+    @Test
+    public void testParsePutRequestHeaderCorrectly() throws Exception {
+        RequestHeader requestHeader = new RequestHeader("PUT /abc HTTP/1.1");
+        requestHeader.parse();
+
+        assertEquals(HttpRequestMethod.Put, requestHeader.getRequestMethod());
+        assertEquals("/abc", requestHeader.getRequestUrl());
+        assertEquals(HttpVersion.OneDotOne, requestHeader.getHttpVersion());
+    }
+
+    @Test
+    public void testParseHeadRequestHeaderCorrectly() throws Exception {
+        RequestHeader requestHeader = new RequestHeader("HEAD /abc HTTP/1.1");
+        requestHeader.parse();
+
+        assertEquals(HttpRequestMethod.Head, requestHeader.getRequestMethod());
+        assertEquals("/abc", requestHeader.getRequestUrl());
+        assertEquals(HttpVersion.OneDotOne, requestHeader.getHttpVersion());
+    }
+
+    @Test
+    public void testParsePostRequestHeaderCorrectly() throws Exception {
+        RequestHeader requestHeader = new RequestHeader("POST /abc HTTP/1.1");
+        requestHeader.parse();
+
+        assertEquals(HttpRequestMethod.Post, requestHeader.getRequestMethod());
+        assertEquals("/abc", requestHeader.getRequestUrl());
+        assertEquals(HttpVersion.OneDotOne, requestHeader.getHttpVersion());
     }
 
     @Test(expected = MalformedRequestException.class)

@@ -59,6 +59,15 @@ public class RequestHeader {
         else if ( requestMethod.equals(HttpConstant.OPTIONS_REQUEST) ){
             this.requestMethod = HttpRequestMethod.Options;
         }
+        else if ( requestMethod.equals(HttpConstant.HEAD_REQUEST) ) {
+            this.requestMethod = HttpRequestMethod.Head;
+        }
+        else if ( requestMethod.equals(HttpConstant.POST_REQUEST) ) {
+            this.requestMethod = HttpRequestMethod.Post;
+        }
+        else if ( requestMethod.equals(HttpConstant.PUT_REQUEST) ) {
+            this.requestMethod = HttpRequestMethod.Put;
+        }
         else {
             throw new RequestMethodNotRecognizedException();
         }

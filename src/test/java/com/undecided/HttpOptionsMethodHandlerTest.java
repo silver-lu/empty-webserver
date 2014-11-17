@@ -16,13 +16,13 @@ public class HttpOptionsMethodHandlerTest {
     public void testCorrectResponseCodeIsReturnedByDefault() throws Exception {
         HttpOptionsMethodHandler handler = new HttpOptionsMethodHandler(new RequestHeader("OPTIONS * HTTP/1.1"));
         handler.processRequest();
-        assertEquals("HTTP/1.1 200 OK", handler.getResponse().split("\r\n")[0]);
+        assertEquals("HTTP/1.1 200 OK", handler.getResponse().getHeader().split(System.lineSeparator())[0]);
     }
 
     @Test
     public void testAllowedKeywordIsReturnedByDefault() throws Exception {
         HttpOptionsMethodHandler handler = new HttpOptionsMethodHandler(new RequestHeader("OPTIONS * HTTP/1.1"));
         handler.processRequest();
-        assertTrue(handler.getResponse().contains("Allow:"));
+        assertTrue(handler.getResponse().getHeader().contains("Allow:"));
     }
 }

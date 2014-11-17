@@ -4,6 +4,8 @@ import com.undecided.mocks.MockFile;
 import org.junit.Test;
 
 import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,26 +19,94 @@ public class DirectoryListerTest {
     @Test
     public void testCanPullUpReadableFilesInCurrentDirectory() throws Exception {
         DirectoryLister directoryLister = new DirectoryLister(new File("."));
+        directoryLister.parseDirectory();
         List<File> files = directoryLister.getReadableFiles();
-
         assertTrue(pathExists(files, "pom.xml"));
     }
 
     @Test
     public void testCanPullUpDirectoriesInGivenDirectory() throws Exception {
         DirectoryLister directoryLister = new DirectoryLister(new File("."));
+        directoryLister.parseDirectory();
         List<File> files = directoryLister.getReadableDirectories();
 
         assertTrue(pathExists(files, "src"));
     }
 
- /*   @Test
-    public void testServerRootStartsInCurrentDirectory() {
-        DirectoryLister directoryLister = new DirectoryLister(new File("/"));
-        String response = directoryLister.getStringReadableFilesAndDirectories();
-        System.out.println(response);
-        assertTrue(response.contains("src"));
-    }*/
+    @Test
+    public void testWeAreGettingDirectoryBackAsDirectory() throws Exception {
+        DirectoryLister directoryLister = new DirectoryLister(new File("src"));
+        assertTrue(directoryLister.isDirectory());
+
+        directoryLister = new DirectoryLister(new File("pom.xml"));
+        assertFalse(directoryLister.isDirectory());
+    }
+
+    @Test
+    public void testWeAreGettingFileBackAsFile() throws Exception {
+        DirectoryLister directoryLister = new DirectoryLister(new File("pom.xml"));
+        assertTrue(directoryLister.isFile());
+
+        directoryLister = new DirectoryLister(new File("src"));
+        assertFalse(directoryLister.isFile());
+    }
+
+    @Test
+    public void testCanCheckIfAFilePathExistsOrNot() throws Exception {
+        DirectoryLister directoryLister = new DirectoryLister(new File("pom.xml"));
+        assertTrue(directoryLister.exists());
+
+        directoryLister = new DirectoryLister(new File("abc.123"));
+        assertFalse(directoryLister.exists());
+    }
+
+    @Test
+    public void testReadContentOfAFile() throws Exception {
+        DirectoryLister directoryLister = new DirectoryLister(new File("pom.xml"));
+        byte[] fileContent = directoryLister.getFileContent();
+        String[] lines = new String(fileContent).split(System.lineSeparator());
+        assertEquals("</project>", lines[lines.length - 1]);
+    }
+
+    @Test
+    public void testWeAreAbleToRetrieveCorrectMimeTypeForHtmlFileExtension() throws Exception {
+        DirectoryLister directoryLister = new DirectoryLister(new MockFile("htmlFile.html"));
+        assertEquals("text/html", directoryLister.getFileMimeType());
+    }
+
+    @Test
+    public void testWeAreAbleToRetrieveCorrectMimeTypeForXmlFileExtension() throws Exception {
+        DirectoryLister directoryLister = new DirectoryLister(new MockFile("xmlFile.xml"));
+        assertEquals("text/xml", directoryLister.getFileMimeType());
+    }
+
+    @Test
+    public void testWeAreAbleToRetrieveCorrectMimeTypeForTxtFileExtension() throws Exception {
+        DirectoryLister directoryLister = new DirectoryLister(new MockFile("textFile.txt"));
+        assertEquals("text/plain", directoryLister.getFileMimeType());
+    }
+
+    @Test
+    public void testWeAreAbleToRetrieveCorrectMimeTypeForJpegFileExtension() throws Exception {
+        DirectoryLister directoryLister = new DirectoryLister(new MockFile("jpegFile.jpeg"));
+        assertEquals("image/jpeg", directoryLister.getFileMimeType());
+
+        directoryLister = new DirectoryLister(new MockFile("jpegFile.jpg"));
+        assertEquals("image/jpeg", directoryLister.getFileMimeType());
+    }
+
+    @Test
+    public void testWeAreAbleToRetrieveCorrectMimeTypeForGifFileExtension() throws Exception {
+        DirectoryLister directoryLister = new DirectoryLister(new MockFile("gifFile.gif"));
+        assertEquals("image/gif", directoryLister.getFileMimeType());
+    }
+
+    @Test
+    public void testWeAreAbleToRetrieveCorrectMimeTypeForPngFileExtension() throws Exception {
+        DirectoryLister directoryLister = new DirectoryLister(new MockFile("pngFile.png"));
+        assertEquals("image/png", directoryLister.getFileMimeType());
+    }
+
 
     @Test
     public void testHiddenFilesAreNotPulledUp() throws Exception {
@@ -49,6 +119,7 @@ public class DirectoryListerTest {
         mockFile.setFiles(fakeFiles);
 
         DirectoryLister directoryLister = new DirectoryLister(mockFile);
+        directoryLister.parseDirectory();
         List<File> files = directoryLister.getReadableFiles();
 
         assertTrue(pathExists(files, "abc"));
@@ -67,6 +138,7 @@ public class DirectoryListerTest {
         mockFile.setFiles(fakeFiles);
 
         DirectoryLister directoryLister = new DirectoryLister(mockFile);
+        directoryLister.parseDirectory();
         List<File> files = directoryLister.getReadableDirectories();
 
         assertTrue(pathExists(files, "abc"));

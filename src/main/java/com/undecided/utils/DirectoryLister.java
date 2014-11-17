@@ -1,6 +1,13 @@
 package com.undecided.utils;
 
+import com.undecided.constants.MimeTypeConstant;
+import com.undecided.enums.FileExtension;
+
+import javax.swing.filechooser.FileNameExtensionFilter;
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.spi.FileTypeDetector;
 import java.util.*;
 
 /**
@@ -8,38 +15,23 @@ import java.util.*;
  */
 public class DirectoryLister {
     private File baseDirectory;
-    private String startDirectory;
     private List<File> readableFiles;
     private List<File> readableDirectories;
     private List<File> readableFilesAndDirectories;
     private List<File> allFiles;
     private List<File> allDirectories;
 
- /*   public DirectoryLister(String startDirectory) {
-        this.startDirectory = startDirectory;
-        this.readableFiles = new ArrayList<File>();
-        this.readableDirectories = new ArrayList<File>();
-        this.readableFilesAndDirectories = new ArrayList<File>();
-        this.allFiles = new ArrayList<File>();
-        this.allDirectories = new ArrayList<File>();
-
-        parseDirectory();
-    }*/
-
     public DirectoryLister(File baseDirectory) {
-        String rootDir = "./";
 
         this.readableFiles = new ArrayList<File>();
         this.readableDirectories = new ArrayList<File>();
         this.readableFilesAndDirectories = new ArrayList<File>();
         this.allFiles = new ArrayList<File>();
         this.allDirectories = new ArrayList<File>();
-
         this.baseDirectory = baseDirectory;
-        parseDirectory();
     }
 
-    private void parseDirectory() {
+    public void parseDirectory() {
         File[] files = baseDirectory.listFiles();
         for (File file : files) {
             if ( file.isFile() ) {
@@ -91,5 +83,37 @@ public class DirectoryLister {
 
     public List<File> getReadableDirectories() {
         return readableDirectories;
+    }
+
+    public boolean exists() {
+        return baseDirectory.exists();
+    }
+
+    public byte[] getFileContent() {
+        try {
+            byte[] fileContent = Files.readAllBytes(Paths.get(baseDirectory.getAbsolutePath()));
+            return fileContent;
+
+        } catch (IOException e) {
+            return new byte[0];
+        }
+    }
+
+    public boolean isFile() {
+        return this.baseDirectory.isFile();
+    }
+
+    public boolean isDirectory() {
+        return this.baseDirectory.isDirectory();
+    }
+
+    private FileExtension getFileExtension() {
+        String filename = baseDirectory.getName();
+        String extensionString = filename.substring(filename.lastIndexOf('.')+1);
+        return MimeTypeConstant.EXTENTION.get(extensionString);
+    }
+
+    public String getFileMimeType() {
+        return MimeTypeConstant.MIME_TYPE.get(getFileExtension());
     }
 }

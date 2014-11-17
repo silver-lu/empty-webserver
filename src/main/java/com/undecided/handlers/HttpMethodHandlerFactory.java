@@ -20,6 +20,15 @@ public class HttpMethodHandlerFactory {
         else if ( this.requestHeader.getRequestMethod() == HttpRequestMethod.Options) {
             return new HttpOptionsMethodHandler(requestHeader);
         }
+        else if ( this.requestHeader.getRequestMethod() == HttpRequestMethod.Put) {
+            return new HttpPutMethodHandler(requestHeader);
+        }
+        else if ( this.requestHeader.getRequestMethod() == HttpRequestMethod.Post) {
+            return new HttpPostMethodHandler(requestHeader);
+        }
+        else if ( this.requestHeader.getRequestMethod() == HttpRequestMethod.Head) {
+            return new HttpHeadMethodHandler(requestHeader);
+        }
         return null;
     }
 }

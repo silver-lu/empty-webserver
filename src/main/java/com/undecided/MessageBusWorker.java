@@ -22,7 +22,8 @@ public class MessageBusWorker implements Runnable {
             String input = readData();
             handler.setRequest(input);
             handler.processRequest();
-            writeData(handler.getResponse());
+            writeData(handler.getResponse().getHeader());
+            writeBinaryData(handler.getResponse().getBody());
             socket.close();
             SocketMessageBus.activeSockets.remove(socket);
         }
@@ -36,6 +37,12 @@ public class MessageBusWorker implements Runnable {
         BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         return reader.readLine();
     }
+
+    private void writeBinaryData(byte[] data) throws IOException {
+        OutputStream stream = socket.getOutputStream();
+        stream.write(data);
+    }
+
 
     private void writeData(String input) throws IOException {
         PrintWriter writer = new PrintWriter(socket.getOutputStream(), true);
