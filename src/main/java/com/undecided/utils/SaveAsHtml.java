@@ -24,7 +24,6 @@ public class SaveAsHtml {
             FileWriter fileWriter = new FileWriter(file.getAbsoluteFile());
             BufferedWriter bufferWriter = new BufferedWriter(fileWriter);
             bufferWriter.write(content);
-            System.out.println(content);
             bufferWriter.close();
 
 
