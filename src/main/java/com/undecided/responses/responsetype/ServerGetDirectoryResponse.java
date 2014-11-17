@@ -1,8 +1,9 @@
-package com.undecided.responses;
+package com.undecided.responses.responsetype;
 
 import com.undecided.constants.HttpConstant;
 import com.undecided.constants.HttpResponseConstant;
 import com.undecided.enums.HttpResponseCode;
+import com.undecided.responses.ServerResponse;
 import com.undecided.utils.SimpleDateTime;
 
 /**

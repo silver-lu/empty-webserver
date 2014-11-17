@@ -1,10 +1,9 @@
 package com.undecided.handlers;
 
 import com.undecided.RequestHeader;
-import com.undecided.responses.ServerOptionsResponse;
+import com.undecided.responses.requestmethod.ServerOptionsResponse;
 import com.undecided.responses.ServerResponse;
 import com.undecided.constants.HttpConstant;
-import com.undecided.enums.HttpResponseCode;
 
 import java.util.ArrayList;
 

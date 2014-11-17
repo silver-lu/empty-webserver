@@ -1,4 +1,4 @@
-package com.undecided.responses;
+package com.undecided.responses.responsecode;
 
 import com.undecided.constants.HttpConstant;
 import com.undecided.constants.HttpResponseConstant;

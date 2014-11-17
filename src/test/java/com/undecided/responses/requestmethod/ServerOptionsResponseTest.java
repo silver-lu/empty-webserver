@@ -1,6 +1,8 @@
-package com.undecided.responses;
+package com.undecided.responses.requestmethod;
 
 import com.undecided.enums.HttpResponseCode;
+import com.undecided.responses.ServerResponse;
+import com.undecided.responses.requestmethod.ServerOptionsResponse;
 import org.junit.Test;
 
 import java.util.Arrays;

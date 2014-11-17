@@ -1,8 +1,9 @@
-package com.undecided.responses;
+package com.undecided.responses.responsecode;
 
 import com.undecided.constants.HttpConstant;
 import com.undecided.constants.HttpResponseConstant;
 import com.undecided.enums.HttpResponseCode;
+import com.undecided.responses.ServerResponse;
 
 /**
  * Created by silver.lu on 11/13/14.

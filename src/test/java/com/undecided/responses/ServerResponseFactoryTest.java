@@ -1,9 +1,7 @@
 package com.undecided.responses;
 
-import com.undecided.RequestHeader;
 import com.undecided.enums.HttpResponseCode;
-import com.undecided.handlers.HttpGetMethodHandler;
-import com.undecided.handlers.HttpMethodHandlerFactory;
+import com.undecided.responses.responsecode.*;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;

@@ -1,8 +1,9 @@
-package com.undecided.responses;
+package com.undecided.responses.requestmethod;
 
 import com.undecided.constants.HttpConstant;
 import com.undecided.constants.HttpResponseConstant;
 import com.undecided.enums.HttpResponseCode;
+import com.undecided.responses.ServerResponse;
 import com.undecided.utils.SimpleDateTime;
 
 import java.util.List;
@@ -10,7 +11,7 @@ import java.util.List;
 /**
  * Created by silver.lu on 11/17/14.
  */
-public class ServerOptionsResponse extends ServerResponse{
+public class ServerOptionsResponse extends ServerResponse {
     public ServerOptionsResponse() {
         super(HttpResponseCode.Ok);
     }

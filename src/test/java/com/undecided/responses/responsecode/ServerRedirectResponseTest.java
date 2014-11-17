@@ -1,9 +1,8 @@
-package com.undecided.responses;
+package com.undecided.responses.responsecode;
 
 import com.undecided.enums.HttpResponseCode;
-import com.undecided.responses.ServerRedirectResponse;
 import com.undecided.responses.ServerResponse;
-import junit.framework.Assert;
+import com.undecided.responses.responsecode.ServerRedirectResponse;
 import org.junit.Test;
 
 import static junit.framework.TestCase.assertTrue;
@@ -22,7 +21,7 @@ public class ServerRedirectResponseTest {
     }
 
     @Test
-    public void testREdirectResponseHasANewLocationSet() throws Exception {
+    public void testRedirectResponseHasANewLocationSet() throws Exception {
         ServerResponse response = new ServerRedirectResponse();
         response.setRedirectLocation("/");
         assertEquals("Location: /", response.getHeader().split(System.lineSeparator())[1]);

@@ -2,6 +2,9 @@ package com.undecided.responses;
 
 import com.undecided.enums.HttpResponseCode;
 import com.undecided.enums.HttpResponseType;
+import com.undecided.responses.responsecode.*;
+import com.undecided.responses.responsetype.ServerGetDirectoryResponse;
+import com.undecided.responses.responsetype.ServerGetFileResponse;
 
 /**
  * Created by silver.lu on 11/17/14.

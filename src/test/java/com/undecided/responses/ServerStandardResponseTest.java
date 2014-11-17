@@ -1,13 +1,9 @@
 package com.undecided.responses;
 
 import com.undecided.enums.HttpResponseCode;
-import com.undecided.responses.ServerOptionsResponse;
-import com.undecided.responses.ServerResponse;
 import com.undecided.utils.SimpleDateTime;
 import com.undecided.utils.SimpleDateTimeInterface;
 import org.junit.Test;
-
-import java.util.Arrays;
 
 import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertArrayEquals;
@@ -16,7 +12,7 @@ import static org.junit.Assert.assertEquals;
 /**
  * Created by silver.lu on 11/11/14.
  */
-public class ServerResponseTest {
+public class ServerStandardResponseTest {
     @Test
     public void testDefaultResponseIsSetTo400() throws Exception {
         ServerResponse response = new ServerStandardResponse();

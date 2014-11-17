@@ -6,8 +6,6 @@ import com.undecided.exceptions.MissingRequestHeaderException;
 import com.undecided.exceptions.RequestMethodNotRecognizedException;
 import com.undecided.handlers.HttpMethodHandler;
 import com.undecided.handlers.HttpMethodHandlerFactory;
-import com.undecided.responses.ServerBadRequestResponse;
-import com.undecided.responses.ServerMethodNotAllowedResponse;
 import com.undecided.responses.ServerResponse;
 import com.undecided.responses.ServerResponseFactory;
 
