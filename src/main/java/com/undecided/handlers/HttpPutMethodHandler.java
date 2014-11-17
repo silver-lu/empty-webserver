@@ -1,6 +1,7 @@
 package com.undecided.handlers;
 
 import com.undecided.RequestHeader;
+import com.undecided.responses.*;
 import com.undecided.Server;
 import com.undecided.ServerRedirectResponse;
 import com.undecided.ServerResponse;
@@ -20,6 +21,9 @@ public class HttpPutMethodHandler extends HttpMethodHandler {
 
     @Override
     public void processRequest() {
+        ServerResponse serverResponse = new ServerStandardResponse(HttpResponseCode.Ok);
+        response = serverResponse;
+        
         // parse client command header
         try {
             requestHeader.parseClientHeaders();
@@ -32,7 +36,7 @@ public class HttpPutMethodHandler extends HttpMethodHandler {
         DirectoryLister lister = new DirectoryLister(new File(Server.startDirectory + requestHeader.getRequestUrl()));
 
         if (lister.exists()) {
-            ServerResponse serverResponse = new ServerResponse(HttpResponseCode.Created);
+            ServerResponse serverResponse = new ServerStandardResponse(HttpResponseCode.Created);
             String body = "<html>\n" +
                     "<body>\n" +
                     "<h1>The file was created.</h1>\n" +
@@ -43,7 +47,7 @@ public class HttpPutMethodHandler extends HttpMethodHandler {
             response = serverResponse;
         }
         else {
-            ServerResponse serverResponse = new ServerResponse(HttpResponseCode.Ok);
+            ServerResponse serverResponse = new ServerStandardResponse(HttpResponseCode.Ok);
 
             response = serverResponse;
         }

@@ -1,7 +1,7 @@
 package com.undecided.handlers;
 
 import com.undecided.RequestHeader;
-import com.undecided.ServerResponse;
+import com.undecided.responses.*;
 import com.undecided.enums.HttpResponseCode;
 
 /**
@@ -14,7 +14,7 @@ public class HttpHeadMethodHandler extends HttpMethodHandler {
 
     @Override
     public void processRequest() {
-        ServerResponse serverResponse = new ServerResponse(HttpResponseCode.Ok);
+        ServerResponse serverResponse = new ServerStandardResponse(HttpResponseCode.Ok);
         response = serverResponse;
     }
 }

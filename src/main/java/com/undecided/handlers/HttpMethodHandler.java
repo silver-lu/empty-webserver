@@ -1,7 +1,7 @@
 package com.undecided.handlers;
 
 import com.undecided.RequestHeader;
-import com.undecided.ServerResponse;
+import com.undecided.responses.ServerResponse;
 
 /**
  * Created by silver.lu on 11/12/14.

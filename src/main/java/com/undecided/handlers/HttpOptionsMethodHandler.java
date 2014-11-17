@@ -1,7 +1,8 @@
 package com.undecided.handlers;
 
 import com.undecided.RequestHeader;
-import com.undecided.ServerResponse;
+import com.undecided.responses.ServerOptionsResponse;
+import com.undecided.responses.ServerResponse;
 import com.undecided.constants.HttpConstant;
 import com.undecided.enums.HttpResponseCode;
 
@@ -18,7 +19,7 @@ public class HttpOptionsMethodHandler extends HttpMethodHandler {
 
     @Override
     public void processRequest() {
-        ServerResponse serverResponse = new ServerResponse(HttpResponseCode.Ok);
+        ServerResponse serverResponse = new ServerOptionsResponse();
         serverResponse.setAllowedMethods(new ArrayList<String>(HttpConstant.REQUEST_METHODS.keySet()));
         response = serverResponse;
     }
