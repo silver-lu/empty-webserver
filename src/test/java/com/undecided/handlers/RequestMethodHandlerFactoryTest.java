@@ -1,6 +1,6 @@
-package com.undecided;
+package com.undecided.handlers;
 
-import com.undecided.handlers.*;
+import com.undecided.RequestHeader;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -8,14 +8,13 @@ import static org.junit.Assert.assertEquals;
 /**
  * Created by silver.lu on 11/12/14.
  */
-public class RequestMethodFactoryTest {
+public class RequestMethodHandlerFactoryTest {
     @Test
     public void testGetRequestAreRoutedToGetRequestHandler() throws Exception {
         RequestHeader requestHeader = new RequestHeader("GET /test HTTP/1.1");
         requestHeader.parse();
 
-        HttpMethodHandlerFactory factory = new HttpMethodHandlerFactory(requestHeader);
-        assertEquals(HttpGetMethodHandler.class, factory.getHandler().getClass());
+        assertEquals(HttpGetMethodHandler.class, HttpMethodHandlerFactory.getInstance(requestHeader).getClass());
     }
 
     @Test
@@ -23,8 +22,7 @@ public class RequestMethodFactoryTest {
         RequestHeader requestHeader = new RequestHeader("OPTIONS * HTTP/1.1");
         requestHeader.parse();
 
-        HttpMethodHandlerFactory factory = new HttpMethodHandlerFactory(requestHeader);
-        assertEquals(HttpOptionsMethodHandler.class, factory.getHandler().getClass());
+        assertEquals(HttpOptionsMethodHandler.class, HttpMethodHandlerFactory.getInstance(requestHeader).getClass());
     }
 
     @Test
@@ -32,8 +30,7 @@ public class RequestMethodFactoryTest {
         RequestHeader requestHeader = new RequestHeader("PUT /test HTTP/1.1");
         requestHeader.parse();
 
-        HttpMethodHandlerFactory factory = new HttpMethodHandlerFactory(requestHeader);
-        assertEquals(HttpPutMethodHandler.class, factory.getHandler().getClass());
+        assertEquals(HttpPutMethodHandler.class, HttpMethodHandlerFactory.getInstance(requestHeader).getClass());
     }
 
     @Test
@@ -41,8 +38,7 @@ public class RequestMethodFactoryTest {
         RequestHeader requestHeader = new RequestHeader("HEAD /test HTTP/1.1");
         requestHeader.parse();
 
-        HttpMethodHandlerFactory factory = new HttpMethodHandlerFactory(requestHeader);
-        assertEquals(HttpHeadMethodHandler.class, factory.getHandler().getClass());
+        assertEquals(HttpHeadMethodHandler.class, HttpMethodHandlerFactory.getInstance(requestHeader).getClass());
     }
 
     @Test
@@ -50,7 +46,6 @@ public class RequestMethodFactoryTest {
         RequestHeader requestHeader = new RequestHeader("POST /test HTTP/1.1");
         requestHeader.parse();
 
-        HttpMethodHandlerFactory factory = new HttpMethodHandlerFactory(requestHeader);
-        assertEquals(HttpPostMethodHandler.class, factory.getHandler().getClass());
+        assertEquals(HttpPostMethodHandler.class, HttpMethodHandlerFactory.getInstance(requestHeader).getClass());
     }
 }

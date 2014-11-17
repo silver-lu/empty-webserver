@@ -1,6 +1,7 @@
 package com.undecided;
 
 import com.undecided.constants.HttpConstant;
+import com.undecided.enums.HttpResponseCode;
 import com.undecided.exceptions.MissingRequestHeaderException;
 import com.undecided.exceptions.RequestMethodNotRecognizedException;
 import com.undecided.handlers.HttpMethodHandler;
@@ -8,6 +9,7 @@ import com.undecided.handlers.HttpMethodHandlerFactory;
 import com.undecided.responses.ServerBadRequestResponse;
 import com.undecided.responses.ServerMethodNotAllowedResponse;
 import com.undecided.responses.ServerResponse;
+import com.undecided.responses.ServerResponseFactory;
 
 import java.util.ArrayList;
 
@@ -32,18 +34,17 @@ public class RequestHandler {
         }
         try {
             requestHeader.parse();
-            HttpMethodHandlerFactory factory = new HttpMethodHandlerFactory(requestHeader);
-            HttpMethodHandler handler = factory.getHandler();
+            HttpMethodHandler handler = HttpMethodHandlerFactory.getInstance(requestHeader);
             handler.processRequest();
             response = handler.getResponse();
         }
         catch ( RequestMethodNotRecognizedException expected) {
-            ServerResponse serverResponse = new ServerMethodNotAllowedResponse();
+            ServerResponse serverResponse = ServerResponseFactory.getInstance(HttpResponseCode.MethodNotAllowed);
             serverResponse.setAllowedMethods(new ArrayList<String>(HttpConstant.REQUEST_METHODS.keySet()));
             response = serverResponse;
         }
         catch ( Exception e) {
-            ServerResponse serverResponse = new ServerBadRequestResponse();
+            ServerResponse serverResponse = ServerResponseFactory.getInstance(HttpResponseCode.BadRequest);
             response = serverResponse;
         }
 
