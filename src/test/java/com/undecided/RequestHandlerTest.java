@@ -34,6 +34,16 @@ public class RequestHandlerTest {
         String response = handler.getResponse();
         assertEquals("HTTP/1.1 404 Not Found", response);
     }*/
+   
+    @Test
+    public void testValidRequestForRootDirectory() throws Exception {
+        Server.startDirectory = "./";
+        RequestHandler handler = new RequestHandler("GET / HTTP/1.1");
+        handler.processRequest();
+        String response = handler.getResponse().getHeader();
+        assertEquals("HTTP/1.1 200 OK", response.split(System.lineSeparator())[0]);
+    }
+
 
     @Test
     public void testInvalidRequestMethodWillReturn405() throws Exception {

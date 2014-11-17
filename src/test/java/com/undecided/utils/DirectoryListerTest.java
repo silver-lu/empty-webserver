@@ -113,7 +113,7 @@ public class DirectoryListerTest {
         MockFile mockFile = new MockFile(".");
 
         List<File> fakeFiles = new ArrayList<File>();
-        fakeFiles.add(new MockFile("abc", MockFile.FILE ));
+        fakeFiles.add(new MockFile("abc", MockFile.FILE));
         fakeFiles.add(new MockFile("hiddenFile", MockFile.FILE, MockFile.HIDDEN));
 
         mockFile.setFiles(fakeFiles);
@@ -130,9 +130,8 @@ public class DirectoryListerTest {
     public void testHiddenDirectoriesAreNotPulledUp() throws Exception {
 
         MockFile mockFile = new MockFile(".");
-        List<File> fakeDirs = new ArrayList<File>();
-
         List<File> fakeFiles = new ArrayList<File>();
+
         fakeFiles.add(new MockFile("abc", MockFile.DIRECTORY ));
         fakeFiles.add(new MockFile("hiddenDirectory", MockFile.DIRECTORY, MockFile.HIDDEN));
 
@@ -144,6 +143,24 @@ public class DirectoryListerTest {
 
         assertTrue(pathExists(files, "abc"));
         assertFalse(pathExists(files, "hiddenDirectory"));
+    }
+
+    @Test
+    public void testGeneratingHrefLinks() throws Exception {
+        MockFile mockFile = new MockFile("./");
+        List<File> fakeFiles = new ArrayList<File>();
+
+        fakeFiles.add(new MockFile("abc", MockFile.FILE));
+        fakeFiles.add(new MockFile("def", MockFile.FILE));
+        fakeFiles.add(new MockFile("ghi", MockFile.DIRECTORY));
+
+        mockFile.setFiles(fakeFiles);
+
+        DirectoryLister directoryLister = new DirectoryLister(mockFile);
+        //DirectoryLister directoryLister = new DirectoryLister(new File("/Users/yvonne.wang/JavaTraining/cob_spec/public"));
+        directoryLister.parseDirectory();
+        String htmlLinks = directoryLister.getLinkableDirectory();
+        assertTrue(htmlLinks.contains("<a href='/abc'"));
     }
 
     private boolean pathExists(List<File> paths, String target) {

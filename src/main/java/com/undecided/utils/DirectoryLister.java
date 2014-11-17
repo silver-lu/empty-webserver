@@ -56,8 +56,25 @@ public class DirectoryLister {
         for (File file : getReadableFilesAndDirectories()) {
             str += file.getName() + " ";
         }
-
         return str;
+    }
+
+    public List<String> getListReadableFilesAndDirectories() {
+        List<String> str = new ArrayList<String>();
+        for (File file : getReadableFilesAndDirectories()) {
+            str.add(file.getName());
+        }
+        return str;
+    }
+
+    public String getLinkableDirectory() {
+        HtmlGenerator htmlGenerator = new HtmlGenerator(getListReadableFilesAndDirectories());
+
+        String writeContent = htmlGenerator.getBody();
+        SaveAsHtml saving = new SaveAsHtml(writeContent);
+        saving.saveFile();
+
+        return htmlGenerator.getBody();
     }
 
     public List<File> getReadableFilesAndDirectories() {
