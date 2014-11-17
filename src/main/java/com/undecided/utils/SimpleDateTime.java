@@ -19,8 +19,8 @@ public class SimpleDateTime implements SimpleDateTimeInterface {
         String DATE_FORMAT = "EEE, dd MMM yyyy HH:mm:ss z";
         final SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT);
         sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
-        String dateTimeString =  sdf.format(new Date());
-        dateTimeString += "Date: ";
+        String dateTimeString = sdf.format(new Date());
+
         return dateTimeString;
     }
 

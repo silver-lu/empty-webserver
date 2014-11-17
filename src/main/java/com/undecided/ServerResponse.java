@@ -2,6 +2,7 @@ package com.undecided;
 
 import com.undecided.constants.HttpConstant;
 import com.undecided.constants.HttpResponseConstant;
+import com.undecided.constants.ServerParamConstant;
 import com.undecided.enums.HttpResponseCode;
 import com.undecided.utils.SimpleDateTime;
 import com.undecided.utils.SimpleDateTimeInterface;
@@ -21,6 +22,7 @@ public class ServerResponse {
     protected SimpleDateTimeInterface dateTime;
     protected List<String> allowedMethods;
     protected String contentMimeType;
+    protected String redirectLocation;
 
     public ServerResponse() {
         this(HttpResponseCode.BadRequest);
@@ -69,6 +71,26 @@ public class ServerResponse {
     public String getHeader() {
         String header = "";
 
+        header += getBasicHeader();
+        header += getContentHeader();
+
+        return header;
+
+    }
+
+    public String getBasicAuthHeader() {
+        String header = "";
+
+        header += getBasicHeader();
+        header += String.format(HttpResponseConstant.TPL_BASIC_AUTH, ServerParamConstant.BASIC_REALM);
+        header += getContentHeader();
+
+        return header;
+    }
+
+    private String getBasicHeader() {
+        String header = "";
+
         if (dateTime == null) { dateTime = new SimpleDateTime(); }
 
         header += String.format(HttpResponseConstant.TPL_RESPONSE_CODE, HttpConstant.HTTP_VERSION, HttpConstant.RESPONSE_CODES.get(responseCode));
@@ -77,6 +99,13 @@ public class ServerResponse {
         if (allowedMethods != null) {
             header += String.format(HttpResponseConstant.TPL_ALLOWED_METHODS, String.join(",", allowedMethods));
         }
+
+        return header;
+    }
+
+    private String getContentHeader() {
+        String header = "";
+
         if (contentType.equals("image/jpeg")) {
             header += "Content-Type: image/jpeg" + System.lineSeparator();
         }
@@ -86,12 +115,19 @@ public class ServerResponse {
         header += String.format(HttpResponseConstant.TPL_CONTENT_LENGTH, getContentLength());
 
         return header;
-
     }
 
     public byte[] getBody() {
         return responseBody;
     }
+
+//    public String getHttpResponse() {
+//        return getHeader() + System.lineSeparator() + getBody();
+//    }
+//
+//    public String getBasicAuthResponse() {
+//        return getBasicAuthHeader() + System.lineSeparator() + getBody();
+//    }
 
     public void setAllowedMethods(List<String> allowedMethods) {
         this.allowedMethods = allowedMethods;
@@ -103,5 +139,8 @@ public class ServerResponse {
 
     public String getBodyAsString() {
         return new String(responseBody);
+    }
+
+    public void setRedirectLocation(String location) {
     }
 }

@@ -7,5 +7,7 @@ public enum HttpResponseCode {
     Ok,
     NotFound,
     BadRequest,
-    MethodNotAllowed
+    MethodNotAllowed,
+    Redirect,
+    AuthorizedRequired
 }

@@ -10,5 +10,7 @@ public interface HttpResponseConstant {
     public static final String TPL_RESPONSE_CODE = "%s %s%n" ;
     public static final String TPL_RESPONSE_TIMESTAMP = "Date: %s%n";
     public static final String TPL_ALLOWED_METHODS = "Allow: %s%n";
+    public static final String TPL_BASIC_AUTH = "WWW-Authenticate: Basic realm=\"%s\"%n";
     public static final String TPL_MIME_TYPE = "Content-Type: %s%n";
+    public static final String TPL_NEW_LOCATION = "Location: %s%n";
 }
