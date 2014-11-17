@@ -32,7 +32,8 @@ public class HttpGetMethodHandler extends HttpMethodHandler {
         else if ( lister.isDirectory()) {
             lister.parseDirectory();
             ServerResponse serverResponse = new ServerResponse(HttpResponseCode.Ok);
-            serverResponse.setResponseBody(lister.getStringReadableFilesAndDirectories().getBytes());
+            //serverResponse.setResponseBody(lister.getStringReadableFilesAndDirectories().getBytes());
+            serverResponse.setResponseBody(lister.getLinkableDirectory().getBytes());
             response = serverResponse;
         }
 

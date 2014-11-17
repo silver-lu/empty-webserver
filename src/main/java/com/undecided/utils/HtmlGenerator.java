@@ -25,7 +25,6 @@ public class HtmlGenerator {
 
             strHolder.add(links);
         }
-
         return strHolder;
     }
 
@@ -36,7 +35,6 @@ public class HtmlGenerator {
         for (String link : getHtmlLinks()) {
             links += link;
         }
-
         return links;
     }
 

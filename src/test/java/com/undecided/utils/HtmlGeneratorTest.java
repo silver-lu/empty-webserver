@@ -7,6 +7,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 public class HtmlGeneratorTest {
@@ -23,7 +24,8 @@ public class HtmlGeneratorTest {
         String file = files.get(0);
         String link = dirLinks.get(0);
 
-        assertTrue(link.contains(file));
+        assertFalse(file.contains("<a href"));
+        assertTrue(link.contains("<a href"));
     }
 
 }
