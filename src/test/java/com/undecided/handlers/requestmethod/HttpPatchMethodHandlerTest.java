@@ -1,4 +1,4 @@
-package com.undecided.handlers;
+package com.undecided.handlers.requestmethod;
 
 import com.undecided.Server;
 import com.undecided.constants.ServerParamConstant;

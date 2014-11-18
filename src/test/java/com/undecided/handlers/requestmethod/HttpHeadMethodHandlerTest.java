@@ -1,4 +1,4 @@
-package com.undecided.handlers;
+package com.undecided.handlers.requestmethod;
 
 import com.undecided.requests.Request;
 import com.undecided.Server;
