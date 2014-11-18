@@ -58,6 +58,9 @@ public abstract class ServerResponse {
     }
 
     public int getContentLength() {
+        if (null == responseBody)
+            return 0;
+
         return responseBody.length;
     }
 
