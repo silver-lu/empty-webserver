@@ -14,21 +14,18 @@ import java.io.File;
  */
 public class HttpGetMethodHandler extends HttpHandler {
 
+    private DirectoryLister lister = null;
+
     public HttpGetMethodHandler(RequestHeader requestHandler) {
         super(requestHandler);
     }
 
     @Override
     public void processRequest() {
-        DirectoryLister lister = new DirectoryLister(new File(Server.startDirectory + requestHeader.getRequestUrl()));
+        DirectoryLister lister = getDirectoryLister(new File(Server.startDirectory + requestHeader.getRequestUrl()));
 
 
-        if ( requestHeader.getRequestUrl().equals("/redirect") ) {
-            ServerResponse serverResponse = ServerResponseFactory.getInstance(HttpResponseCode.Redirect);
-            serverResponse.setRedirectLocation("http://localhost:5000/");
-            response = serverResponse;
-        }
-        else if (requestHeader.getRequestUrl().equals("/logs")) {
+        if (requestHeader.getRequestUrl().equals("/logs")) {
             ServerResponse serverResponse = ServerResponseFactory.getInstance(HttpResponseCode.Unauthorized);
             String message = "Authentication required";
             serverResponse.setResponseBody(message.getBytes());
@@ -53,6 +50,19 @@ public class HttpGetMethodHandler extends HttpHandler {
             response = serverResponse;
         }
 
+    }
+
+    private DirectoryLister getDirectoryLister(File baseDirectory) {
+        if ( lister != null ) {
+            return lister;
+        }
+        else {
+            return new DirectoryLister(baseDirectory);
+        }
+    }
+
+    public void setDirectoryLister(DirectoryLister lister) {
+        this.lister = lister;
     }
 
 }

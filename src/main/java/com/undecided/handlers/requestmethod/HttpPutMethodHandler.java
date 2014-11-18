@@ -13,7 +13,7 @@ import java.io.File;
  * Created by silver.lu on 11/12/14.
  */
 public class HttpPutMethodHandler extends HttpHandler {
-    DirectoryLister lister;
+    DirectoryLister lister = null;
 
     public HttpPutMethodHandler(RequestHeader requestHeader) {
         super(requestHeader);
@@ -21,12 +21,7 @@ public class HttpPutMethodHandler extends HttpHandler {
 
     @Override
     public void processRequest() {
-        // parse client command header
-
-
-        String fileName = Server.startDirectory + requestHeader.getRequestUrl();
-        DirectoryLister lister = new DirectoryLister(new File(fileName));
-        setDirectoryLister(lister);
+        DirectoryLister lister = getDirectoryLister(new File(Server.startDirectory + requestHeader.getRequestUrl()));
 
         try {
             requestHeader.parseClientHeaders();
@@ -34,18 +29,16 @@ public class HttpPutMethodHandler extends HttpHandler {
             e.printStackTrace();
         }
 
-        /*
-        if (!lister.exists()) {
-            lister.saveFile( requestHeader.getClientBody() );
+        response = new ServerStandardResponse(HttpResponseCode.Ok);
+    }
 
-            serverResponse = new ServerCreateResponse();
-
-            response = serverResponse;
+    private DirectoryLister getDirectoryLister(File baseDirectory) {
+        if ( lister != null ) {
+            return lister;
         }
-        else {*/
-            // for now, let's just return 200, because the cob_spec doesn't require 201 (Created)
-            response = new ServerStandardResponse(HttpResponseCode.Ok);
-        //}
+        else {
+            return new DirectoryLister(baseDirectory);
+        }
     }
 
     public void setDirectoryLister(DirectoryLister lister) {

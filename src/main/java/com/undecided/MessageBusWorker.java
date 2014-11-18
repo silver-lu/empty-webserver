@@ -1,5 +1,7 @@
 package com.undecided;
 
+import com.undecided.responses.ServerResponse;
+
 import java.io.*;
 import java.net.Socket;
 
@@ -22,20 +24,23 @@ public class MessageBusWorker implements Runnable {
             String input = readData();
             handler.setRequest(input);
             handler.processRequest();
-            writeData(handler.getResponse().getHeader());
-            writeBinaryData(handler.getResponse().getBody());
+            writeData(handler.getResponse());
             socket.close();
             SocketMessageBus.activeSockets.remove(socket);
         }
         catch (Exception e) {
-
+            e.printStackTrace();
         }
-
     }
 
     private String readData() throws IOException {
         BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         return reader.readLine();
+    }
+
+    private void writeData(ServerResponse response) throws IOException {
+        writeStringData(response.getHeader());
+        writeBinaryData(response.getBody());
     }
 
     private void writeBinaryData(byte[] data) throws IOException {
@@ -44,7 +49,7 @@ public class MessageBusWorker implements Runnable {
     }
 
 
-    private void writeData(String input) throws IOException {
+    private void writeStringData(String input) throws IOException {
         PrintWriter writer = new PrintWriter(socket.getOutputStream(), true);
         writer.println(input);
         writer.flush();
