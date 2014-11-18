@@ -3,7 +3,6 @@ package com.undecided.responses;
 import com.undecided.enums.HttpResponseCode;
 import com.undecided.responses.ServerRedirectResponse;
 import com.undecided.responses.ServerResponse;
-import junit.framework.Assert;
 import org.junit.Test;
 
 import static junit.framework.TestCase.assertTrue;

@@ -75,4 +75,8 @@ public class MockFile extends File {
         hidden = true;
     }
 
+    @Override
+    public boolean createNewFile() {
+        return true;
+    }
 }
