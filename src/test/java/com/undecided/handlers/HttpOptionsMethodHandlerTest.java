@@ -1,7 +1,6 @@
 package com.undecided.handlers;
 
-import com.undecided.Request;
-import com.undecided.RequestHeader;
+import com.undecided.requests.Request;
 import com.undecided.handlers.requestmethod.HttpOptionsMethodHandler;
 import org.junit.Test;
 

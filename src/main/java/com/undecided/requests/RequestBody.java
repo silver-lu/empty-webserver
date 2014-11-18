@@ -1,4 +1,4 @@
-package com.undecided;
+package com.undecided.requests;
 
 import java.util.HashMap;
 import java.util.Map;

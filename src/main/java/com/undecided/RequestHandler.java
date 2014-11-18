@@ -1,6 +1,5 @@
 package com.undecided;
 
-import com.undecided.constants.Configurations;
 import com.undecided.constants.HttpConstant;
 import com.undecided.enums.HttpResponseCode;
 import com.undecided.exceptions.MissingRequestHeaderException;
@@ -8,6 +7,7 @@ import com.undecided.exceptions.RequestMethodNotRecognizedException;
 import com.undecided.handlers.HttpHandler;
 import com.undecided.handlers.HttpHandlerFactory;
 import com.undecided.handlers.RequestValidationExceptionHandler;
+import com.undecided.requests.Request;
 import com.undecided.responses.ServerResponse;
 import com.undecided.responses.ServerResponseFactory;
 import com.undecided.validators.RequestRedirectValidator;
@@ -15,7 +15,6 @@ import com.undecided.validators.RequestRestrictedMethodValidator;
 import com.undecided.validators.RequestValidatorChain;
 
 import java.util.ArrayList;
-import java.util.Map;
 
 /**
  * Created by silver.lu on 11/11/14.

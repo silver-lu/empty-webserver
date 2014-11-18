@@ -1,7 +1,6 @@
 package com.undecided.validators;
 
-import com.undecided.Request;
-import com.undecided.RequestHeader;
+import com.undecided.requests.Request;
 
 /**
  * Created by silver.lu on 11/17/14.

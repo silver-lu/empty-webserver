@@ -1,20 +1,12 @@
 package com.undecided.handlers;
 
-import com.undecided.Request;
-import com.undecided.RequestHeader;
+import com.undecided.requests.Request;
 import com.undecided.constants.Configurations;
-import com.undecided.constants.HttpConstant;
-import com.undecided.enums.HttpRequestMethod;
 import com.undecided.enums.HttpResponseCode;
 import com.undecided.exceptions.RequestMethodNotAllowedException;
 import com.undecided.exceptions.RequestRedirectRequiredException;
 import com.undecided.responses.ServerResponse;
 import com.undecided.responses.ServerResponseFactory;
-import com.undecided.validators.RequestRedirectValidator;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 
 /**
  * Created by silver.lu on 11/17/14.

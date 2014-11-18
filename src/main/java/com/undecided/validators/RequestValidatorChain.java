@@ -1,7 +1,6 @@
 package com.undecided.validators;
 
-import com.undecided.Request;
-import com.undecided.RequestHeader;
+import com.undecided.requests.Request;
 
 import java.util.ArrayList;
 import java.util.List;

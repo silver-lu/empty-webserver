@@ -1,13 +1,9 @@
 package com.undecided.handlers;
 
-import com.undecided.Request;
-import com.undecided.RequestHeader;
-import com.undecided.Server;
+import com.undecided.requests.Request;
+import com.undecided.requests.RequestHeader;
 import com.undecided.enums.HttpRequestMethod;
 import com.undecided.handlers.requestmethod.*;
-import com.undecided.utils.DirectoryLister;
-
-import java.io.File;
 
 /**
  * Created by silver.lu on 11/12/14.

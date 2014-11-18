@@ -1,14 +1,11 @@
 package com.undecided.handlers;
 
-import com.undecided.Request;
-import com.undecided.RequestHeader;
+import com.undecided.requests.Request;
 import com.undecided.Server;
 import com.undecided.constants.ServerParamConstant;
 import com.undecided.handlers.requestmethod.HttpPutMethodHandler;
 import com.undecided.mocks.MockDirectoryLister;
 import com.undecided.mocks.MockFile;
-import com.undecided.utils.DirectoryLister;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 

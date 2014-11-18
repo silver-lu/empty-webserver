@@ -1,4 +1,4 @@
-package com.undecided;
+package com.undecided.requests;
 
 import com.undecided.constants.HttpConstant;
 import com.undecided.enums.HttpRequestMethod;

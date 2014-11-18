@@ -1,7 +1,5 @@
 package com.undecided.exceptions;
 
-import com.undecided.RequestHeader;
-
 /**
  * Created by silver.lu on 11/17/14.
  */

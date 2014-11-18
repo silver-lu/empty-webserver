@@ -1,7 +1,6 @@
-package com.undecided;
+package com.undecided.requests;
 
-import com.undecided.enums.HttpRequestMethod;
-import com.undecided.enums.HttpVersion;
+import com.undecided.requests.RequestBody;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;

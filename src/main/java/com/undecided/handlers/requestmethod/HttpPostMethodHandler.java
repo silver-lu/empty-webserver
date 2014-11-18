@@ -1,7 +1,6 @@
 package com.undecided.handlers.requestmethod;
 
-import com.undecided.Request;
-import com.undecided.RequestHeader;
+import com.undecided.requests.Request;
 import com.undecided.handlers.HttpHandler;
 import com.undecided.responses.ServerResponse;
 import com.undecided.enums.HttpResponseCode;

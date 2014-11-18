@@ -1,7 +1,6 @@
 package com.undecided.validators;
 
-import com.undecided.Request;
-import com.undecided.RequestHeader;
+import com.undecided.requests.Request;
 import com.undecided.exceptions.RequestRedirectRequiredException;
 import org.junit.Test;
 

@@ -1,4 +1,4 @@
-package com.undecided;
+package com.undecided.requests;
 
 /**
  * Created by silver.lu on 11/18/14.

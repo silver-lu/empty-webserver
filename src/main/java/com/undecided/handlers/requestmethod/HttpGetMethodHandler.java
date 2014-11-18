@@ -4,6 +4,8 @@ import com.undecided.*;
 import com.undecided.enums.HttpResponseCode;
 import com.undecided.enums.HttpResponseType;
 import com.undecided.handlers.HttpHandler;
+import com.undecided.requests.Request;
+import com.undecided.requests.RequestHeader;
 import com.undecided.responses.*;
 import com.undecided.utils.DirectoryLister;
 

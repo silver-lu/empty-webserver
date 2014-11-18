@@ -1,7 +1,6 @@
 package com.undecided.handlers;
 
-import com.undecided.Request;
-import com.undecided.RequestHeader;
+import com.undecided.requests.Request;
 import com.undecided.Server;
 import com.undecided.constants.ServerParamConstant;
 import com.undecided.handlers.requestmethod.HttpGetMethodHandler;

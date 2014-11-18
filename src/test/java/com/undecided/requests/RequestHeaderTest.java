@@ -1,10 +1,11 @@
-package com.undecided;
+package com.undecided.requests;
 
 import com.undecided.enums.HttpRequestMethod;
 import com.undecided.enums.HttpVersion;
 import com.undecided.exceptions.MalformedRequestException;
 import com.undecided.exceptions.ProtocolNotRecognizedException;
 import com.undecided.exceptions.RequestMethodNotRecognizedException;
+import com.undecided.requests.RequestHeader;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
