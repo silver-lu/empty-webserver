@@ -21,6 +21,7 @@ public class HttpHeadMethodHandler extends HttpHandler {
 
     @Override
     public void processRequest() {
+        RequestHeader requestHeader = request.getRequestHeader();
         DirectoryLister lister = new DirectoryLister(new File(Server.startDirectory + requestHeader.getRequestUrl()));
 
         if ( requestHeader.getRequestUrl().equals("/redirect") ) {

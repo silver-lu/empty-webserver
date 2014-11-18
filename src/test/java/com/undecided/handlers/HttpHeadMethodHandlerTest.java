@@ -1,5 +1,6 @@
 package com.undecided.handlers;
 
+import com.undecided.Request;
 import com.undecided.RequestHeader;
 import com.undecided.Server;
 import com.undecided.constants.ServerParamConstant;
@@ -24,9 +25,9 @@ public class HttpHeadMethodHandlerTest {
 
     @Test
     public void testOnlyResponseWithHeader200() throws Exception {
-        RequestHeader requestHeader = new RequestHeader("HEAD /src HTTP/1.1");
-        requestHeader.parse();
-        HttpHeadMethodHandler handler = new HttpHeadMethodHandler(requestHeader);
+        Request request = new Request("HEAD /src HTTP/1.1");
+        request.parse();
+        HttpHeadMethodHandler handler = new HttpHeadMethodHandler(request);
         handler.processRequest();
         assertEquals("HTTP/1.1 200 OK", handler.getResponse().getHeader().split(System.lineSeparator())[0]);
         assertEquals(null, (handler.getResponse().getBody()));
