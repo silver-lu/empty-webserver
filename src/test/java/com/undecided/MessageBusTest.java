@@ -1,7 +1,9 @@
 package com.undecided;
 
+import com.undecided.constants.Configurations;
 import com.undecided.mocks.MocketMessageBus;
 import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 
 import java.io.BufferedReader;
@@ -21,6 +23,11 @@ public class MessageBusTest {
 
     Thread serverThread;
     MessageBus bus;
+
+    @Before
+    public void setUp() throws Exception {
+        Server.configuration = new Configurations();
+    }
 
     @Test
     public void testMessageBusCanBeInitializedWithPortNumber() throws Exception {

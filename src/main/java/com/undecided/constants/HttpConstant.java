@@ -43,6 +43,16 @@ public interface HttpConstant {
         }
     };
 
+    public final static Map<HttpRequestMethod, String> METHOD_STRINGS = new HashMap<HttpRequestMethod, String>() {
+        {
+            put(HttpRequestMethod.Get, GET_REQUEST);
+            put(HttpRequestMethod.Options, OPTIONS_REQUEST);
+            put(HttpRequestMethod.Post, POST_REQUEST);
+            put(HttpRequestMethod.Put, PUT_REQUEST);
+            put(HttpRequestMethod.Head, HEAD_REQUEST);
+        }
+    };
+
     public final static Map<HttpResponseCode, String> RESPONSE_CODES = new HashMap<HttpResponseCode, String>() {
         {
             put(HttpResponseCode.BadRequest, BAD_REQUEST);
