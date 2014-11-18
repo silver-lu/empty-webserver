@@ -3,6 +3,7 @@ package com.undecided.handlers;
 import com.undecided.RequestHeader;
 import com.undecided.Server;
 import com.undecided.constants.ServerParamConstant;
+import com.undecided.handlers.requestmethod.HttpGetMethodHandler;
 import org.junit.Before;
 import org.junit.Test;
 

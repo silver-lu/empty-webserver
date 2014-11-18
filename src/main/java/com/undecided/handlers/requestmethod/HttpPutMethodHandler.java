@@ -1,14 +1,15 @@
-package com.undecided.handlers;
+package com.undecided.handlers.requestmethod;
 
 import com.undecided.RequestHeader;
+import com.undecided.handlers.HttpHandler;
 import com.undecided.responses.*;
 import com.undecided.enums.HttpResponseCode;
 
 /**
  * Created by silver.lu on 11/12/14.
  */
-public class HttpHeadMethodHandler extends HttpMethodHandler {
-    public HttpHeadMethodHandler(RequestHeader requestHeader) {
+public class HttpPutMethodHandler extends HttpHandler {
+    public HttpPutMethodHandler(RequestHeader requestHeader) {
         super(requestHeader);
     }
 

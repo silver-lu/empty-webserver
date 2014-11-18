@@ -2,12 +2,13 @@ package com.undecided.handlers;
 
 import com.undecided.RequestHeader;
 import com.undecided.enums.HttpRequestMethod;
+import com.undecided.handlers.requestmethod.*;
 
 /**
  * Created by silver.lu on 11/12/14.
  */
-public class HttpMethodHandlerFactory {
-    public static HttpMethodHandler getInstance(RequestHeader requestHeader) {
+public class HttpHandlerFactory {
+    public static HttpHandler getInstance(RequestHeader requestHeader) {
         if ( requestHeader.getRequestMethod() == HttpRequestMethod.Get) {
             return new HttpGetMethodHandler(requestHeader);
         }

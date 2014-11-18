@@ -1,8 +1,9 @@
-package com.undecided.handlers;
+package com.undecided.handlers.requestmethod;
 
 import com.undecided.*;
 import com.undecided.enums.HttpResponseCode;
 import com.undecided.enums.HttpResponseType;
+import com.undecided.handlers.HttpHandler;
 import com.undecided.responses.*;
 import com.undecided.utils.DirectoryLister;
 
@@ -11,7 +12,7 @@ import java.io.File;
 /**
  * Created by silver.lu on 11/12/14.
  */
-public class HttpGetMethodHandler extends HttpMethodHandler {
+public class HttpGetMethodHandler extends HttpHandler {
 
     public HttpGetMethodHandler(RequestHeader requestHandler) {
         super(requestHandler);
