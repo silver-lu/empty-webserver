@@ -23,6 +23,7 @@ public abstract class ServerResponse {
     protected List<String> allowedMethods;
     protected String contentMimeType;
     protected String redirectLocation;
+    private boolean suppressBody;
 
     public ServerResponse() {
         this(HttpResponseCode.BadRequest);
@@ -35,6 +36,7 @@ public abstract class ServerResponse {
         this.contentType = "text/html";
         this.responseBody = "".getBytes();
         this.allowedMethods = null;
+        this.suppressBody = false;
     }
 
     public void setDateTime(SimpleDateTimeInterface dateTime) {
@@ -58,8 +60,9 @@ public abstract class ServerResponse {
     }
 
     public int getContentLength() {
-        if (null == responseBody)
+        if (null == responseBody) {
             return 0;
+        }
 
         return responseBody.length;
     }
@@ -71,7 +74,12 @@ public abstract class ServerResponse {
     public abstract String getHeader();
 
     public byte[] getBody() {
-        return responseBody;
+        if ( suppressBody ) {
+            return "".getBytes();
+        }
+        else {
+            return responseBody;
+        }
     }
 
     public void setAllowedMethods(List<String> allowedMethods) {}
@@ -85,4 +93,8 @@ public abstract class ServerResponse {
     }
 
     public void setRedirectLocation(String location) {}
+
+    public void suppressBody() {
+        suppressBody = true;
+    }
 }

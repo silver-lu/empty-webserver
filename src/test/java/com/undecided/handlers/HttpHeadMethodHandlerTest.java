@@ -24,12 +24,14 @@ public class HttpHeadMethodHandlerTest {
     }
 
     @Test
-    public void testOnlyResponseWithHeader200() throws Exception {
+    public void testHeadReturnOnlyABodyOfZeroLength() throws Exception {
         Request request = new Request("HEAD /src HTTP/1.1");
         request.parse();
+
         HttpHeadMethodHandler handler = new HttpHeadMethodHandler(request);
         handler.processRequest();
+
         assertEquals("HTTP/1.1 200 OK", handler.getResponse().getHeader().split(System.lineSeparator())[0]);
-        assertEquals(null, (handler.getResponse().getBody()));
+        assertEquals(0, handler.getResponse().getBody().length);
     }
 }
