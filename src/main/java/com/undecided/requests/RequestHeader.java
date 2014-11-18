@@ -2,8 +2,13 @@ package com.undecided.requests;
 
 import com.undecided.constants.HttpConstant;
 import com.undecided.enums.HttpRequestMethod;
+import com.undecided.enums.HttpSupportedHeader;
 import com.undecided.enums.HttpVersion;
 import com.undecided.exceptions.*;
+
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by silver.lu on 11/10/14.
@@ -22,9 +27,11 @@ public class RequestHeader {
     private int ClientContentLength;
     private String ClientBody;
     private String ClientInput;
+    private Map<HttpSupportedHeader, String> additionalHeaders;
 
     public RequestHeader(String rawInput) {
         this.rawInput = rawInput;
+        additionalHeaders = new HashMap<HttpSupportedHeader, String>();
     }
 
     public void parse() throws Exception {
@@ -45,7 +52,7 @@ public class RequestHeader {
         parseRequestUrl(requestParams[1]);
         parseHttpVersion(requestParams[2]);
 
-        parseClientHeaders();
+        parseAdditionalHeaders(Arrays.copyOfRange(requests, 1, requests.length));
     }
 
     private void parseHttpVersion(String httpVersion) throws Exception {
@@ -65,19 +72,11 @@ public class RequestHeader {
     }
 
     private void parseRequestMethod(String requestMethod) throws Exception {
-        if (requestMethod.equals(HttpConstant.GET_REQUEST)) {
-            this.requestMethod = HttpRequestMethod.Get;
-        } else if (requestMethod.equals(HttpConstant.OPTIONS_REQUEST)) {
-            this.requestMethod = HttpRequestMethod.Options;
-        } else if (requestMethod.equals(HttpConstant.HEAD_REQUEST)) {
-            this.requestMethod = HttpRequestMethod.Head;
-        } else if (requestMethod.equals(HttpConstant.POST_REQUEST)) {
-            this.requestMethod = HttpRequestMethod.Post;
-        } else if (requestMethod.equals(HttpConstant.PUT_REQUEST)) {
-            this.requestMethod = HttpRequestMethod.Put;
-        } else {
+        HttpRequestMethod method = HttpConstant.REQUEST_METHODS.get(requestMethod);
+        if (method == null) {
             throw new RequestMethodNotRecognizedException();
         }
+        this.requestMethod = method;
     }
 
     public HttpRequestMethod getRequestMethod() {
@@ -91,6 +90,17 @@ public class RequestHeader {
     public HttpVersion getHttpVersion() {
         return httpVersion;
     }
+
+    private void parseAdditionalHeaders(String[] headers) {
+        for (String header : headers) {
+            String[] params = header.split(": ");
+            if (HttpConstant.SUPPORTED_HEADERS.containsKey(params[0])) {
+                additionalHeaders.put(HttpConstant.SUPPORTED_HEADERS.get(params[0]), params[1]);
+            }
+        }
+    }
+
+
 
     public void parseClientHeaders() throws Exception {
         String[] requests = rawInput.split("\n");
@@ -144,5 +154,10 @@ public class RequestHeader {
 
     public String getClientBody() {
         return ClientBody;
+    }
+
+
+    public String getHeaderParam(HttpSupportedHeader header) {
+        return additionalHeaders.get(header);
     }
 }

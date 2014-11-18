@@ -1,6 +1,7 @@
 package com.undecided.requests;
 
 import com.undecided.enums.HttpRequestMethod;
+import com.undecided.enums.HttpSupportedHeader;
 import com.undecided.enums.HttpVersion;
 import com.undecided.exceptions.MalformedRequestException;
 import com.undecided.exceptions.ProtocolNotRecognizedException;
@@ -104,6 +105,21 @@ public class RequestHeaderTest {
     public void testMalformedRequestExceptionIsThrownWhenRequestUrlMissingSlash() throws Exception {
         RequestHeader requestHeader = new RequestHeader("GET abc HTTP/1.1");
         requestHeader.parse();
+    }
+
+
+    @Test
+    public void testThatETagDirectiveInTheHeaderCanBeRead() throws Exception {
+        String rawRequest = "PATCH /file.txt HTTP/1.1" + System.lineSeparator();
+        rawRequest += "Host: www.example.com" + System.lineSeparator();
+        rawRequest += "Content-Type: application/example" + System.lineSeparator();
+        rawRequest += "If-Match: \"e0023aa4e\"" + System.lineSeparator();
+        rawRequest += "Content-Length: 20";
+
+        RequestHeader requestHeader = new RequestHeader(rawRequest);
+        requestHeader.parse();
+        assertEquals("\"e0023aa4e\"", requestHeader.getHeaderParam(HttpSupportedHeader.ETag));
+
     }
 
 }

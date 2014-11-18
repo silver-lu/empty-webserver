@@ -2,6 +2,7 @@ package com.undecided.constants;
 
 import com.undecided.enums.HttpRequestMethod;
 import com.undecided.enums.HttpResponseCode;
+import com.undecided.enums.HttpSupportedHeader;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -33,6 +34,8 @@ public interface HttpConstant {
     public final static String CLIENT_CONNECTION = "Connection";
     public final static String CLIENT_CONTENT_TYPE = "Content-type";
     public final static String CLIENT_CONTENT_LENGTH = "Content-Length";
+    public final static String CLIENT_IF_MATCH = "If-Match";
+
 
     public final static Map<String, HttpRequestMethod> REQUEST_METHODS = new HashMap<String, HttpRequestMethod>() {
         {
@@ -42,6 +45,18 @@ public interface HttpConstant {
             put(PUT_REQUEST, HttpRequestMethod.Put);
             put(HEAD_REQUEST, HttpRequestMethod.Head);
             put(PATCH_REQUEST, HttpRequestMethod.Patch);
+        }
+    };
+
+    public final static Map<String, HttpSupportedHeader> SUPPORTED_HEADERS = new HashMap<String, HttpSupportedHeader>() {
+        {
+            put(CLIENT_USER_AGENT, HttpSupportedHeader.UserAgent);
+            put(CLIENT_HOST, HttpSupportedHeader.Host);
+            put(CLIENT_ACCEPT_LANGUAGE, HttpSupportedHeader.AcceptLanguage);
+            put(CLIENT_CONNECTION, HttpSupportedHeader.Connection);
+            put(CLIENT_CONTENT_TYPE, HttpSupportedHeader.ContentType);
+            put(CLIENT_CONTENT_LENGTH, HttpSupportedHeader.ContentLength);
+            put(CLIENT_IF_MATCH, HttpSupportedHeader.ETag);
         }
     };
 
