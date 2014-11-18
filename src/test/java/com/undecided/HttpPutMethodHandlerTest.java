@@ -1,7 +1,7 @@
 package com.undecided;
 
 import com.undecided.constants.ServerParamConstant;
-import com.undecided.handlers.HttpPutMethodHandler;
+import com.undecided.handlers.requestmethod.HttpPutMethodHandler;
 import com.undecided.mocks.MockDirectoryLister;
 import com.undecided.mocks.MockFile;
 import com.undecided.utils.DirectoryLister;
