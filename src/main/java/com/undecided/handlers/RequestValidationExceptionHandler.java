@@ -1,5 +1,6 @@
 package com.undecided.handlers;
 
+import com.undecided.Request;
 import com.undecided.RequestHeader;
 import com.undecided.constants.Configurations;
 import com.undecided.constants.HttpConstant;
@@ -21,12 +22,12 @@ import java.util.Map;
 public class RequestValidationExceptionHandler {
 
     private Configurations config;
-    private RequestHeader requestHeader;
+    private Request request;
     private Exception exception;
     private ServerResponse response;
 
-    public RequestValidationExceptionHandler(RequestHeader requestHeader, Exception exception) {
-        this.requestHeader = requestHeader;
+    public RequestValidationExceptionHandler(Request request, Exception exception) {
+        this.request = request;
         this.exception = exception;
         this.config = config;
     }

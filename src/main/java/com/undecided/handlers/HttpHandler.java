@@ -1,5 +1,6 @@
 package com.undecided.handlers;
 
+import com.undecided.Request;
 import com.undecided.RequestHeader;
 import com.undecided.responses.ServerResponse;
 
@@ -9,10 +10,10 @@ import com.undecided.responses.ServerResponse;
 public abstract class HttpHandler {
 
     protected ServerResponse response;
-    protected RequestHeader requestHeader;
+    protected Request request;
 
-    public HttpHandler(RequestHeader requestHeader){
-        this.requestHeader = requestHeader;
+    public HttpHandler(Request request){
+        this.request = request;
     }
 
     public abstract void processRequest() throws Exception;

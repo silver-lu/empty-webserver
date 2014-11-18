@@ -21,11 +21,11 @@ import java.util.Map;
  * Created by silver.lu on 11/11/14.
  */
 public class RequestHandler {
-    RequestHeader requestHeader;
+    Request request;
     ServerResponse response;
 
     public RequestHandler(String request) {
-        this.requestHeader = new RequestHeader(request);
+        this.request = new Request(request);
     }
 
     public RequestHandler() {
@@ -38,10 +38,10 @@ public class RequestHandler {
         validatorChain.add(new RequestRestrictedMethodValidator(Server.configuration.getRestrictedMethodsConfig()));
 
         try {
-            requestHeader.parse();
-            validatorChain.validateChain(requestHeader);
+            request.parse();
+            validatorChain.validateChain(request);
 
-            HttpHandler handler = HttpHandlerFactory.getInstance(requestHeader);
+            HttpHandler handler = HttpHandlerFactory.getInstance(request);
             handler.processRequest();
             response = handler.getResponse();
         }
@@ -51,7 +51,7 @@ public class RequestHandler {
             response = serverResponse;
         }
         catch ( Exception expected) {
-            RequestValidationExceptionHandler validationExceptionHandler = new RequestValidationExceptionHandler(requestHeader, expected);
+            RequestValidationExceptionHandler validationExceptionHandler = new RequestValidationExceptionHandler(request, expected);
             validationExceptionHandler.processException();
             response = validationExceptionHandler.getResponse();
         }
@@ -67,6 +67,6 @@ public class RequestHandler {
     }
 
     public void setRequest(String request) {
-        this.requestHeader = new RequestHeader(request);
+        this.request = new Request(request);
     }
 }

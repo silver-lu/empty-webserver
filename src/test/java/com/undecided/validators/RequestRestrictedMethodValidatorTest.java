@@ -1,5 +1,6 @@
 package com.undecided.validators;
 
+import com.undecided.Request;
 import com.undecided.RequestHeader;
 import com.undecided.enums.HttpRequestMethod;
 import com.undecided.exceptions.RequestMethodNotAllowedException;
@@ -16,8 +17,8 @@ import java.util.Map;
 public class RequestRestrictedMethodValidatorTest {
     @Test(expected = RequestMethodNotAllowedException.class)
     public void testUrlWithRestrictionsThrowRequestMethodNotAllowedException() throws Exception {
-        RequestHeader requestHeader = new RequestHeader("POST /text-file.txt HTTP/1.1");
-        requestHeader.parse();
+        Request request = new Request("POST /text-file.txt HTTP/1.1");
+        request.parse();
 
         Map<String, List<HttpRequestMethod>> restrictedMethodConfig = new HashMap<String, List<HttpRequestMethod>>() {
             {
@@ -26,13 +27,13 @@ public class RequestRestrictedMethodValidatorTest {
         };
 
         RequestValidator validator = new RequestRestrictedMethodValidator(restrictedMethodConfig);
-        validator.validate(requestHeader);
+        validator.validate(request);
     }
 
     @Test(expected = RequestMethodNotAllowedException.class)
     public void testUrlWithMultipleRestrictionsThrowRequestMethodNotAllowedExceptionForPut() throws Exception {
-        RequestHeader requestHeader = new RequestHeader("PUT /file1 HTTP/1.1");
-        requestHeader.parse();
+        Request request = new Request("PUT /file1 HTTP/1.1");
+        request.parse();
 
         Map<String, List<HttpRequestMethod>> restrictedMethodConfig = new HashMap<String, List<HttpRequestMethod>>() {
             {
@@ -41,13 +42,13 @@ public class RequestRestrictedMethodValidatorTest {
         };
 
         RequestValidator validator = new RequestRestrictedMethodValidator(restrictedMethodConfig);
-        validator.validate(requestHeader);
+        validator.validate(request);
     }
 
     @Test(expected = RequestMethodNotAllowedException.class)
     public void testUrlWithMultipleRestrictionsThrowRequestMethodNotAllowedExceptionForPost() throws Exception {
-        RequestHeader requestHeader = new RequestHeader("POST /file1 HTTP/1.1");
-        requestHeader.parse();
+        Request request = new Request("POST /file1 HTTP/1.1");
+        request.parse();
 
         Map<String, List<HttpRequestMethod>> restrictedMethodConfig = new HashMap<String, List<HttpRequestMethod>>() {
             {
@@ -56,13 +57,13 @@ public class RequestRestrictedMethodValidatorTest {
         };
 
         RequestValidator validator = new RequestRestrictedMethodValidator(restrictedMethodConfig);
-        validator.validate(requestHeader);
+        validator.validate(request);
     }
 
     @Test
     public void testUrlWithRestrictionsWillNotThrowExceptionForNoneRestrictedMethod() throws Exception {
-        RequestHeader requestHeader = new RequestHeader("GET /file1 HTTP/1.1");
-        requestHeader.parse();
+        Request request = new Request("GET /file1 HTTP/1.1");
+        request.parse();
 
         Map<String, List<HttpRequestMethod>> restrictedMethodConfig = new HashMap<String, List<HttpRequestMethod>>() {
             {
@@ -71,6 +72,6 @@ public class RequestRestrictedMethodValidatorTest {
         };
 
         RequestValidator validator = new RequestRestrictedMethodValidator(restrictedMethodConfig);
-        validator.validate(requestHeader);
+        validator.validate(request);
     }
 }

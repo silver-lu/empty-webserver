@@ -1,5 +1,6 @@
 package com.undecided.handlers;
 
+import com.undecided.Request;
 import com.undecided.RequestHeader;
 import com.undecided.enums.HttpResponseCode;
 import com.undecided.exceptions.RequestMethodNotAllowedException;
@@ -18,10 +19,10 @@ import static org.junit.Assert.assertEquals;
 public class RequestValidationExceptionHandlerTest {
     @Test
     public void testHandlerReturnsCorrectResponseWhenEncounteringARedirectRequiredException() throws Exception {
-        RequestHeader requestHeader = new RequestHeader("GET /redirect-test HTTP/1.1");
-        requestHeader.parse();
+        Request request = new Request("GET /redirect-test HTTP/1.1");
+        request.parse();
 
-        RequestValidationExceptionHandler validationExceptionHandler = new RequestValidationExceptionHandler(requestHeader, new RequestRedirectRequiredException("http://localhost:5000/"));
+        RequestValidationExceptionHandler validationExceptionHandler = new RequestValidationExceptionHandler(request, new RequestRedirectRequiredException("http://localhost:5000/"));
         validationExceptionHandler.processException();
         ServerResponse response = validationExceptionHandler.getResponse();
 
@@ -31,10 +32,10 @@ public class RequestValidationExceptionHandlerTest {
 
     @Test
     public void testHandlerReturnsCorrectResponseWhenEncounteringAMethodNotAllowedException() throws Exception {
-        RequestHeader requestHeader = new RequestHeader("GET /redirect-test HTTP/1.1");
-        requestHeader.parse();
+        Request request = new Request("GET /redirect-test HTTP/1.1");
+        request.parse();
 
-        RequestValidationExceptionHandler validationExceptionHandler = new RequestValidationExceptionHandler(requestHeader, new RequestMethodNotAllowedException(Arrays.asList("GET","HEAD","OPTIONS")));
+        RequestValidationExceptionHandler validationExceptionHandler = new RequestValidationExceptionHandler(request, new RequestMethodNotAllowedException(Arrays.asList("GET","HEAD","OPTIONS")));
         validationExceptionHandler.processException();
         ServerResponse response = validationExceptionHandler.getResponse();
 

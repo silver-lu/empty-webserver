@@ -1,5 +1,6 @@
 package com.undecided.handlers.requestmethod;
 
+import com.undecided.Request;
 import com.undecided.RequestHeader;
 import com.undecided.Server;
 import com.undecided.handlers.HttpHandler;
@@ -15,12 +16,13 @@ import java.io.File;
 public class HttpPutMethodHandler extends HttpHandler {
     DirectoryLister lister = null;
 
-    public HttpPutMethodHandler(RequestHeader requestHeader) {
-        super(requestHeader);
+    public HttpPutMethodHandler(Request request) {
+        super(request);
     }
 
     @Override
     public void processRequest() {
+        RequestHeader requestHeader = request.getRequestHeader();
         DirectoryLister lister = getDirectoryLister(new File(Server.startDirectory + requestHeader.getRequestUrl()));
 
         try {

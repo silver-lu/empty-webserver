@@ -1,5 +1,6 @@
 package com.undecided.handlers;
 
+import com.undecided.Request;
 import com.undecided.RequestHeader;
 import com.undecided.handlers.requestmethod.*;
 import org.junit.Test;
@@ -12,41 +13,41 @@ import static org.junit.Assert.assertEquals;
 public class HttpHandlerFactoryTest {
     @Test
     public void testGetRequestAreRoutedToGetRequestHandler() throws Exception {
-        RequestHeader requestHeader = new RequestHeader("GET /test HTTP/1.1");
-        requestHeader.parse();
+        Request request = new Request("GET /test HTTP/1.1");
+        request.parse();
 
-        assertEquals(HttpGetMethodHandler.class, HttpHandlerFactory.getInstance(requestHeader).getClass());
+        assertEquals(HttpGetMethodHandler.class, HttpHandlerFactory.getInstance(request).getClass());
     }
 
     @Test
     public void testOptionsRequestAreRoutedToOptionsRequestHandler() throws Exception {
-        RequestHeader requestHeader = new RequestHeader("OPTIONS * HTTP/1.1");
-        requestHeader.parse();
+        Request request = new Request("OPTIONS * HTTP/1.1");
+        request.parse();
 
-        assertEquals(HttpOptionsMethodHandler.class, HttpHandlerFactory.getInstance(requestHeader).getClass());
+        assertEquals(HttpOptionsMethodHandler.class, HttpHandlerFactory.getInstance(request).getClass());
     }
 
     @Test
     public void testPutRequestAreRoutedToPutRequestHandler() throws Exception {
-        RequestHeader requestHeader = new RequestHeader("PUT /test HTTP/1.1");
-        requestHeader.parse();
+        Request request = new Request("PUT /test HTTP/1.1");
+        request.parse();
 
-        assertEquals(HttpPutMethodHandler.class, HttpHandlerFactory.getInstance(requestHeader).getClass());
+        assertEquals(HttpPutMethodHandler.class, HttpHandlerFactory.getInstance(request).getClass());
     }
 
     @Test
     public void testHeadRequestAreRoutedToHeadRequestHandler() throws Exception {
-        RequestHeader requestHeader = new RequestHeader("HEAD /test HTTP/1.1");
-        requestHeader.parse();
+        Request request = new Request("HEAD /test HTTP/1.1");
+        request.parse();
 
-        assertEquals(HttpHeadMethodHandler.class, HttpHandlerFactory.getInstance(requestHeader).getClass());
+        assertEquals(HttpHeadMethodHandler.class, HttpHandlerFactory.getInstance(request).getClass());
     }
 
     @Test
     public void testPostRequestAreRoutedToHeadRequestHandler() throws Exception {
-        RequestHeader requestHeader = new RequestHeader("POST /test HTTP/1.1");
-        requestHeader.parse();
+        Request request = new Request("POST /test HTTP/1.1");
+        request.parse();
 
-        assertEquals(HttpPostMethodHandler.class, HttpHandlerFactory.getInstance(requestHeader).getClass());
+        assertEquals(HttpPostMethodHandler.class, HttpHandlerFactory.getInstance(request).getClass());
     }
 }

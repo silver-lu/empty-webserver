@@ -1,5 +1,6 @@
 package com.undecided.validators;
 
+import com.undecided.Request;
 import com.undecided.RequestHeader;
 import com.undecided.enums.HttpRequestMethod;
 import com.undecided.exceptions.RequestMethodNotAllowedException;
@@ -59,24 +60,24 @@ public class RequestValidatorChainTest {
     public void testExceptionIsThrownWhenTheFirstValidatorFailToValidate() throws Exception {
         RequestValidatorChain chain = new RequestValidatorChain();
 
-        RequestHeader requestHeader = new RequestHeader("GET /redirect HTTP/1.1");
-        requestHeader.parse();
+        Request request = new Request("GET /redirect HTTP/1.1");
+        request.parse();
 
         chain.add(redirectValidator);
         chain.add(restrictedMethodValidator);
-        chain.validateChain(requestHeader);
+        chain.validateChain(request);
     }
 
     @Test(expected = RequestMethodNotAllowedException.class)
     public void testExceptionIsThrownWhenTheSecondValidatorFailToValidate() throws Exception {
         RequestValidatorChain chain = new RequestValidatorChain();
 
-        RequestHeader requestHeader = new RequestHeader("POST /file1 HTTP/1.1");
-        requestHeader.parse();
+        Request request = new Request("POST /file1 HTTP/1.1");
+        request.parse();
 
         chain.add(redirectValidator);
         chain.add(restrictedMethodValidator);
-        chain.validateChain(requestHeader);
+        chain.validateChain(request);
     }
 
 }

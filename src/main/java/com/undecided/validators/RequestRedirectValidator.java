@@ -1,5 +1,6 @@
 package com.undecided.validators;
 
+import com.undecided.Request;
 import com.undecided.RequestHeader;
 import com.undecided.exceptions.RequestRedirectRequiredException;
 
@@ -16,7 +17,8 @@ public class RequestRedirectValidator implements RequestValidator {
     }
 
     @Override
-    public void validate(RequestHeader requestHeader) throws RequestRedirectRequiredException {
+    public void validate(Request request) throws RequestRedirectRequiredException {
+        RequestHeader requestHeader = request.getRequestHeader();
         if (redirectConfig.containsKey(requestHeader.getRequestUrl())) {
             throw new RequestRedirectRequiredException(redirectConfig.get(requestHeader.getRequestUrl()));
         }

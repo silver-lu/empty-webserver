@@ -1,10 +1,10 @@
 package com.undecided.validators;
 
+import com.undecided.Request;
 import com.undecided.RequestHeader;
 import com.undecided.constants.HttpConstant;
 import com.undecided.enums.HttpRequestMethod;
 import com.undecided.exceptions.RequestMethodNotAllowedException;
-import com.undecided.exceptions.RequestRedirectRequiredException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +21,8 @@ public class RequestRestrictedMethodValidator implements RequestValidator {
     }
 
     @Override
-    public void validate(RequestHeader requestHeader) throws RequestMethodNotAllowedException {
+    public void validate(Request request) throws RequestMethodNotAllowedException {
+        RequestHeader requestHeader = request.getRequestHeader();
         if (restrictedMethodConfig.containsKey(requestHeader.getRequestUrl())) {
             List<HttpRequestMethod> restrictedMethods = restrictedMethodConfig.get(requestHeader.getRequestUrl());
             if ( restrictedMethods.contains(requestHeader.getRequestMethod())) {

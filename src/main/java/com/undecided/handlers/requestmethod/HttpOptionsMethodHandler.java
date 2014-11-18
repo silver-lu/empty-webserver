@@ -1,5 +1,6 @@
 package com.undecided.handlers.requestmethod;
 
+import com.undecided.Request;
 import com.undecided.RequestHeader;
 import com.undecided.handlers.HttpHandler;
 import com.undecided.responses.requestmethod.ServerOptionsResponse;
@@ -13,8 +14,8 @@ import java.util.ArrayList;
  */
 public class HttpOptionsMethodHandler extends HttpHandler {
 
-    public HttpOptionsMethodHandler(RequestHeader requestHandler) {
-        super(requestHandler);
+    public HttpOptionsMethodHandler(Request request) {
+        super(request);
     }
 
     @Override

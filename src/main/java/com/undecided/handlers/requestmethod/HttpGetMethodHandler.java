@@ -16,14 +16,14 @@ public class HttpGetMethodHandler extends HttpHandler {
 
     private DirectoryLister lister = null;
 
-    public HttpGetMethodHandler(RequestHeader requestHandler) {
-        super(requestHandler);
+    public HttpGetMethodHandler(Request request) {
+        super(request);
     }
 
     @Override
     public void processRequest() {
+        RequestHeader requestHeader = request.getRequestHeader();
         DirectoryLister lister = getDirectoryLister(new File(Server.startDirectory + requestHeader.getRequestUrl()));
-
 
         if (requestHeader.getRequestUrl().equals("/logs")) {
             ServerResponse serverResponse = ServerResponseFactory.getInstance(HttpResponseCode.Unauthorized);

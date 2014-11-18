@@ -8,5 +8,6 @@ public enum HttpRequestMethod {
     Options,
     Post,
     Head,
+    Patch,
     Put
 }

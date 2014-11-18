@@ -1,5 +1,6 @@
 package com.undecided.validators;
 
+import com.undecided.Request;
 import com.undecided.RequestHeader;
 import com.undecided.exceptions.RequestRedirectRequiredException;
 import org.junit.Test;
@@ -16,8 +17,8 @@ public class RequestRedirectValidatorTest {
 
     @Test(expected = RequestRedirectRequiredException.class)
     public void testConfiguredRedirectUrlsWillThrowRedirectRequiredException() throws Exception {
-        RequestHeader requestHeader = new RequestHeader("GET /redirect HTTP/1.1");
-        requestHeader.parse();
+        Request request = new Request("GET /redirect HTTP/1.1");
+        request.parse();
 
         Map<String, String> redirectConfig = new HashMap<String, String>() {
             {
@@ -26,13 +27,13 @@ public class RequestRedirectValidatorTest {
         };
 
         RequestValidator validator = new RequestRedirectValidator(redirectConfig);
-        validator.validate(requestHeader);
+        validator.validate(request);
     }
 
     @Test
     public void testRedirectRequiredExceptionIsSetWithRedirectDestination() throws Exception {
-        RequestHeader requestHeader = new RequestHeader("GET /redirect HTTP/1.1");
-        requestHeader.parse();
+        Request request = new Request("GET /redirect HTTP/1.1");
+        request.parse();
 
         Map<String, String> redirectConfig = new HashMap<String, String>() {
             {
@@ -42,7 +43,7 @@ public class RequestRedirectValidatorTest {
 
         RequestValidator validator = new RequestRedirectValidator(redirectConfig);
         try {
-            validator.validate(requestHeader);
+            validator.validate(request);
         }
         catch ( RequestRedirectRequiredException expected) {
             assertEquals("http://localhost:5000/", expected.getDestination());
@@ -51,8 +52,8 @@ public class RequestRedirectValidatorTest {
 
     @Test
     public void testNotConfiguredRedirectUrlsWillNotThrowRedirectRequiredException() throws Exception {
-        RequestHeader requestHeader = new RequestHeader("GET /dontredirect HTTP/1.1");
-        requestHeader.parse();
+        Request request = new Request("GET /dontredirect HTTP/1.1");
+        request.parse();
 
         Map<String, String> redirectConfig = new HashMap<String, String>() {
             {
@@ -61,6 +62,6 @@ public class RequestRedirectValidatorTest {
         };
 
         RequestValidator validator = new RequestRedirectValidator(redirectConfig);
-        validator.validate(requestHeader);
+        validator.validate(request);
     }
 }

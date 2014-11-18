@@ -1,5 +1,6 @@
 package com.undecided.handlers;
 
+import com.undecided.Request;
 import com.undecided.RequestHeader;
 import com.undecided.Server;
 import com.undecided.constants.ServerParamConstant;
@@ -26,12 +27,12 @@ public class HttpPutMethodHandlerTest {
 
     @Test
     public void testPutReturns200ForExistingFile() throws Exception {
-        RequestHeader requestHeader = new RequestHeader("PUT /form HTTP/1.1");
-        requestHeader.parse();
+        Request request = new Request("PUT /form HTTP/1.1");
+        request.parse();
 
-        String fileName = Server.startDirectory + requestHeader.getRequestUrl();
+        String fileName = Server.startDirectory + request.getRequestHeader().getRequestUrl();
 
-        HttpPutMethodHandler handler = new HttpPutMethodHandler(requestHeader);
+        HttpPutMethodHandler handler = new HttpPutMethodHandler(request);
         MockDirectoryLister lister = new MockDirectoryLister(new MockFile(fileName));
         lister.exists = true;
         handler.setDirectoryLister( lister );

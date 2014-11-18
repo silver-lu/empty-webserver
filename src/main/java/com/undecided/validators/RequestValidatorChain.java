@@ -1,5 +1,6 @@
 package com.undecided.validators;
 
+import com.undecided.Request;
 import com.undecided.RequestHeader;
 
 import java.util.ArrayList;
@@ -23,9 +24,9 @@ public class RequestValidatorChain {
         validators.add(validator);
     }
 
-    public void validateChain(RequestHeader requestHeader) throws Exception {
+    public void validateChain(Request request) throws Exception {
         for(RequestValidator validator : validators) {
-            validator.validate(requestHeader);
+            validator.validate(request);
         }
     }
 
