@@ -35,6 +35,7 @@ public interface HttpConstant {
     public final static String CLIENT_CONTENT_TYPE = "Content-type";
     public final static String CLIENT_CONTENT_LENGTH = "Content-Length";
     public final static String CLIENT_IF_MATCH = "If-Match";
+    public final static String CLIENT_AUTHORIZATION = "Authorization";
 
 
     public final static Map<String, HttpRequestMethod> REQUEST_METHODS = new HashMap<String, HttpRequestMethod>() {
@@ -57,6 +58,7 @@ public interface HttpConstant {
             put(CLIENT_CONTENT_TYPE, HttpSupportedHeader.ContentType);
             put(CLIENT_CONTENT_LENGTH, HttpSupportedHeader.ContentLength);
             put(CLIENT_IF_MATCH, HttpSupportedHeader.ETag);
+            put(CLIENT_AUTHORIZATION, HttpSupportedHeader.Authorization);
         }
     };
 
