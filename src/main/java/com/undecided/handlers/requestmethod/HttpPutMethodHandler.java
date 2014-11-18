@@ -1,6 +1,7 @@
 package com.undecided.handlers.requestmethod;
 
 import com.undecided.RequestHeader;
+import com.undecided.Server;
 import com.undecided.handlers.HttpHandler;
 import com.undecided.responses.*;
 import com.undecided.enums.HttpResponseCode;
@@ -21,6 +22,12 @@ public class HttpPutMethodHandler extends HttpHandler {
     @Override
     public void processRequest() {
         // parse client command header
+
+
+        String fileName = Server.startDirectory + requestHeader.getRequestUrl();
+        DirectoryLister lister = new DirectoryLister(new File(fileName));
+        setDirectoryLister(lister);
+
         try {
             requestHeader.parseClientHeaders();
         } catch (Exception e) {

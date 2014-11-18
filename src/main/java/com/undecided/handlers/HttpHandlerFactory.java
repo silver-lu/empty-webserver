@@ -20,13 +20,7 @@ public class HttpHandlerFactory {
             return new HttpOptionsMethodHandler(requestHeader);
         }
         else if ( requestHeader.getRequestMethod() == HttpRequestMethod.Put) {
-            HttpPutMethodHandler handler = new HttpPutMethodHandler(requestHeader);
-
-            String fileName = Server.startDirectory + requestHeader.getRequestUrl();
-            DirectoryLister lister = new DirectoryLister(new File(fileName));
-            handler.setDirectoryLister(lister);
-
-            return handler;
+            return new HttpPutMethodHandler(requestHeader);
         }
         else if ( requestHeader.getRequestMethod() == HttpRequestMethod.Post) {
             return new HttpPostMethodHandler(requestHeader);
