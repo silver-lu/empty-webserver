@@ -16,11 +16,6 @@ public class MockDirectoryLister extends DirectoryLister {
     }
 
     @Override
-    public void saveFile(String content) {
-
-    }
-
-    @Override
     public boolean exists() {
         return exists;
     }

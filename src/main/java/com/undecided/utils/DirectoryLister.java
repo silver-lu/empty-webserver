@@ -120,22 +120,4 @@ public class DirectoryLister {
     public String getFileMimeType() {
         return MimeTypeConstant.MIME_TYPE.get(getFileExtension());
     }
-
-    public void saveFile(String content) {
-        try {
-            if (!baseDirectory.isFile()) {
-                baseDirectory.createNewFile();
-
-                FileWriter fileWriter = new FileWriter(baseDirectory.getAbsoluteFile());
-                BufferedWriter bufferWriter = new BufferedWriter(fileWriter);
-                bufferWriter.write(content);
-                bufferWriter.close();
-            }
-            //else {
-            //    baseDirectory.mkdir();
-            //}
-        } catch (IOException e){
-            e.printStackTrace();
-        }
-    }
 }
