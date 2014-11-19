@@ -69,11 +69,6 @@ public class DirectoryLister {
 
     public String getLinkableDirectory() {
         HtmlGenerator htmlGenerator = new HtmlGenerator(getListReadableFilesAndDirectories());
-
-        String writeContent = htmlGenerator.getBody();
-        SaveAsHtml saving = new SaveAsHtml(writeContent);
-        saving.saveFile();
-
         return htmlGenerator.getBody();
     }
 
