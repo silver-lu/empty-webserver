@@ -7,38 +7,48 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class UrlQueryStringDecode {
-    private URL url;
     private String urlString;
     private String[] split;
     private String decodedString;
     private Map<String,String> valuePair = new HashMap<String, String>();
+    private String mainUrl;
+    private String subsetUrl;
+    private String formattedQueryString;
 
-    public UrlQueryStringDecode(URL url){
-        this.url = url;
-    }
     public UrlQueryStringDecode(String urlString){
         this.urlString = urlString;
+        parse();
     }
 
     public String getParamQuery() {
-        return url.getQuery();
+        return this.subsetUrl;
     }
 
+    private void parse() {
+        int startIndex = urlString.indexOf("/");
+        int endIndex = urlString.indexOf("?");
 
-    public String[] getSplitURLContent(String urlString) {
-        return this.split = urlString.split("&");
+        this.mainUrl = urlString.substring(startIndex, endIndex);
+        this.subsetUrl = urlString.substring(endIndex + 1);
+        this.split = subsetUrl.split("&");
+        formattedQueryString = "";
+        for (String elm : split) {
+            String[] pair = elm.split("=");
+            if(pair.length > 1) {
+                String value = null;
+                try {
+                    value = decodeQueryString(pair[1]);
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
+                valuePair.put(pair[0], value);
+                formattedQueryString += pair[0] + " = " + value + " ";
+            }
+        }
     }
 
-    public Map<String, String> ParamsPair(){
-        //for (String elm : )
-    }
-
-    public String decodeQueryString(String urlString) throws UnsupportedEncodingException {
-        return decodedString = URLDecoder.decode(urlString, "UTF-8");
-    }
-
-    public String getDecodedString() {
-        return decodedString;
+    public String decodeQueryString(String queryValue) throws UnsupportedEncodingException {
+        return decodedString = URLDecoder.decode(queryValue, "UTF-8");
     }
 
     public String[] getSplit() {
@@ -51,5 +61,9 @@ public class UrlQueryStringDecode {
 
     public Map<String, String> getValuePair() {
         return valuePair;
+    }
+
+    public String getFormattedQueryStringPairs() {
+        return formattedQueryString;
     }
 }
