@@ -58,6 +58,7 @@ public class MessageBusWorker implements Runnable {
     private void writeBinaryData(byte[] data) throws IOException {
         OutputStream stream = socket.getOutputStream();
         stream.write(data);
+        stream.flush();
     }
 
 
