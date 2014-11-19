@@ -41,8 +41,7 @@ public class MessageBusWorker implements Runnable {
         byte[] b = new byte[255];
 
         // Such a bad hack
-        Thread.sleep(50);
-        while (inputStream.available() > 0) {
+        while (inputStream.available() > 0 || sb.length() == 0) {
             int length = inputStream.read(b);
             sb.append(new String(Arrays.copyOfRange(b, 0, length), "UTF-8"));
         }
@@ -58,6 +57,7 @@ public class MessageBusWorker implements Runnable {
     private void writeBinaryData(byte[] data) throws IOException {
         OutputStream stream = socket.getOutputStream();
         stream.write(data);
+        stream.flush();
     }
 
 

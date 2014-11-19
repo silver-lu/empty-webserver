@@ -8,6 +8,8 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.spi.FileTypeDetector;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.*;
 
 /**
@@ -20,6 +22,7 @@ public class DirectoryLister {
     private List<File> readableFilesAndDirectories;
     private List<File> allFiles;
     private List<File> allDirectories;
+    private String checkSum;
 
     public DirectoryLister(File baseDirectory) {
 
@@ -69,11 +72,6 @@ public class DirectoryLister {
 
     public String getLinkableDirectory() {
         HtmlGenerator htmlGenerator = new HtmlGenerator(getListReadableFilesAndDirectories());
-
-        String writeContent = htmlGenerator.getBody();
-        SaveAsHtml saving = new SaveAsHtml(writeContent);
-        saving.saveFile();
-
         return htmlGenerator.getBody();
     }
 
@@ -119,5 +117,20 @@ public class DirectoryLister {
 
     public String getFileMimeType() {
         return MimeTypeConstant.MIME_TYPE.get(getFileExtension());
+    }
+
+    public String getCheckSum() throws NoSuchAlgorithmException {
+        MessageDigest crypto = MessageDigest.getInstance("SHA-1");
+        crypto.reset();
+        crypto.update(getFileContent());
+        return bytesToHex(crypto.digest());
+    }
+
+    public static String bytesToHex(byte[] in) {
+        final StringBuilder builder = new StringBuilder();
+        for(byte b : in) {
+            builder.append(String.format("%02x", b));
+        }
+        return builder.toString();
     }
 }

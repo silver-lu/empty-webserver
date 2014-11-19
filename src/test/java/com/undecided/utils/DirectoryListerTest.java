@@ -163,6 +163,12 @@ public class DirectoryListerTest {
         assertTrue(htmlLinks.contains("<a href='/abc'"));
     }
 
+    @Test
+    public void testWeCanObtainCorrectSha1HashCheckSumOfFile() throws Exception {
+        DirectoryLister directoryLister = new DirectoryLister(new File("pom.xml"));
+        assertEquals("27c03f744e06fdd68399df130d0d3ef3a0de2138", directoryLister.getCheckSum());
+    }
+
     private boolean pathExists(List<File> paths, String target) {
         for  ( File path : paths ) {
             if ( path.getPath().contains(target)) {

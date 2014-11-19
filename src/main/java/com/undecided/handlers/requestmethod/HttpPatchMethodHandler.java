@@ -32,7 +32,6 @@ public class HttpPatchMethodHandler extends HttpHandler {
         if (lister.isFile()) {
             ServerResponse serverResponse = ServerResponseFactory.getInstance(HttpResponseType.PatchFile);
             serverResponse.setETag(requestHeader.getHeaderParam(HttpSupportedHeader.ETag));
-            serverResponse.setResponseBody("test".getBytes());
             response = serverResponse;
         }
         else {
