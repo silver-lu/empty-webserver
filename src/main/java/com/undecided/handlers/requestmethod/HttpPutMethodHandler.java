@@ -7,6 +7,7 @@ import com.undecided.handlers.HttpHandler;
 import com.undecided.responses.*;
 import com.undecided.enums.HttpResponseCode;
 import com.undecided.utils.DirectoryLister;
+import com.undecided.utils.FileSystemWrapper;
 
 import java.io.File;
 
@@ -14,7 +15,7 @@ import java.io.File;
  * Created by silver.lu on 11/12/14.
  */
 public class HttpPutMethodHandler extends HttpHandler {
-    DirectoryLister lister = null;
+    FileSystemWrapper fsWrapper = null;
 
     public HttpPutMethodHandler(Request request) {
         super(request);
@@ -23,7 +24,7 @@ public class HttpPutMethodHandler extends HttpHandler {
     @Override
     public void processRequest() {
         RequestHeader requestHeader = request.getRequestHeader();
-        DirectoryLister lister = getDirectoryLister(new File(Server.startDirectory + requestHeader.getRequestUrl()));
+        FileSystemWrapper fsWrapper = getFileSystemWrapper(new File(Server.startDirectory + requestHeader.getRequestUrl()));
 
         try {
             requestHeader.parseClientHeaders();
@@ -34,17 +35,16 @@ public class HttpPutMethodHandler extends HttpHandler {
         response = new ServerStandardResponse(HttpResponseCode.Ok);
     }
 
-    private DirectoryLister getDirectoryLister(File baseDirectory) {
-        if ( lister != null ) {
-            return lister;
+    private FileSystemWrapper getFileSystemWrapper(File baseDirectory) {
+        if ( fsWrapper != null ) {
+            return fsWrapper;
         }
         else {
-            return new DirectoryLister(baseDirectory);
+            return new FileSystemWrapper(baseDirectory);
         }
     }
 
-    public void setDirectoryLister(DirectoryLister lister) {
-        this.lister = lister;
+    public void setFileSystemWrapper(FileSystemWrapper fsWrapper) {
+        this.fsWrapper = fsWrapper;
     }
-
 }

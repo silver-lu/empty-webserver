@@ -1,13 +1,17 @@
 package com.undecided.handlers.requestmethod;
 
+import com.undecided.mocks.MockFileSystemWrapper;
 import com.undecided.requests.Request;
 import com.undecided.Server;
 import com.undecided.constants.ServerParamConstant;
 import com.undecided.handlers.requestmethod.HttpPutMethodHandler;
 import com.undecided.mocks.MockDirectoryLister;
 import com.undecided.mocks.MockFile;
+import com.undecided.utils.FileSystemWrapper;
 import org.junit.Before;
 import org.junit.Test;
+
+import java.nio.file.FileSystem;
 
 import static org.junit.Assert.assertEquals;
 
@@ -28,11 +32,12 @@ public class HttpPutMethodHandlerTest {
         request.parse();
 
         String fileName = Server.startDirectory + request.getRequestHeader().getRequestUrl();
-
         HttpPutMethodHandler handler = new HttpPutMethodHandler(request);
+        MockFileSystemWrapper fsWrapper = new MockFileSystemWrapper(new MockFile(fileName));
         MockDirectoryLister lister = new MockDirectoryLister(new MockFile(fileName));
         lister.exists = true;
-        handler.setDirectoryLister( lister );
+        fsWrapper.setDirectoryLister(lister);
+        handler.setFileSystemWrapper(fsWrapper);
 
         handler.processRequest();
 

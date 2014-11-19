@@ -8,11 +8,11 @@ import java.util.List;
  * Created by silver.lu on 11/19/14.
  */
 public class FileSystemWrapper {
-    private DirectoryLister directoryLister;
-    private File baseDirectory;
-    private FileReader fileReader;
-    private FileWriter fileWriter;
-    private FileInspector fileInspector;
+    protected DirectoryLister directoryLister;
+    protected File baseDirectory;
+    protected FileReader fileReader;
+    protected FileWriter fileWriter;
+    protected FileInspector fileInspector;
 
     public FileSystemWrapper(File baseDirectory) {
         this.baseDirectory = baseDirectory;

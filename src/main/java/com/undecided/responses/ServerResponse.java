@@ -22,7 +22,6 @@ public abstract class ServerResponse {
     protected SimpleDateTimeInterface dateTime;
     protected List<String> allowedMethods;
     protected String eTag;
-    protected String contentMimeType;
     protected String redirectLocation;
     private boolean suppressBody;
 
