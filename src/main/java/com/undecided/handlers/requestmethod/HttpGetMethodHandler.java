@@ -10,6 +10,7 @@ import com.undecided.responses.*;
 import com.undecided.utils.DirectoryLister;
 import com.undecided.utils.FileReader;
 import com.undecided.utils.FileSystemWrapper;
+import com.undecided.utils.UrlQueryStringDecode;
 
 import java.io.File;
 import java.util.Base64;
@@ -52,6 +53,14 @@ public class HttpGetMethodHandler extends HttpHandler {
                 //response = serverResponse.getBasicAuthResponse();
             }
 
+            response = serverResponse;
+        }
+        else if (requestHeader.getRequestUrl().contains("/parameters")) {
+            UrlQueryStringDecode d = new UrlQueryStringDecode(requestHeader.getRequestUrl());
+            String formattedQueryStrings = d.getFormattedQueryStringPairs();
+            ServerResponse serverResponse = ServerResponseFactory.getInstance(HttpResponseType.GetFile);
+            serverResponse.setContentType(fsWrapper.getFileInspector().getFileMimeType());
+            serverResponse.setResponseBody(formattedQueryStrings.getBytes());
             response = serverResponse;
         }
         else if (! fsWrapper.getFileInspector().exists()){
