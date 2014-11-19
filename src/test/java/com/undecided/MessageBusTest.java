@@ -69,7 +69,6 @@ public class MessageBusTest {
     @Test (expected = ConnectException.class)
     public void testWeAreAbleToShutDownServerSocketWithClose() throws Exception {
         startPrivateServer(5000);
-        Thread.sleep(500);
         bus.close();
         Socket socket = new Socket(InetAddress.getLocalHost(), 5000);
     }
@@ -77,7 +76,6 @@ public class MessageBusTest {
     @Test
     public void testEndToEndWeGetA400BackWithABadRequest() throws Exception {
         startPrivateServer(5000);
-        Thread.sleep(500);
         Socket socket = new Socket(InetAddress.getLocalHost(), 5000);
         PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
         out.println("This is a read Test" + System.lineSeparator());
@@ -119,6 +117,7 @@ public class MessageBusTest {
             }
         };
         serverThread.start();
+        Thread.sleep(500);
     }
 
     @After

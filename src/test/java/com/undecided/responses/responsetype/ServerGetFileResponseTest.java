@@ -1,9 +1,12 @@
-package com.undecided.responses;
+package com.undecided.responses.responsetype;
 
 import com.undecided.enums.HttpResponseCode;
 import com.undecided.responses.ServerResponse;
 import com.undecided.responses.responsetype.ServerGetFileResponse;
 import org.junit.Test;
+
+import java.nio.charset.Charset;
+import java.security.MessageDigest;
 
 import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertEquals;
@@ -24,6 +27,5 @@ public class ServerGetFileResponseTest {
         ServerResponse response = new ServerGetFileResponse();
         assertEquals(HttpResponseCode.Ok, response.getResponseCode());
         assertEquals("HTTP/1.1 200 OK", response.getHeader().split(System.lineSeparator())[0]);
-
     }
 }
