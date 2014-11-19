@@ -14,9 +14,4 @@ public class MockDirectoryLister extends DirectoryLister {
     public MockDirectoryLister(File baseDirectory) {
         super(baseDirectory);
     }
-
-    @Override
-    public boolean exists() {
-        return exists;
-    }
 }

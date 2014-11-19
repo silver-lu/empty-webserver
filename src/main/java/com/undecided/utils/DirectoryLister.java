@@ -7,6 +7,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.nio.file.spi.FileTypeDetector;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -22,7 +23,10 @@ public class DirectoryLister {
     private List<File> readableFilesAndDirectories;
     private List<File> allFiles;
     private List<File> allDirectories;
-    private String checkSum;
+
+    private FileReader fileReader;
+    private FileWriter fileWriter;
+    private FileInspector fileInspector;
 
     public DirectoryLister(File baseDirectory) {
 
@@ -32,6 +36,8 @@ public class DirectoryLister {
         this.allFiles = new ArrayList<File>();
         this.allDirectories = new ArrayList<File>();
         this.baseDirectory = baseDirectory;
+        this.fileReader = new FileReader(baseDirectory);
+        this.fileWriter = new FileWriter(baseDirectory);
     }
 
     public void parseDirectory() {
@@ -87,50 +93,15 @@ public class DirectoryLister {
         return readableDirectories;
     }
 
-    public boolean exists() {
-        return baseDirectory.exists();
+    public FileInspector fileInspector() {
+        return fileInspector;
     }
 
-    public byte[] getFileContent() {
-        try {
-            byte[] fileContent = Files.readAllBytes(Paths.get(baseDirectory.getAbsolutePath()));
-            return fileContent;
-
-        } catch (IOException e) {
-            return new byte[0];
-        }
+    public FileReader getFileReader() {
+        return fileReader;
     }
 
-    public boolean isFile() {
-        return this.baseDirectory.isFile();
-    }
-
-    public boolean isDirectory() {
-        return this.baseDirectory.isDirectory();
-    }
-
-    private FileExtension getFileExtension() {
-        String filename = baseDirectory.getName();
-        String extensionString = filename.substring(filename.lastIndexOf('.')+1);
-        return MimeTypeConstant.EXTENTION.get(extensionString);
-    }
-
-    public String getFileMimeType() {
-        return MimeTypeConstant.MIME_TYPE.get(getFileExtension());
-    }
-
-    public String getCheckSum() throws NoSuchAlgorithmException {
-        MessageDigest crypto = MessageDigest.getInstance("SHA-1");
-        crypto.reset();
-        crypto.update(getFileContent());
-        return bytesToHex(crypto.digest());
-    }
-
-    public static String bytesToHex(byte[] in) {
-        final StringBuilder builder = new StringBuilder();
-        for(byte b : in) {
-            builder.append(String.format("%02x", b));
-        }
-        return builder.toString();
+    public FileWriter getFileWriter() {
+        return fileWriter;
     }
 }

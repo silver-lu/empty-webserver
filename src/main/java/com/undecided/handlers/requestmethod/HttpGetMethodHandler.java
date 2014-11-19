@@ -8,6 +8,8 @@ import com.undecided.requests.Request;
 import com.undecided.requests.RequestHeader;
 import com.undecided.responses.*;
 import com.undecided.utils.DirectoryLister;
+import com.undecided.utils.FileReader;
+import com.undecided.utils.FileSystemWrapper;
 
 import java.io.File;
 import java.util.Base64;
@@ -17,7 +19,7 @@ import java.util.Base64;
  */
 public class HttpGetMethodHandler extends HttpHandler {
 
-    private DirectoryLister lister = null;
+    private FileSystemWrapper fsWrapper = null;
 
     public HttpGetMethodHandler(Request request) {
         super(request);
@@ -26,7 +28,7 @@ public class HttpGetMethodHandler extends HttpHandler {
     @Override
     public void processRequest() {
         RequestHeader requestHeader = request.getRequestHeader();
-        DirectoryLister lister = getDirectoryLister(new File(Server.startDirectory + requestHeader.getRequestUrl()));
+        FileSystemWrapper fsWrapper = new FileSystemWrapper(new File(Server.startDirectory + requestHeader.getRequestUrl()));
 
         if (requestHeader.getRequestUrl().equals("/logs")) {
             String authString = requestHeader.getAuthorization();
@@ -39,8 +41,10 @@ public class HttpGetMethodHandler extends HttpHandler {
             ServerResponse serverResponse;
             if (match.equals(authString)) {
                 serverResponse = ServerResponseFactory.getInstance(HttpResponseType.GetFile);
-                serverResponse.setContentType(lister.getFileMimeType());
-                serverResponse.setResponseBody(lister.getFileContent());
+                serverResponse.setContentType(fsWrapper.getFileInspector().getFileMimeType());
+                FileReader fileReader = fsWrapper.getFileReader();
+                fileReader.read();
+                serverResponse.setResponseBody(fileReader.getContent());
             } else {
                 serverResponse = ServerResponseFactory.getInstance(HttpResponseCode.Unauthorized);
                 String message = "Authentication required";
@@ -50,17 +54,20 @@ public class HttpGetMethodHandler extends HttpHandler {
 
             response = serverResponse;
         }
-        else if (! lister.exists()){
+        else if (! fsWrapper.getFileInspector().exists()){
             ServerResponse serverResponse = ServerResponseFactory.getInstance(HttpResponseCode.NotFound);
             response = serverResponse;
         }
-        else if ( lister.isFile()) {
+        else if ( fsWrapper.getFileInspector().isFile()) {
             ServerResponse serverResponse = ServerResponseFactory.getInstance(HttpResponseType.GetFile);
-            serverResponse.setContentType(lister.getFileMimeType());
-            serverResponse.setResponseBody(lister.getFileContent());
+            serverResponse.setContentType(fsWrapper.getFileInspector().getFileMimeType());
+            FileReader fileReader = fsWrapper.getFileReader();
+            fileReader.read();
+            serverResponse.setResponseBody(fileReader.getContent());
             response = serverResponse;
         }
-        else if ( lister.isDirectory()) {
+        else if ( fsWrapper.getFileInspector().isDirectory()) {
+            DirectoryLister lister = fsWrapper.getDirectoryLister();
             lister.parseDirectory();
             ServerResponse serverResponse = ServerResponseFactory.getInstance(HttpResponseType.GetDirectory);
             serverResponse.setResponseBody(lister.getLinkableDirectory().getBytes());
@@ -69,17 +76,17 @@ public class HttpGetMethodHandler extends HttpHandler {
 
     }
 
-    private DirectoryLister getDirectoryLister(File baseDirectory) {
-        if ( lister != null ) {
-            return lister;
+    private FileSystemWrapper getFileSystemWrapper(File baseDirectory) {
+        if ( fsWrapper != null ) {
+            return fsWrapper;
         }
         else {
-            return new DirectoryLister(baseDirectory);
+            return new FileSystemWrapper(baseDirectory);
         }
     }
 
-    public void setDirectoryLister(DirectoryLister lister) {
-        this.lister = lister;
+    public void setFileSystemWrapper(FileSystemWrapper fsWrapper) {
+        this.fsWrapper = fsWrapper;
     }
 
 }
