@@ -35,8 +35,8 @@ public class RequestHeader {
     }
 
     public void parse() throws Exception {
-        String[] requests = rawInput.split("\n");
-        String requestLine = requests[0];
+        String[] requests = rawInput.split(System.lineSeparator());
+        String requestLine = requests[0].trim();
 
         if (requestLine == null || requestLine.length() < 10) {
             throw new MalformedRequestException();
@@ -95,7 +95,7 @@ public class RequestHeader {
         for (String header : headers) {
             String[] params = header.split(": ");
             if (HttpConstant.SUPPORTED_HEADERS.containsKey(params[0])) {
-                additionalHeaders.put(HttpConstant.SUPPORTED_HEADERS.get(params[0]), params[1]);
+                additionalHeaders.put(HttpConstant.SUPPORTED_HEADERS.get(params[0]), params[1].trim());
             }
         }
     }

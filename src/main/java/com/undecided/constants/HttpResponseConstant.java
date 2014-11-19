@@ -13,4 +13,5 @@ public interface HttpResponseConstant {
     public static final String TPL_BASIC_AUTH = "WWW-Authenticate: Basic realm=\"%s\"%n";
     public static final String TPL_MIME_TYPE = "Content-Type: %s%n";
     public static final String TPL_NEW_LOCATION = "Location: %s%n";
+    public static final String TPL_ETAG = "ETag: %s%n";
 }

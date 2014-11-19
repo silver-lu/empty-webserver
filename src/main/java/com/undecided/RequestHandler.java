@@ -32,6 +32,7 @@ public class RequestHandler {
     }
 
     public void processRequest() throws MissingRequestHeaderException {
+
         RequestValidatorChain validatorChain = new RequestValidatorChain();
         validatorChain.add(new RequestRedirectValidator(Server.configuration.getRedirectsConfig()));
         validatorChain.add(new RequestRestrictedMethodValidator(Server.configuration.getRestrictedMethodsConfig()));

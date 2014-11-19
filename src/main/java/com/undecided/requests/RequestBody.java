@@ -16,7 +16,7 @@ public class RequestBody {
     }
 
     public void parse() {
-        if (rawInput.length() > 0) {
+        if (rawInput.length() > 0 && rawInput.indexOf("=") != -1) {
             String[] params = rawInput.split("&");
             for (String param : params) {
                 String name = param.split("=")[0];

@@ -28,4 +28,19 @@ public class RequestTest {
         assertEquals("Cosby", request.getRequestBody().getParam("home"));
     }
 
+    @Test
+    public void testParsingOfAPatchRequestGivenARawRequest() throws Exception {
+        String rawRequest = "PATCH /pom.xml HTTP/1.1" + System.lineSeparator();
+        rawRequest += "Host: www.example.com" + System.lineSeparator();
+        rawRequest += "Content-Type: application/example" + System.lineSeparator();
+        rawRequest += "If-Match: \"e0023aa4e\"" + System.lineSeparator();
+        rawRequest += "Content-Length: 20" + System.lineSeparator();
+        rawRequest += System.lineSeparator();
+        rawRequest += "abcdefghijabcdefghij";
+
+        Request request = new Request(rawRequest);
+        request.parse();
+
+        assertEquals(HttpRequestMethod.Patch, request.getRequestHeader().getRequestMethod());
+    }
 }

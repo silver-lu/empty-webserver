@@ -4,6 +4,7 @@ import com.undecided.responses.ServerResponse;
 
 import java.io.*;
 import java.net.Socket;
+import java.util.Arrays;
 
 /**
  * Created by silver.lu on 11/12/14.
@@ -24,6 +25,7 @@ public class MessageBusWorker implements Runnable {
             String input = readData();
             handler.setRequest(input);
             handler.processRequest();
+
             writeData(handler.getResponse());
             socket.close();
             SocketMessageBus.activeSockets.remove(socket);
@@ -33,9 +35,19 @@ public class MessageBusWorker implements Runnable {
         }
     }
 
-    private String readData() throws IOException {
-        BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-        return reader.readLine();
+    private String readData() throws Exception {
+        InputStream inputStream = socket.getInputStream();
+        StringBuilder sb = new StringBuilder();
+        byte[] b = new byte[255];
+
+        // Such a bad hack
+        Thread.sleep(50);
+        while (inputStream.available() > 0) {
+            int length = inputStream.read(b);
+            sb.append(new String(Arrays.copyOfRange(b, 0, length), "UTF-8"));
+        }
+
+        return sb.toString();
     }
 
     private void writeData(ServerResponse response) throws IOException {

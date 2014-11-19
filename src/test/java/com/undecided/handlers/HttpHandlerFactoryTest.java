@@ -49,4 +49,12 @@ public class HttpHandlerFactoryTest {
 
         assertEquals(HttpPostMethodHandler.class, HttpHandlerFactory.getInstance(request).getClass());
     }
+
+    @Test
+    public void testPatchRequestAreRoutedToHeadRequestHandler() throws Exception {
+        Request request = new Request("PATCH /test HTTP/1.1");
+        request.parse();
+
+        assertEquals(HttpPatchMethodHandler.class, HttpHandlerFactory.getInstance(request).getClass());
+    }
 }

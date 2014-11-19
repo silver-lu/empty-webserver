@@ -40,14 +40,14 @@ public class HttpGetMethodHandler extends HttpHandler {
             response = serverResponse;
         }
         else if ( lister.isFile()) {
-            ServerResponse serverResponse = ServerResponseFactory.getInstance(HttpResponseType.File);
+            ServerResponse serverResponse = ServerResponseFactory.getInstance(HttpResponseType.GetFile);
             serverResponse.setContentType(lister.getFileMimeType());
             serverResponse.setResponseBody(lister.getFileContent());
             response = serverResponse;
         }
         else if ( lister.isDirectory()) {
             lister.parseDirectory();
-            ServerResponse serverResponse = ServerResponseFactory.getInstance(HttpResponseType.Directory);
+            ServerResponse serverResponse = ServerResponseFactory.getInstance(HttpResponseType.GetDirectory);
             serverResponse.setResponseBody(lister.getLinkableDirectory().getBytes());
             response = serverResponse;
         }

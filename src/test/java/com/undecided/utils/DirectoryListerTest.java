@@ -157,7 +157,7 @@ public class DirectoryListerTest {
         mockFile.setFiles(fakeFiles);
 
         DirectoryLister directoryLister = new DirectoryLister(mockFile);
-        //DirectoryLister directoryLister = new DirectoryLister(new File("/Users/yvonne.wang/JavaTraining/cob_spec/public"));
+        //DirectoryLister directoryLister = new DirectoryLister(new GetFile("/Users/yvonne.wang/JavaTraining/cob_spec/public"));
         directoryLister.parseDirectory();
         String htmlLinks = directoryLister.getLinkableDirectory();
         assertTrue(htmlLinks.contains("<a href='/abc'"));

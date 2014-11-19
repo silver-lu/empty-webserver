@@ -26,7 +26,9 @@ public class MessageBusTest {
 
     @Before
     public void setUp() throws Exception {
+
         Server.configuration = new Configurations();
+        Server.startDirectory = "./";
     }
 
     @Test
@@ -48,11 +50,11 @@ public class MessageBusTest {
 
         Socket firstSocket = new Socket(InetAddress.getLocalHost(), 5000);
         PrintWriter firstOut = new PrintWriter(firstSocket.getOutputStream(), true);
-        firstOut.println("This is a read Test");
+        firstOut.println("This is a read Test" + System.lineSeparator());
 
         Socket secondSocket = new Socket(InetAddress.getLocalHost(), 5000);
         PrintWriter secondOut = new PrintWriter(secondSocket.getOutputStream(), true);
-        secondOut.println("GET /foo HTTP/1.1");
+        secondOut.println("GET /foo HTTP/1.1" + System.lineSeparator());
 
         // read from second socket
         BufferedReader secondIn = new BufferedReader(new InputStreamReader(secondSocket.getInputStream()));
@@ -78,12 +80,10 @@ public class MessageBusTest {
         Thread.sleep(500);
         Socket socket = new Socket(InetAddress.getLocalHost(), 5000);
         PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
-        out.println("This is a read Test");
+        out.println("This is a read Test" + System.lineSeparator());
         BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         assertEquals("HTTP/1.1 400 Bad Request", in.readLine());
     }
-
-
 
     /*
     @Test

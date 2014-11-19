@@ -15,7 +15,7 @@ public class SaveAsHtmlTest {
     public void ShouldSaveFileAsHtml(){
         DirectoryLister directoryLister = new DirectoryLister(new File("."));
 
-        //DirectoryLister directoryLister = new DirectoryLister(new File("."));
+        //DirectoryLister directoryLister = new DirectoryLister(new GetFile("."));
         directoryLister.parseDirectory();
         List<String> files = directoryLister.getListReadableFilesAndDirectories();
         SaveAsHtml saveAsHtml = new SaveAsHtml(files.toString());

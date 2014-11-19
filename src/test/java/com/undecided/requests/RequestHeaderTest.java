@@ -109,7 +109,7 @@ public class RequestHeaderTest {
 
 
     @Test
-    public void testThatETagDirectiveInTheHeaderCanBeRead() throws Exception {
+    public void testThatETagDirectiveIfMatchInTheHeaderCanBeRead() throws Exception {
         String rawRequest = "PATCH /file.txt HTTP/1.1" + System.lineSeparator();
         rawRequest += "Host: www.example.com" + System.lineSeparator();
         rawRequest += "Content-Type: application/example" + System.lineSeparator();
@@ -119,7 +119,6 @@ public class RequestHeaderTest {
         RequestHeader requestHeader = new RequestHeader(rawRequest);
         requestHeader.parse();
         assertEquals("\"e0023aa4e\"", requestHeader.getHeaderParam(HttpSupportedHeader.ETag));
-
     }
 
 }

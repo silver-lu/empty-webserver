@@ -5,6 +5,7 @@ import com.undecided.enums.HttpResponseType;
 import com.undecided.responses.responsecode.*;
 import com.undecided.responses.responsetype.ServerGetDirectoryResponse;
 import com.undecided.responses.responsetype.ServerGetFileResponse;
+import com.undecided.responses.responsetype.ServerPatchFileResponse;
 
 /**
  * Created by silver.lu on 11/17/14.
@@ -30,11 +31,14 @@ public class ServerResponseFactory {
     }
 
     public static ServerResponse getInstance(HttpResponseType responseType) {
-        if ( responseType == HttpResponseType.File) {
+        if ( responseType == HttpResponseType.GetFile) {
             return new ServerGetFileResponse();
         }
-        else if ( responseType == HttpResponseType.Directory) {
+        else if ( responseType == HttpResponseType.GetDirectory) {
             return new ServerGetDirectoryResponse();
+        }
+        else if ( responseType == HttpResponseType.PatchFile) {
+            return new ServerPatchFileResponse();
         }
         return null;
     }

@@ -21,6 +21,7 @@ public abstract class ServerResponse {
     protected byte[] responseBody;
     protected SimpleDateTimeInterface dateTime;
     protected List<String> allowedMethods;
+    protected String eTag;
     protected String contentMimeType;
     protected String redirectLocation;
     private boolean suppressBody;
@@ -83,6 +84,8 @@ public abstract class ServerResponse {
     }
 
     public void setAllowedMethods(List<String> allowedMethods) {}
+
+    public void setETag(String eTag){}
 
     public void setContentType(String contentType) {
         this.contentType = contentType;

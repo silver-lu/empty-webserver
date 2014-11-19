@@ -27,6 +27,9 @@ public class HttpHandlerFactory {
         else if ( requestHeader.getRequestMethod() == HttpRequestMethod.Head) {
             return new HttpHeadMethodHandler(request);
         }
+        else if ( requestHeader.getRequestMethod() == HttpRequestMethod.Patch) {
+            return new HttpPatchMethodHandler(request);
+        }
         return null;
     }
 }
