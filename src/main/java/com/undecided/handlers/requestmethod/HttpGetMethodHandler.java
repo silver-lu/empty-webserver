@@ -38,7 +38,7 @@ public class HttpGetMethodHandler extends HttpHandler {
 
             ServerResponse serverResponse;
             if (match.equals(authString)) {
-                serverResponse = ServerResponseFactory.getInstance(HttpResponseType.File);
+                serverResponse = ServerResponseFactory.getInstance(HttpResponseType.GetFile);
                 serverResponse.setContentType(lister.getFileMimeType());
                 serverResponse.setResponseBody(lister.getFileContent());
             } else {
