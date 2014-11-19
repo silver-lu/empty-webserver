@@ -43,9 +43,11 @@ public class HttpGetMethodHandler extends HttpHandler {
             if (match.equals(authString)) {
                 serverResponse = ServerResponseFactory.getInstance(HttpResponseType.GetFile);
                 serverResponse.setContentType(fsWrapper.getFileInspector().getFileMimeType());
-                FileReader fileReader = fsWrapper.getFileReader();
-                fileReader.read();
-                serverResponse.setResponseBody(fileReader.getContent());
+                String body = "GET /log HTTP/1.1" + System.lineSeparator() +
+                        "PUT /these HTTP/1.1" + System.lineSeparator() +
+                        "HEAD /requests HTTP/1.1";
+
+                serverResponse.setResponseBody(body.getBytes());
             } else {
                 serverResponse = ServerResponseFactory.getInstance(HttpResponseCode.Unauthorized);
                 String message = "Authentication required";
