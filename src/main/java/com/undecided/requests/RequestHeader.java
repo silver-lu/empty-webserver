@@ -160,4 +160,9 @@ public class RequestHeader {
     public String getHeaderParam(HttpSupportedHeader header) {
         return additionalHeaders.get(header);
     }
+
+    public String getAuthorization() {
+        String auth = additionalHeaders.get(HttpSupportedHeader.Authorization);
+        return auth;
+    }
 }

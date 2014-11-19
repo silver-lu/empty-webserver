@@ -10,6 +10,7 @@ import com.undecided.responses.*;
 import com.undecided.utils.DirectoryLister;
 
 import java.io.File;
+import java.util.Base64;
 
 /**
  * Created by silver.lu on 11/12/14.
@@ -28,11 +29,25 @@ public class HttpGetMethodHandler extends HttpHandler {
         DirectoryLister lister = getDirectoryLister(new File(Server.startDirectory + requestHeader.getRequestUrl()));
 
         if (requestHeader.getRequestUrl().equals("/logs")) {
-            ServerResponse serverResponse = ServerResponseFactory.getInstance(HttpResponseCode.Unauthorized);
-            String message = "Authentication required";
-            serverResponse.setResponseBody(message.getBytes());
+            String authString = requestHeader.getAuthorization();
 
-            //response = serverResponse.getBasicAuthResponse();
+            String userPass = "admin:hunter2";
+            Base64.Encoder encoder = Base64.getEncoder();
+
+            String match = "Basic " + encoder.encodeToString(userPass.getBytes());
+
+            ServerResponse serverResponse;
+            if (match.equals(authString)) {
+                serverResponse = ServerResponseFactory.getInstance(HttpResponseType.File);
+                serverResponse.setContentType(lister.getFileMimeType());
+                serverResponse.setResponseBody(lister.getFileContent());
+            } else {
+                serverResponse = ServerResponseFactory.getInstance(HttpResponseCode.Unauthorized);
+                String message = "Authentication required";
+                serverResponse.setResponseBody(message.getBytes());
+                //response = serverResponse.getBasicAuthResponse();
+            }
+
             response = serverResponse;
         }
         else if (! lister.exists()){

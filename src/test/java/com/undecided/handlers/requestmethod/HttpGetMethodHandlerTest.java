@@ -6,8 +6,9 @@ import com.undecided.constants.ServerParamConstant;
 import com.undecided.handlers.requestmethod.HttpGetMethodHandler;
 import org.junit.Before;
 import org.junit.Test;
+import java.util.Base64;
 
-
+import static java.util.Base64.*;
 import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertEquals;
 
@@ -66,4 +67,22 @@ public class HttpGetMethodHandlerTest {
         lines = handler.getResponse().getBodyAsString().split(System.lineSeparator());
         assertEquals("Authentication required", lines[lines.length - 1]);
     }
+    
+    @Test
+    public void testPathThatRequiresBasicAuthReturns200ForValidUserPass() throws Exception {
+        String userPass = "admin:hunter2";
+        Base64.Encoder encoder = Base64.getEncoder();
+
+        String headerString = "GET /logs HTTP/1.1" + System.lineSeparator() +
+                "Authorization: Basic " + encoder.encodeToString(userPass.getBytes());
+
+        Request request = new Request(headerString);
+        request.parse();
+        HttpGetMethodHandler handler = new HttpGetMethodHandler(request);
+        handler.processRequest();
+        String header = handler.getResponse().getHeader();
+        String[] lines = handler.getResponse().getHeader().split(System.lineSeparator());
+        assertEquals("HTTP/1.1 200 OK", lines[0]);
+    }
+
 }
