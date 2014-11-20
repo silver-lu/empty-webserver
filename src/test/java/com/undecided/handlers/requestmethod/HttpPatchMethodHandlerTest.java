@@ -24,6 +24,7 @@ public class HttpPatchMethodHandlerTest {
         Server.startDirectory = ServerParamConstant.DEFAULT_START_DIRECTORY;
 
         MockFile file = new MockFile("virtual-path.txt");
+        file.setExists(true);
         fsWrapper = new MockFileSystemWrapper(file);
         MockFileWriter fileWriter = new MockFileWriter(file);
         fsWrapper.setFileWriter(fileWriter);

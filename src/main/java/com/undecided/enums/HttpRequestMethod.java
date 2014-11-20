@@ -9,5 +9,5 @@ public enum HttpRequestMethod {
     Post,
     Head,
     Patch,
-    Put
+    Delete, Put
 }

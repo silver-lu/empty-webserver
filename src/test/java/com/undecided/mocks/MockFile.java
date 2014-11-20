@@ -13,6 +13,8 @@ public class MockFile extends File {
     private boolean hidden;
     private boolean isDirectory;
     private boolean isFile;
+    private boolean exists;
+    private boolean isDeleted;
 
     public static final boolean DIRECTORY = true;
     public static final boolean HIDDEN = true;
@@ -22,6 +24,7 @@ public class MockFile extends File {
     public MockFile(String pathname) {
         super(pathname);
         this.isFile = true;
+        this.isDeleted = false;
     }
 
     public MockFile(String pathname, boolean isDirectory) {
@@ -80,8 +83,22 @@ public class MockFile extends File {
         return true;
     }
 
+    public void setExists(boolean exists) {
+        this.exists = exists;
+    }
+
     @Override
     public boolean exists() {
+        return exists;
+    }
+
+    @Override
+    public boolean delete() {
+        isDeleted = true;
         return true;
+    }
+
+    public boolean isDeleted() {
+        return isDeleted;
     }
 }

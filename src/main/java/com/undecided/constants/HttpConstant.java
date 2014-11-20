@@ -29,6 +29,7 @@ public interface HttpConstant {
     public final static String PUT_REQUEST = "PUT";
     public final static String HEAD_REQUEST = "HEAD";
     public final static String PATCH_REQUEST = "PATCH";
+    public final static String DELETE_REQUEST = "DELETE";
 
     public final static String CLIENT_USER_AGENT = "User-Agent";
     public final static String CLIENT_HOST = "Host";
@@ -48,6 +49,7 @@ public interface HttpConstant {
             put(PUT_REQUEST, HttpRequestMethod.Put);
             put(HEAD_REQUEST, HttpRequestMethod.Head);
             put(PATCH_REQUEST, HttpRequestMethod.Patch);
+            put(DELETE_REQUEST, HttpRequestMethod.Delete);
         }
     };
 
@@ -72,6 +74,7 @@ public interface HttpConstant {
             put(HttpRequestMethod.Put, PUT_REQUEST);
             put(HttpRequestMethod.Head, HEAD_REQUEST);
             put(HttpRequestMethod.Patch, PATCH_REQUEST);
+            put(HttpRequestMethod.Delete, DELETE_REQUEST);
         }
     };
 

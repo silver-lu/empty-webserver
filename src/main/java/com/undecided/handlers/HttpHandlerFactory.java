@@ -30,6 +30,9 @@ public class HttpHandlerFactory {
         else if ( requestHeader.getRequestMethod() == HttpRequestMethod.Patch) {
             return new HttpPatchMethodHandler(request);
         }
+        else if ( requestHeader.getRequestMethod() == HttpRequestMethod.Delete) {
+            return new HttpDeleteMethodHandler(request);
+        }
         return null;
     }
 }

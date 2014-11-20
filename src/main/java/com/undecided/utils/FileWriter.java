@@ -43,4 +43,8 @@ public class FileWriter {
         }
         return builder.toString();
     }
+
+    public void delete() {
+        file.delete();
+    }
 }

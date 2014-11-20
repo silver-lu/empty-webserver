@@ -14,9 +14,9 @@ import static org.junit.Assert.assertEquals;
  */
 public class ServerStandardResponseTest {
     @Test
-    public void testDefaultResponseIsSetTo400() throws Exception {
+    public void testDefaultResponseIsSetTo200() throws Exception {
         ServerResponse response = new ServerStandardResponse();
-        assertEquals(HttpResponseCode.BadRequest, response.getResponseCode());
+        assertEquals(HttpResponseCode.Ok, response.getResponseCode());
     }
 
     @Test
@@ -63,7 +63,7 @@ public class ServerStandardResponseTest {
 
         String header = response.getHeader();
         String[] lines = header.split(System.lineSeparator());
-        assertEquals("HTTP/1.1 400 Bad Request", lines[0]);
+        assertEquals("HTTP/1.1 200 OK", lines[0]);
         assertEquals("Date: Tue, 11 Nov 2014 19:15:23 GMT", lines[1]);
         assertEquals("Server: undecided", lines[2]);
         assertEquals("Content-Type: text/html; charset=UTF-8", lines[3]);

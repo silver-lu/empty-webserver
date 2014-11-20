@@ -1,12 +1,10 @@
 package com.undecided.handlers.requestmethod;
 
-import com.undecided.mocks.MockFileSystemWrapper;
+import com.undecided.mocks.*;
 import com.undecided.requests.Request;
 import com.undecided.Server;
 import com.undecided.constants.ServerParamConstant;
 import com.undecided.handlers.requestmethod.HttpPutMethodHandler;
-import com.undecided.mocks.MockDirectoryLister;
-import com.undecided.mocks.MockFile;
 import com.undecided.utils.FileSystemWrapper;
 import org.junit.Before;
 import org.junit.Test;
@@ -19,12 +17,18 @@ import static org.junit.Assert.assertEquals;
  * Created by anthony.chai on 11/15/14.
  */
 public class HttpPutMethodHandlerTest {
+    private MockFileSystemWrapper fsWrapper;
     @Before
     public void setUp() throws Exception {
         Server.startDirectory = ServerParamConstant.DEFAULT_START_DIRECTORY;
+
+        MockFile file = new MockFile("virtual-path.txt");
+        fsWrapper = new MockFileSystemWrapper(file);
+        MockFileWriter fileWriter = new MockFileWriter(file);
+        fsWrapper.setFileWriter(fileWriter);
+        MockFileReader fileReader = new MockFileReader(file);
+        fsWrapper.setFileReader(fileReader);
     }
-
-
 
     @Test
     public void testPutReturns200ForExistingFile() throws Exception {
@@ -33,12 +37,7 @@ public class HttpPutMethodHandlerTest {
 
         String fileName = Server.startDirectory + request.getRequestHeader().getRequestUrl();
         HttpPutMethodHandler handler = new HttpPutMethodHandler(request);
-        MockFileSystemWrapper fsWrapper = new MockFileSystemWrapper(new MockFile(fileName));
-        MockDirectoryLister lister = new MockDirectoryLister(new MockFile(fileName));
-        lister.exists = true;
-        fsWrapper.setDirectoryLister(lister);
         handler.setFileSystemWrapper(fsWrapper);
-
         handler.processRequest();
 
         String[] lines = handler.getResponse().getHeader().split(System.lineSeparator());

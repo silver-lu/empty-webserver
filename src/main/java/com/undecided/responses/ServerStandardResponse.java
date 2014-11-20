@@ -11,7 +11,7 @@ import com.undecided.utils.SimpleDateTime;
  */
 public class ServerStandardResponse extends ServerResponse {
     public ServerStandardResponse() {
-        this(HttpResponseCode.BadRequest);
+        this(HttpResponseCode.Ok);
     }
     public ServerStandardResponse(HttpResponseCode responseCode) {
         super(responseCode);
