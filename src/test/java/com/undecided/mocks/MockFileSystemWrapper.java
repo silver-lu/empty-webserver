@@ -8,6 +8,8 @@ import java.io.File;
  * Created by silver.lu on 11/19/14.
  */
 public class MockFileSystemWrapper extends FileSystemWrapper{
+    public static byte[] Content;
+
     public MockFileSystemWrapper(File baseDirectory) {
         super(baseDirectory);
     }

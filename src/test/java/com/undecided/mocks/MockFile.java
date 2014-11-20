@@ -79,4 +79,9 @@ public class MockFile extends File {
     public boolean createNewFile() {
         return true;
     }
+
+    @Override
+    public boolean exists() {
+        return true;
+    }
 }

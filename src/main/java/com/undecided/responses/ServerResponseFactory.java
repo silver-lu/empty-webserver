@@ -27,6 +27,9 @@ public class ServerResponseFactory {
         else if (responseCode == HttpResponseCode.Unauthorized) {
             return new ServerUnauthorizedResponse();
         }
+        else if (responseCode == HttpResponseCode.PreconditionFailed) {
+            return new ServerPreconditionFailedResponse();
+        }
         return null;
     }
 

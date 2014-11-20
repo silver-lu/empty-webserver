@@ -11,8 +11,8 @@ import java.security.NoSuchAlgorithmException;
  * Created by silver.lu on 11/19/14.
  */
 public class FileReader {
-    private File file;
-    private byte[] content;
+    protected File file;
+    protected byte[] content;
 
     public FileReader(File file) {
         this.file = file;

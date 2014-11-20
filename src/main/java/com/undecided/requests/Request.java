@@ -15,7 +15,11 @@ public class Request {
     }
 
     public void parse() throws Exception {
-        String headAndBodySeperator = System.lineSeparator() + System.lineSeparator();
+        String headAndBodySeperator = "\r\n\r\n";
+        if ( rawInput.indexOf(headAndBodySeperator) == -1 ) {
+            headAndBodySeperator = System.lineSeparator() + System.lineSeparator();
+        }
+
         if ( rawInput.indexOf(headAndBodySeperator) != -1 ) {
             rawHeader = rawInput.substring(0, rawInput.indexOf(headAndBodySeperator));
             rawBody = rawInput.substring(rawInput.indexOf(headAndBodySeperator) + headAndBodySeperator.length());

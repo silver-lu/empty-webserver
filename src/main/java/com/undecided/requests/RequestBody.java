@@ -29,4 +29,8 @@ public class RequestBody {
     public String getParam(String paramName) {
         return params.get(paramName);
     }
+
+    public byte[] getContent() {
+        return rawInput.getBytes();
+    }
 }

@@ -30,7 +30,7 @@ public class FileReaderWriterTest {
 
         FileReader fileReader = new FileReader(file);
         fileReader.read();
-        assertEquals("abc123", new String(fileReader.getContent()));
+        assertEquals("abc123\n", new String(fileReader.getContent()));
     }
 
     @Test
@@ -44,7 +44,7 @@ public class FileReaderWriterTest {
 
         FileReader fileReader = new FileReader(file);
         fileReader.read();
-        assertEquals("123abc", new String(fileReader.getContent()));
+        assertEquals("123abc\n", new String(fileReader.getContent()));
     }
 
     @Test
@@ -55,7 +55,7 @@ public class FileReaderWriterTest {
 
         FileReader fileReader = new FileReader(file);
         fileReader.read();
-        assertEquals("6367c48dd193d56ea7b0baad25b19455e529f5ee", fileReader.getCheckSum());
+        assertEquals("61ee8b5601a84d5154387578466c8998848ba089", fileReader.getCheckSum());
     }
 
     @After

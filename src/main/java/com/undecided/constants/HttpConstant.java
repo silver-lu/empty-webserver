@@ -19,6 +19,7 @@ public interface HttpConstant {
     public final static String REDIRECT = "302 Redirect";
     public final static String UNAUTHORIZED = "401 Unauthorized";
     public final static String NO_CONTENT = "204 No Content";
+    public final static String PRECONDITION_FAILED = "412 Precondition Failed";
 
     public final static String HTTP_VERSION = "HTTP/1.1";
 
@@ -84,6 +85,7 @@ public interface HttpConstant {
             put(HttpResponseCode.Unauthorized, UNAUTHORIZED);
             put(HttpResponseCode.Created, CREATED);
             put(HttpResponseCode.NoContent, NO_CONTENT);
+            put(HttpResponseCode.PreconditionFailed, PRECONDITION_FAILED);
         }
     };
 }

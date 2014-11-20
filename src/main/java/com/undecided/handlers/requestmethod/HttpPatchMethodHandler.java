@@ -10,7 +10,9 @@ import com.undecided.requests.RequestHeader;
 import com.undecided.responses.ServerResponse;
 import com.undecided.responses.ServerResponseFactory;
 import com.undecided.utils.DirectoryLister;
+import com.undecided.utils.FileReader;
 import com.undecided.utils.FileSystemWrapper;
+import com.undecided.utils.FileWriter;
 
 import java.io.File;
 
@@ -30,14 +32,24 @@ public class HttpPatchMethodHandler extends HttpHandler {
         RequestHeader requestHeader = request.getRequestHeader();
         FileSystemWrapper fsWrapper = getFileSystemWrapper(new File(Server.startDirectory + requestHeader.getRequestUrl()));
 
-        if (fsWrapper.getFileInspector().isFile()) {
+        FileReader fileReader = fsWrapper.getFileReader();
+        fileReader.read();
+        if (! fsWrapper.getFileInspector().exists()){
+            ServerResponse serverResponse = ServerResponseFactory.getInstance(HttpResponseCode.NotFound);
+            response = serverResponse;
+        }
+        else if ( fileReader.getCheckSum().equals(request.getRequestHeader().getHeaderParam(HttpSupportedHeader.ETag))) {
+            FileWriter fileWriter = fsWrapper.getFileWriter();
+            fileWriter.setContent(request.getRequestBody().getContent());
+            fileWriter.write();
+
             ServerResponse serverResponse = ServerResponseFactory.getInstance(HttpResponseType.PatchFile);
-            serverResponse.setETag(requestHeader.getHeaderParam(HttpSupportedHeader.ETag));
+            serverResponse.setETag(fileWriter.getCheckSum());
             response = serverResponse;
         }
         else {
-            ServerResponse serverResponse = ServerResponseFactory.getInstance(HttpResponseType.PatchFile);
-            serverResponse.setETag(requestHeader.getHeaderParam(HttpSupportedHeader.ETag));
+            ServerResponse serverResponse = ServerResponseFactory.getInstance(HttpResponseCode.PreconditionFailed);
+            serverResponse.setETag(fileReader.getCheckSum());
             response = serverResponse;
         }
     }
