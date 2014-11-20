@@ -99,4 +99,6 @@ public abstract class ServerResponse {
     public void suppressBody() {
         suppressBody = true;
     }
+
+    public void setRange(String range) {}
 }

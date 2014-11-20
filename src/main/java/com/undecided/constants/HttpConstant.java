@@ -20,6 +20,7 @@ public interface HttpConstant {
     public final static String UNAUTHORIZED = "401 Unauthorized";
     public final static String NO_CONTENT = "204 No Content";
     public final static String PRECONDITION_FAILED = "412 Precondition Failed";
+    public final static String PARTIAL_CONTENT = "206 Partial Content";
 
     public final static String HTTP_VERSION = "HTTP/1.1";
 
@@ -39,6 +40,7 @@ public interface HttpConstant {
     public final static String CLIENT_CONTENT_LENGTH = "Content-Length";
     public final static String CLIENT_IF_MATCH = "If-Match";
     public final static String CLIENT_AUTHORIZATION = "Authorization";
+    public final static String CLIENT_RANGE = "Range";
 
 
     public final static Map<String, HttpRequestMethod> REQUEST_METHODS = new HashMap<String, HttpRequestMethod>() {
@@ -63,6 +65,7 @@ public interface HttpConstant {
             put(CLIENT_CONTENT_LENGTH, HttpSupportedHeader.ContentLength);
             put(CLIENT_IF_MATCH, HttpSupportedHeader.ETag);
             put(CLIENT_AUTHORIZATION, HttpSupportedHeader.Authorization);
+            put(CLIENT_RANGE, HttpSupportedHeader.Range);
         }
     };
 
@@ -89,6 +92,7 @@ public interface HttpConstant {
             put(HttpResponseCode.Created, CREATED);
             put(HttpResponseCode.NoContent, NO_CONTENT);
             put(HttpResponseCode.PreconditionFailed, PRECONDITION_FAILED);
+            put(HttpResponseCode.PartialContent, PARTIAL_CONTENT);
         }
     };
 }

@@ -19,14 +19,6 @@ public class RequestHeader {
     private HttpRequestMethod requestMethod;
     private String requestUrl;
     private HttpVersion httpVersion;
-    private String ClientUserAgent;
-    private String ClientHost;
-    private String ClientAcceptLanguage;
-    private String ClientConnection;
-    private String ClientContentType;
-    private int ClientContentLength;
-    private String ClientBody;
-    private String ClientInput;
     private Map<HttpSupportedHeader, String> additionalHeaders;
 
     public RequestHeader(String rawInput) {
@@ -100,62 +92,9 @@ public class RequestHeader {
         }
     }
 
-
-
-    public void parseClientHeaders() throws Exception {
-        String[] requests = rawInput.split("\n");
-
-        // remove the first line of the request
-        ClientInput = rawInput.substring(requests[0].length(), rawInput.length());
-
-        for (String requestLine : requests) {
-            // skip the first header
-            if (requestLine.equals(requests[0])) {
-                continue;
-            }
-
-            parseClientLine(requestLine);
-
-            // We can stop once we get see the client content length
-            String[] clientCommand = requestLine.split(": ");
-            if (clientCommand[0].equals(HttpConstant.CLIENT_CONTENT_LENGTH)) {
-                break;
-            }
-        }
+    public boolean hasHeaderParam(HttpSupportedHeader header) {
+        return additionalHeaders.containsKey(header);
     }
-
-    private void parseClientLine(String requestLine) {
-        String[] clientCommand = requestLine.split(": ");
-
-        if (clientCommand[0].equals(HttpConstant.CLIENT_USER_AGENT)) {
-            this.ClientUserAgent = clientCommand[1];
-            ClientInput = ClientInput.substring(requestLine.length() + 1, ClientInput.length());
-        } else if (clientCommand[0].equals(HttpConstant.CLIENT_HOST)) {
-            this.ClientHost = clientCommand[1];
-            ClientInput = ClientInput.substring(requestLine.length() + 1, ClientInput.length());
-        } else if (clientCommand[0].equals(HttpConstant.CLIENT_ACCEPT_LANGUAGE)) {
-            this.ClientAcceptLanguage = clientCommand[1];
-            ClientInput = ClientInput.substring(requestLine.length() + 1, ClientInput.length());
-        } else if (clientCommand[0].equals(HttpConstant.CLIENT_CONNECTION)) {
-            this.ClientConnection = clientCommand[1];
-            ClientInput = ClientInput.substring(requestLine.length() + 1, ClientInput.length());
-        } else if (clientCommand[0].equals(HttpConstant.CLIENT_CONTENT_TYPE)) {
-            this.ClientContentType = clientCommand[1];
-            ClientInput = ClientInput.substring(requestLine.length() + 1, ClientInput.length());
-        } else if (clientCommand[0].equals(HttpConstant.CLIENT_CONTENT_LENGTH)) {
-            this.ClientContentLength = Integer.parseInt(clientCommand[1]);
-
-            // We can assume that the last part after Content-Length is the body:
-            ClientInput = ClientInput.substring(requestLine.length() + 1, ClientInput.length());
-
-            ClientBody = ClientInput;
-        }
-    }
-
-    public String getClientBody() {
-        return ClientBody;
-    }
-
 
     public String getHeaderParam(HttpSupportedHeader header) {
         return additionalHeaders.get(header);

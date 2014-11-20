@@ -25,7 +25,6 @@ public class MessageBusWorker implements Runnable {
             String input = readData();
             handler.setRequest(input);
             handler.processRequest();
-
             writeData(handler.getResponse());
             socket.close();
             SocketMessageBus.activeSockets.remove(socket);

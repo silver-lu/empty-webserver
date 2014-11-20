@@ -10,5 +10,5 @@ public enum HttpResponseCode {
     MethodNotAllowed,
     Redirect,
     Unauthorized,
-    NoContent, PreconditionFailed, Created
+    NoContent, PreconditionFailed, PartialContent, Created
 }

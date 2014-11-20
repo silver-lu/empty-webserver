@@ -3,6 +3,7 @@ package com.undecided.handlers.requestmethod;
 import com.undecided.*;
 import com.undecided.enums.HttpResponseCode;
 import com.undecided.enums.HttpResponseType;
+import com.undecided.enums.HttpSupportedHeader;
 import com.undecided.handlers.HttpHandler;
 import com.undecided.requests.Request;
 import com.undecided.requests.RequestHeader;
@@ -70,12 +71,20 @@ public class HttpGetMethodHandler extends HttpHandler {
             response = serverResponse;
         }
         else if ( fsWrapper.getFileInspector().isFile()) {
-            ServerResponse serverResponse = ServerResponseFactory.getInstance(HttpResponseType.GetFile);
+            ServerResponse serverResponse;
+            if ( requestHeader.hasHeaderParam(HttpSupportedHeader.Range)) {
+                serverResponse = ServerResponseFactory.getInstance(HttpResponseCode.PartialContent);
+                serverResponse.setRange(requestHeader.getHeaderParam(HttpSupportedHeader.Range));
+            }
+            else {
+                serverResponse = ServerResponseFactory.getInstance(HttpResponseType.GetFile);
+            }
             serverResponse.setContentType(fsWrapper.getFileInspector().getFileMimeType());
             FileReader fileReader = fsWrapper.getFileReader();
             fileReader.read();
             serverResponse.setResponseBody(fileReader.getContent());
             response = serverResponse;
+
         }
         else if ( fsWrapper.getFileInspector().isDirectory()) {
             DirectoryLister lister = fsWrapper.getDirectoryLister();

@@ -22,4 +22,7 @@ public class MockFileWriter extends FileWriter {
         MockFileSystemWrapper.Content = content;
     }
 
+    @Override
+    public void delete() { file.delete(); }
+
 }

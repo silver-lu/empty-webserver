@@ -44,7 +44,7 @@ public class FileWriter {
         return builder.toString();
     }
 
-    public void delete() {
-        file.delete();
+    public void delete() throws IOException {
+        Files.delete(Paths.get(file.getAbsolutePath()));
     }
 }

@@ -30,9 +30,13 @@ public class ServerResponseFactory {
         else if (responseCode == HttpResponseCode.PreconditionFailed) {
             return new ServerPreconditionFailedResponse();
         }
-        else {
+        else if (responseCode == HttpResponseCode.PartialContent) {
+            return new ServerPartialContentResponse();
+        }
+        else if (responseCode == HttpResponseCode.Ok ) {
             return new ServerStandardResponse();
         }
+        return null;
     }
 
     public static ServerResponse getInstance(HttpResponseType responseType) {
